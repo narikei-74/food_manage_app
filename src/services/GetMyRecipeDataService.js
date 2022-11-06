@@ -2,6 +2,11 @@ const GetMyRecipeDataService = () => {
   const myRecipeData = {
     monday: [
       {
+        name: "唐揚げ",
+        img: require("../../assets/images/karaage.jpg"),
+      },
+
+      {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
       },
@@ -20,13 +25,13 @@ const GetMyRecipeDataService = () => {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
       },
-
+    ],
+    tuesday: [
       {
         name: "唐揚げ",
         img: require("../../assets/images/karaage.jpg"),
       },
-    ],
-    tuesday: [
+
       {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
@@ -46,13 +51,13 @@ const GetMyRecipeDataService = () => {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
       },
-
+    ],
+    wednesday: [
       {
         name: "唐揚げ",
         img: require("../../assets/images/karaage.jpg"),
       },
-    ],
-    wednesday: [
+
       {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
@@ -71,15 +76,15 @@ const GetMyRecipeDataService = () => {
       {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
-      },
-
-      {
-        name: "唐揚げ",
-        img: require("../../assets/images/karaage.jpg"),
       },
     ],
     thursday: [
       {
+        name: "唐揚げ",
+        img: require("../../assets/images/karaage.jpg"),
+      },
+
+      {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
       },
@@ -97,15 +102,15 @@ const GetMyRecipeDataService = () => {
       {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
-      },
-
-      {
-        name: "唐揚げ",
-        img: require("../../assets/images/karaage.jpg"),
       },
     ],
     friday: [
       {
+        name: "唐揚げ",
+        img: require("../../assets/images/karaage.jpg"),
+      },
+
+      {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
       },
@@ -123,15 +128,15 @@ const GetMyRecipeDataService = () => {
       {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
-      },
-
-      {
-        name: "唐揚げ",
-        img: require("../../assets/images/karaage.jpg"),
       },
     ],
     saturday: [
       {
+        name: "唐揚げ",
+        img: require("../../assets/images/karaage.jpg"),
+      },
+
+      {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
       },
@@ -149,15 +154,15 @@ const GetMyRecipeDataService = () => {
       {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
-      },
-
-      {
-        name: "唐揚げ",
-        img: require("../../assets/images/karaage.jpg"),
       },
     ],
     sunday: [
       {
+        name: "唐揚げ",
+        img: require("../../assets/images/karaage.jpg"),
+      },
+
+      {
         name: "サラダ",
         img: require("../../assets/images/sarada.jpg"),
       },
@@ -175,11 +180,6 @@ const GetMyRecipeDataService = () => {
       {
         name: "味噌汁",
         img: require("../../assets/images/misoshiru.jpg"),
-      },
-
-      {
-        name: "唐揚げ",
-        img: require("../../assets/images/karaage.jpg"),
       },
     ],
   };

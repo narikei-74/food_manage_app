@@ -9,12 +9,12 @@ import {
 // スタイル
 import RecipeListStyle from "../styles/RecipeListStyle";
 // サービス
-import findCurrentWeekRecipe from "../services/FindCurrentWeekRecipe";
+import FindCurrentWeekRecipeService from "../services/FindCurrentWeekRecipeService";
 
 const RecipeListComponent = ({ onPress, myRecipeData, currentWeek }) => {
   const styles = RecipeListStyle();
 
-  const myRecipe = findCurrentWeekRecipe(myRecipeData, currentWeek);
+  const myRecipe = FindCurrentWeekRecipeService(myRecipeData, currentWeek);
 
   const recipeView = myRecipe?.map((recipe) => {
     return (
