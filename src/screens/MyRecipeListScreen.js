@@ -1,5 +1,4 @@
 // コアコンポーネント
-import { StatusBar } from "expo-status-bar";
 import { View, ScrollView } from "react-native";
 // スタイル
 import BaseStyle from "../styles/BaseStyle";
@@ -30,12 +29,13 @@ const MyRecipeListScreen = ({ navigation }) => {
       <View style={styles.bar}></View>
       <RecipeListComponent
         onPress={() => {
+          navigation.setOptions({ title: "私の献立" });
           navigation.navigate("レシピ");
         }}
         myRecipeData={myRecipeData}
         currentWeek={currentWeek}
+        isMyRecipe={true}
       />
-      <StatusBar style="auto" />
     </ScrollView>
   );
 };

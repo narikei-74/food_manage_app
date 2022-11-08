@@ -11,10 +11,18 @@ import RecipeListStyle from "../styles/RecipeListStyle";
 // サービス
 import FindCurrentWeekRecipeService from "../services/FindCurrentWeekRecipeService";
 
-const RecipeListComponent = ({ onPress, myRecipeData, currentWeek }) => {
+const RecipeListComponent = ({
+  onPress,
+  myRecipeData,
+  currentWeek,
+  isMyRecipe,
+}) => {
   const styles = RecipeListStyle();
 
-  const myRecipe = FindCurrentWeekRecipeService(myRecipeData, currentWeek);
+  const myRecipe =
+    isMyRecipe === true
+      ? FindCurrentWeekRecipeService(myRecipeData, currentWeek)
+      : myRecipeData;
 
   const recipeView = myRecipe?.map((recipe) => {
     return (
