@@ -1,4 +1,6 @@
-import { View, Text, Button } from "react-native";
+// コア
+import { View } from "react-native";
+// スタイル
 import FooterStyle from "../styles/FooterStyle";
 
 const FooterComponent = () => {

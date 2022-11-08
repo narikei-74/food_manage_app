@@ -1,4 +1,6 @@
+// コア
 import { View, Text, Button } from "react-native";
+// スタイル
 import HeaderStyle from "../styles/HeaderStyle";
 
 const HeaderComponent = ({ currentWeek, setCurrentWeek }) => {

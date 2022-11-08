@@ -1,20 +1,17 @@
-// コアコンポーネント
-import { View, ScrollView } from "react-native";
+// コア
+import { ScrollView } from "react-native";
+import { useState } from "react";
 // スタイル
 import BaseStyle from "../styles/BaseStyle";
 // カスタムコンポーネント
 import RecipeListComponent from "../components/RecipeListComponent";
-// フック
-import { useState } from "react";
 // サービス
 import GetRecipeDataService from "../services/GetRecipeDataService";
 
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
 
-  // 指定されている曜日
-  const currentWeek = false;
-
+  /// state ///
   // 現在保存されているマイレシピ
   const [recipeData, setRecipeData] = useState(GetRecipeDataService());
 
@@ -25,7 +22,7 @@ const RecipeListScreen = ({ navigation }) => {
           navigation.navigate("レシピ");
         }}
         myRecipeData={recipeData}
-        currentWeek={currentWeek}
+        currentWeek={false}
         isMyRecipe={false}
       />
     </ScrollView>

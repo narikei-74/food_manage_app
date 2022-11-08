@@ -1,11 +1,5 @@
-// コアコンポーネント
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+// コア
+import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 // スタイル
 import RecipeListStyle from "../styles/RecipeListStyle";
 // サービス

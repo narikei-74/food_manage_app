@@ -1,4 +1,4 @@
-import React from "react";
+// コア
 import { View, Text } from "react-native";
 
 const MyRecipeDetailScreen = () => {

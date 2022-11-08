@@ -1,3 +1,7 @@
+/**
+ *
+ * @return {object} - レシピデータ30件返す
+ */
 const GetRecipeDataService = () => {
   const RecipeData = [
     {

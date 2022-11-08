@@ -1,3 +1,7 @@
+/**
+ *
+ * @return {object} - my献立を返す
+ */
 const GetMyRecipeDataService = () => {
   const myRecipeData = {
     monday: [

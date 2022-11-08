@@ -1,4 +1,6 @@
+// コア
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// スクリーン
 import MyRecipeListScreen from "../screens/MyRecipeListScreen";
 import RecipeListScreen from "../screens/RecipeListScreen";
 
