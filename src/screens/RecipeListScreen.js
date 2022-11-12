@@ -1,11 +1,7 @@
-// コア
 import { ScrollView } from "react-native";
 import { useState } from "react";
-// スタイル
 import BaseStyle from "../styles/BaseStyle";
-// カスタムコンポーネント
 import RecipeListComponent from "../components/RecipeListComponent";
-// サービス
 import GetRecipeDataService from "../services/GetRecipeDataService";
 
 const RecipeListScreen = ({ navigation }) => {
@@ -19,7 +15,7 @@ const RecipeListScreen = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <RecipeListComponent
         onPress={() => {
-          navigation.navigate("レシピ");
+          navigation.navigate("RecipeDetail");
         }}
         myRecipeData={recipeData}
         currentWeek={false}

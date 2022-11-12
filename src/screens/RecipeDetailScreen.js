@@ -1,10 +1,9 @@
-// コア
 import { View, Text } from "react-native";
 
 const RecipeDetailScreen = () => {
   return (
     <View>
-      <Text>詳細画面</Text>
+      <Text>献立詳細ページ</Text>
     </View>
   );
 };
