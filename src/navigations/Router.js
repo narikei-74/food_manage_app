@@ -6,6 +6,8 @@ import MyRecipeDetailScreen from "../screens/MyRecipeDetailScreen";
 import RecipeListScreen from "../screens/RecipeListScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
+import MyRecipeEditScreen from "../screens/MyRecipeEditScreen";
+import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +29,16 @@ const MainNavigator = () => {
           name="RecipeDetail"
           component={RecipeDetailScreen}
           options={{ title: "レシピ" }}
+        />
+        <Stack.Screen
+          name="MyRecipeEdit"
+          component={MyRecipeEditScreen}
+          options={{ title: "献立編集" }}
+        />
+        <Stack.Screen
+          name="CreateRecipe"
+          component={CreateRecipeScreen}
+          options={{ title: "献立自動作成" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
