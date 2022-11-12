@@ -1,8 +1,5 @@
-// コア
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
-// スタイル
 import RecipeListStyle from "../styles/RecipeListStyle";
-// サービス
 import FindCurrentWeekRecipeService from "../services/FindCurrentWeekRecipeService";
 
 const RecipeListComponent = ({
