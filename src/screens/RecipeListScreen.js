@@ -1,15 +1,14 @@
 import { ScrollView } from "react-native";
-import { useState } from "react";
 import BaseStyle from "../styles/BaseStyle";
 import RecipeListComponent from "../components/RecipeListComponent";
-import GetRecipeDataService from "../services/GetRecipeDataService";
+import { useSelector } from "react-redux";
 
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
 
   /// state ///
   // 現在保存されているマイレシピ
-  const [recipeData, setRecipeData] = useState(GetRecipeDataService());
+  const recipeData = useSelector((state) => state.recipeData);
 
   return (
     <ScrollView style={styles.container}>
