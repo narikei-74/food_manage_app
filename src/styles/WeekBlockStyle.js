@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const HeaderStyle = () => {
+const WeekBlockStyle = () => {
   const styles = StyleSheet.create({
     header: {
       width: "100%",
@@ -33,4 +33,4 @@ const HeaderStyle = () => {
   return styles;
 };
 
-export default HeaderStyle;
+export default WeekBlockStyle;

@@ -1,10 +1,8 @@
-// コア
 import { View, Text, Button } from "react-native";
-// スタイル
-import HeaderStyle from "../styles/HeaderStyle";
+import WeekBlockStyle from "../styles/WeekBlockStyle";
 
-const HeaderComponent = ({ currentWeek, setCurrentWeek }) => {
-  const styles = HeaderStyle();
+const WeekBlockComponent = ({ currentWeek, setCurrentWeek }) => {
+  const styles = WeekBlockStyle();
   const week = [
     {
       id: 0,
@@ -66,4 +64,4 @@ const HeaderComponent = ({ currentWeek, setCurrentWeek }) => {
   );
 };
 
-export default HeaderComponent;
+export default WeekBlockComponent;
