@@ -1,29 +1,26 @@
-import { Button } from "@rneui/themed"
-
-import { StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Button } from "@rneui/themed";
 import { OutlineButtonStyle } from "../../styles/OutlineButtonStyle";
 
-export const OutlineButton = (props) =>{
-    const {title, route, navigation} = props;
+export const OutlineButton = (props) => {
+  const { title, route, navigation } = props;
 
-    const styles = OutlineButtonStyle();
-    return(
-        <Button
-        title={title} 
-        type="outline"
-        style={styles.button}
-        titleStyle={styles.title}
-        buttonStyle={styles.button} 
-        containerStyle={{
-            width: 100,
-            marginHorizontal: 20,
-            marginTop:10,
-            marginBottom:15,
-        }}
-        onPress={() => {
-            navigation.navigate(route);
-        }}
-        />
-    )
-}
+  const styles = OutlineButtonStyle();
+  return (
+    <Button
+      title={title}
+      type="outline"
+      style={styles.button}
+      titleStyle={styles.title}
+      buttonStyle={styles.button}
+      containerStyle={{
+        width: 100,
+        marginHorizontal: 20,
+        marginTop: 10,
+        marginBottom: 15,
+      }}
+      onPress={() => {
+        navigation.navigate(route);
+      }}
+    />
+  );
+};

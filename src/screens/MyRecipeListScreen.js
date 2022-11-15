@@ -1,11 +1,10 @@
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useState } from "react";
 import BaseStyle from "../styles/BaseStyle";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import RecipeListComponent from "../components/RecipeListComponent";
-import GetMyRecipeDataService from "../services/GetMyRecipeDataService";
-import { Button } from "@rneui/themed";
 import { RecipeEditbuttonsComponent } from "../components/RecipeEditbuttonsComponent";
+import { useSelector } from "react-redux";
 
 const MyRecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
@@ -15,7 +14,7 @@ const MyRecipeListScreen = ({ navigation }) => {
   const nowWeek = new Date().getDay();
   const [currentWeek, setCurrentWeek] = useState(nowWeek);
   // 現在保存されているマイレシピ
-  const [myRecipeData, setMyRecipeData] = useState(GetMyRecipeDataService());
+  const myRecipeData = useSelector((state) => state.myRecipeData);
 
   return (
     <ScrollView style={styles.container}>
@@ -23,9 +22,7 @@ const MyRecipeListScreen = ({ navigation }) => {
         currentWeek={currentWeek}
         setCurrentWeek={setCurrentWeek}
       />
-      <View style={{flexDirection:"row"}}>
       <RecipeEditbuttonsComponent navigation={navigation} />
-      </View>
       <View style={styles.bar}></View>
       <RecipeListComponent
         onPress={() => {
