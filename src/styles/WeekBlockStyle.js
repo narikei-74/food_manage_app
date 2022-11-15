@@ -4,7 +4,7 @@ const WeekBlockStyle = () => {
   const styles = StyleSheet.create({
     header: {
       width: "100%",
-      height: 100,
+      height: 130,
       top: "4%",
       alignItems: "center",
       textAlign: "center",

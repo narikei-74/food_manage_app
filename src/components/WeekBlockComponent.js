@@ -1,8 +1,16 @@
+import { addDays, startOfWeek } from "date-fns";
+import { useState } from "react";
 import { View, Text, Button } from "react-native";
 import WeekBlockStyle from "../styles/WeekBlockStyle";
+import { formatDate, getEndOfWeek, getStartOfWeek, getWeekName } from "../utils/function";
 
 const WeekBlockComponent = ({ currentWeek, setCurrentWeek }) => {
   const styles = WeekBlockStyle();
+  const today = new Date();
+  const startOfWeekString = getStartOfWeek();
+  const endOfWeek = getEndOfWeek();
+  const [currentDay, setCurrentDay] = useState(today);
+  const [currentWeekName, setCurrentWeekName] = useState(getWeekName(currentWeek));
   const week = [
     {
       id: 0,
@@ -37,7 +45,7 @@ const WeekBlockComponent = ({ currentWeek, setCurrentWeek }) => {
   return (
     <View style={styles.header}>
       <Text>
-        11月7日<Text style={styles.week}>(月)</Text>　〜　11月13日
+        {startOfWeekString}<Text style={styles.week}>(月)</Text>　〜 {endOfWeek}
         <Text style={styles.week}>(日)</Text>
       </Text>
       <View style={styles.weekBar}>
@@ -53,12 +61,17 @@ const WeekBlockComponent = ({ currentWeek, setCurrentWeek }) => {
                 title={day.title}
                 onPress={() => {
                   setCurrentWeek(day.id);
+                  setCurrentWeekName(getWeekName(day.id));
+                  setCurrentDay(addDays(startOfWeek(today),day.id+1));
                 }}
                 color={currentWeek == day.id ? "#fff" : "#333"}
               />
             </View>
           );
         })}
+      </View>
+      <View style={{alignItems:"center",justifyContent:"flex-start", flex:1,height:30}}>
+        <Text>{formatDate(currentDay)}({currentWeekName})</Text>
       </View>
     </View>
   );
