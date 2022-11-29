@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import RecipeListComponent from "../components/RecipeListComponent";
 import WeekBlockComponent from "../components/WeekBlockComponent";
@@ -6,7 +7,7 @@ import GetMyRecipeDataService from "../services/GetMyRecipeDataService";
 import BaseStyle from "../styles/BaseStyle";
 import { getDateString, getStartOfWeek, getWeekName } from "../utils/function";
 
-const MyRecipeEditScreen = () => {
+const MyRecipeEditScreen = ({navigation}) => {
   const styles = BaseStyle();
   // 指定されている曜日
   const startOfWeek = getStartOfWeek();
@@ -29,7 +30,8 @@ const MyRecipeEditScreen = () => {
             myRecipeData={myRecipeData}
             currentWeek={currentWeek}
             isMyRecipe={true}
-          />
+            navigation ={navigation}
+      />
     </View>
   );
 };

@@ -1,12 +1,14 @@
 import { View, ScrollView } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BaseStyle from "../styles/BaseStyle";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import RecipeListComponent from "../components/RecipeListComponent";
 import { RecipeEditbuttonsComponent } from "../components/RecipeEditbuttonsComponent";
 import { useSelector } from "react-redux";
+import { useRoute } from "@react-navigation/native";
 
-const MyRecipeListScreen = ({ navigation }) => {
+const MyRecipeListScreen = (props) => {
+  const {navigation} = props;
   const styles = BaseStyle();
 
   /// state ///

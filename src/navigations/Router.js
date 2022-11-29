@@ -40,6 +40,11 @@ const MainNavigator = () => {
           component={CreateRecipeScreen}
           options={{ title: "献立自動作成" }}
         />
+        <Stack.Screen
+          name="RecipeList"
+          component={RecipeListScreen}
+          options={{ title: "献立一覧" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
