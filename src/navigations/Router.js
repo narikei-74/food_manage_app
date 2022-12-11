@@ -8,13 +8,18 @@ import RecipeDetailScreen from "../screens/RecipeDetailScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import MyRecipeEditScreen from "../screens/MyRecipeEditScreen";
 import CreateRecipeScreen from "../screens/CreateRecipeScreen";
+import LoginScreen from "../screens/LoginScreen";
+import { UserProvider } from "../context/UserContext";
+import { DateProvider } from "../context/DateContext";
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <UserProvider>
+        <DateProvider>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="BottomTab"
           component={BottomTabNavigator}
@@ -40,7 +45,19 @@ const MainNavigator = () => {
           component={CreateRecipeScreen}
           options={{ title: "献立自動作成" }}
         />
+        <Stack.Screen
+          name="RecipeList"
+          component={RecipeListScreen}
+          options={{ title: "献立一覧" }}
+        />
+        <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ title: "ログイン" }}
+        />
       </Stack.Navigator>
+      </DateProvider>
+      </UserProvider>
     </NavigationContainer>
   );
 };

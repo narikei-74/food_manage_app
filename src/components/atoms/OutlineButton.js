@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import { OutlineButtonStyle } from "../../styles/OutlineButtonStyle";
 
 export const OutlineButton = (props) => {
-  const { title, route, navigation } = props;
+  const { title, onPress } = props;
 
   const styles = OutlineButtonStyle();
   return (
@@ -18,9 +18,7 @@ export const OutlineButton = (props) => {
         marginTop: 10,
         marginBottom: 15,
       }}
-      onPress={() => {
-        navigation.navigate(route);
-      }}
+      onPress={onPress}
     />
   );
 };

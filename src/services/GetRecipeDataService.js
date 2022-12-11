@@ -1,46 +1,17 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 /**
  *
  * @return {object} - レシピデータ30件返す
  */
-const GetRecipeDataService = () => {
-  const RecipeData = [
-    {
-      name: "唐揚げ",
-      img: require("../../assets/images/karaage.jpg"),
-    },
-
-    {
-      name: "サラダ",
-      img: require("../../assets/images/sarada.jpg"),
-    },
-
-    {
-      name: "煮物",
-      img: require("../../assets/images/nimono.jpg"),
-    },
-
-    {
-      name: "卵をかけたご飯",
-      img: require("../../assets/images/tamagokakegohan.jpg"),
-    },
-
-    {
-      name: "味噌汁",
-      img: require("../../assets/images/misoshiru.jpg"),
-    },
-
-    {
-      name: "卵かけご飯",
-      img: require("../../assets/images/tamagokakegohan.jpg"),
-    },
-
-    {
-      name: "美味しい煮物",
-      img: require("../../assets/images/nimono.jpg"),
-    },
-  ];
-
-  return RecipeData;
+const GetRecipeDataService = async() => {
+  return data = await fetch("http://18.183.189.68:8080/recipedata/get",{method:'post',body:JSON.stringify({Offset:0})})
+    .then(res=>res.json())
+    .then((resJson)=>{
+      return resJson;
+    })
+    .catch((err)=>console.log(err));
 };
 
 export default GetRecipeDataService;
