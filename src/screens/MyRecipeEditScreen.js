@@ -1,6 +1,8 @@
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
+import MyRecipeListComponent from "../components/MyRecipeListComponent";
 import RecipeListComponent from "../components/RecipeListComponent";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import GetMyRecipeDataService from "../services/GetMyRecipeDataService";
@@ -14,7 +16,8 @@ const MyRecipeEditScreen = ({navigation}) => {
   const nowWeek = new Date().getDay();
   const [currentWeek, setCurrentWeek] = useState(nowWeek);
   // 現在保存されているマイレシピ
-  const [myRecipeData, setMyRecipeData] = useState(GetMyRecipeDataService());
+  // const [myRecipeData, setMyRecipeData] = useState(GetMyRecipeDataService());
+  const myRecipeData = useSelector((state) => state.myRecipeData)._z.data;
 
   return (
     <View style={styles.container}>
@@ -23,7 +26,7 @@ const MyRecipeEditScreen = ({navigation}) => {
         setCurrentWeek={setCurrentWeek}
       />
       <View style={styles.bar}></View>
-      <RecipeListComponent
+      <MyRecipeListComponent
             onPress={() => {
               navigation.navigate("MyRecipeDetail");
             }}

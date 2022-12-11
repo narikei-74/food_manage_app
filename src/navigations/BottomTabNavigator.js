@@ -36,7 +36,7 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "食材購入" }}
+        options={{ title: "ログイン" }}
       />
     </Tab.Navigator>
   );

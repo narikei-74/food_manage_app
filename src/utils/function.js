@@ -1,28 +1,43 @@
-import { addDays, endOfWeek, format, startOfWeek } from "date-fns";
+import { addDays, addWeeks, endOfWeek, format, startOfWeek, subWeeks } from "date-fns";
+import {ja} from "date-fns/locale"
 
 //今日の日付を返す
 export const getDateString = () =>{
     const date = new Date();
-    return `${date.getMonth()+1}月${date.getDate()}日`
+    return format(date,"yyyy-MM-dd");
 }
 
-//現在の週の初め(月曜日)を文字列で返す
-export const getStartOfWeek = () =>{
-    return format(addDays(startOfWeek(new Date()),1),"MM月dd日");
-}
-
-//現在の週の終わり(日曜日)を文字列で返す
-export const getEndOfWeek = () =>{
-    return format(addDays(endOfWeek(new Date()),1),"MM月dd日");
-}
-
-//曜日名を返す
-export const getWeekName = (currentWeek) =>{
-    const Week ={0:"月", 1:"火", 2:"水", 3:"木", 4:"金", 5:"土", 6:"日"}
-    return Week[currentWeek];
-}
-
-//日付のフォーマット
+/**
+ * 日付のフォーマット 表示用
+ * @param Date
+ * */ 
 export const formatDate = (date) =>{
-    return format(date,"MM月dd日");
+    return format(date,"MM月dd日(E)",{locale:ja});
+}
+
+/**
+ * 日付のフォーマット
+ * @param Date
+ * @return String "yyyy-MM-dd"
+ */
+export const formatDateToString = (date) => {
+    return format(date,"yyyy-MM-dd");
+}
+
+/**
+ * 1週間前の日付
+ * @param String "yyyy-MM-dd"
+ * @return String "yyyy-MM-dd"
+*/
+export const getPreviousWeek = (date)=>{
+    return format(subWeeks(new Date(date), 1),"yyyy-MM-dd");
+}
+
+/**
+ * 13日後の日付
+ * @param String "yyyy-MM-dd"
+ * @return String "yyyy-MM-dd"
+*/
+export const getNextWeek = (date)=>{
+    return format(addDays(new Date(date), 13),"yyyy-MM-dd");
 }

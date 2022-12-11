@@ -8,22 +8,24 @@ import { useEffect, useState } from "react";
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
   const route = useRoute();
-  const editRecipeName = route.params!=undefined ? route.params.editRecipeName : null;
+  const editRecipeID = route.params!=undefined && "editRecipeID" in route.params ? route.params.editRecipeID : null;
+  const index = route.params!=undefined && "i" in route.params ? route.params.i : null;
+
   // 現在保存されているマイレシピ
   const recipeData = useSelector((state) => state.recipeData)._z.data;
-  console.log(recipeData);
 
   return (
     <ScrollView style={styles.container}>
       <RecipeListComponent
-        onPress={() => {
-          navigation.navigate("RecipeDetail");
+        onPress={(recipe) => {
+          navigation.navigate("RecipeDetail",{recipe:recipe});
         }}
         myRecipeData={recipeData}
         currentWeek={false}
         isMyRecipe={false}
-        recipeName={editRecipeName}
+        editRecipeID={editRecipeID}
         navigation={navigation}
+        index={index}
       />
     </ScrollView>
   );
