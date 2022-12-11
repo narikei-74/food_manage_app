@@ -12,7 +12,6 @@ import { getDateString, getStartOfWeek, getWeekName } from "../utils/function";
 const MyRecipeEditScreen = ({navigation}) => {
   const styles = BaseStyle();
   // 指定されている曜日
-  const startOfWeek = getStartOfWeek();
   const nowWeek = new Date().getDay();
   const [currentWeek, setCurrentWeek] = useState(nowWeek);
   // 現在保存されているマイレシピ
