@@ -9,7 +9,7 @@ import { UserContext } from "../context/UserContext";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
 
 const MyRecipeListScreen = (props) => {
-  const {navigation} = props;
+  const { navigation } = props;
   const styles = BaseStyle();
 
   /// state ///
@@ -18,13 +18,13 @@ const MyRecipeListScreen = (props) => {
   const [currentWeek, setCurrentWeek] = useState(nowWeek);
   // 現在保存されているマイレシピ
   const myRecipeData = useSelector((state) => state.myRecipeData)._z.data;
-  const {currentUser} = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
-  useEffect(()=>{
-    if(!currentUser){
+  useEffect(() => {
+    if (!currentUser) {
       navigation.navigate("Login");
     }
-  },[]);
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -36,7 +36,7 @@ const MyRecipeListScreen = (props) => {
       <View style={styles.bar}></View>
       <MyRecipeListComponent
         onPress={(recipe) => {
-          navigation.navigate("RecipeDetail",{recipe:recipe});
+          navigation.navigate("RecipeDetail", { recipe: recipe });
         }}
         myRecipeData={myRecipeData}
         currentWeek={currentWeek}

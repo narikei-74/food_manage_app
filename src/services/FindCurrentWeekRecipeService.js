@@ -7,7 +7,7 @@ import { formatDate, formatDateToString } from "../utils/function";
  * @return {object} - 指定の曜日のレシピデータ
  */
 const findCurrentWeekRecipe = (recipeData, currentDate) => {
-  const currentDateRecipe =  recipeData.filter(data=>formatDateToString(new Date(data.Date)) == currentDate);
+  const currentDateRecipe = recipeData.filter(data => formatDateToString(new Date(data.Date)) == currentDate);
   return currentDateRecipe;
 };
 

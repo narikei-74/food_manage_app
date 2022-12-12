@@ -4,13 +4,13 @@ import { View, Text, Image } from "react-native";
 
 const RecipeDetailScreen = () => {
   const route = useRoute();
-  const {recipe} =route.params;
+  const { recipe } = route.params;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageContainer}>
-        <Image 
+        <Image
           style={styles.imageInner}
-          source={{uri:recipe.Image_key}} />
+          source={{ uri: recipe.Image_key }} />
       </View>
       <View >
         <View>
@@ -19,12 +19,13 @@ const RecipeDetailScreen = () => {
           <Text>
             材料
           </Text>
-            {recipe.Recipe_materials.map((material)=>{
-              return(
-                <Text>
+          {recipe.Recipe_materials.map((material) => {
+            return (
+              <Text>
                 {material.Food.Name}
-                </Text>
-              )})}
+              </Text>
+            )
+          })}
         </View>
         <Text style={styles.cookTextContainer}>
           {recipe.How_to_cook}
@@ -35,18 +36,18 @@ const RecipeDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container:{
-    flexGrow:1,
-    alignItems:'center'
+  container: {
+    flexGrow: 1,
+    alignItems: 'center'
   },
-  imageContainer:{
+  imageContainer: {
 
   },
-  imageInner:{
+  imageInner: {
     width: 256,
-    height: 256, 
+    height: 256,
   },
-  cookTextContainer:{
+  cookTextContainer: {
   }
 })
 

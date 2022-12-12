@@ -6,7 +6,9 @@ export const MyRecipeDataSlice = createSlice({
   name: "myRecipeData",
   initialState: GetMyRecipeDataService(),
   reducers: {
-    setMyRecipeData: (state, action) => {},
+    setMyRecipeData: (state, action) => {
+      state = GetMyRecipeDataService();
+    },
   },
 });
 

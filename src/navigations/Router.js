@@ -19,44 +19,44 @@ const MainNavigator = () => {
     <NavigationContainer>
       <UserProvider>
         <DateProvider>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="BottomTab"
-          component={BottomTabNavigator}
-          options={{ headerShown: false, title: "戻る" }}
-        />
-        <Stack.Screen
-          name="MyRecipeDetail"
-          component={MyRecipeDetailScreen}
-          options={{ title: "レシピ" }}
-        />
-        <Stack.Screen
-          name="RecipeDetail"
-          component={RecipeDetailScreen}
-          options={{ title: "レシピ" }}
-        />
-        <Stack.Screen
-          name="MyRecipeEdit"
-          component={MyRecipeEditScreen}
-          options={{ title: "献立編集" }}
-        />
-        <Stack.Screen
-          name="CreateRecipe"
-          component={CreateRecipeScreen}
-          options={{ title: "献立自動作成" }}
-        />
-        <Stack.Screen
-          name="RecipeList"
-          component={RecipeListScreen}
-          options={{ title: "献立一覧" }}
-        />
-        <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ title: "ログイン" }}
-        />
-      </Stack.Navigator>
-      </DateProvider>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="BottomTab"
+              component={BottomTabNavigator}
+              options={{ headerShown: false, title: "戻る" }}
+            />
+            <Stack.Screen
+              name="MyRecipeDetail"
+              component={MyRecipeDetailScreen}
+              options={{ title: "レシピ" }}
+            />
+            <Stack.Screen
+              name="RecipeDetail"
+              component={RecipeDetailScreen}
+              options={{ title: "レシピ" }}
+            />
+            <Stack.Screen
+              name="MyRecipeEdit"
+              component={MyRecipeEditScreen}
+              options={{ title: "献立編集" }}
+            />
+            <Stack.Screen
+              name="CreateRecipe"
+              component={CreateRecipeScreen}
+              options={{ title: "献立自動作成" }}
+            />
+            <Stack.Screen
+              name="RecipeList"
+              component={RecipeListScreen}
+              options={{ title: "献立一覧" }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ title: "ログイン" }}
+            />
+          </Stack.Navigator>
+        </DateProvider>
       </UserProvider>
     </NavigationContainer>
   );

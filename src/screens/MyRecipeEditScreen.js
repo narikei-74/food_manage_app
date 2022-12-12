@@ -9,7 +9,7 @@ import GetMyRecipeDataService from "../services/GetMyRecipeDataService";
 import BaseStyle from "../styles/BaseStyle";
 import { getDateString, getStartOfWeek, getWeekName } from "../utils/function";
 
-const MyRecipeEditScreen = ({navigation}) => {
+const MyRecipeEditScreen = ({ navigation }) => {
   const styles = BaseStyle();
   // 指定されている曜日
   const nowWeek = new Date().getDay();
@@ -26,13 +26,13 @@ const MyRecipeEditScreen = ({navigation}) => {
       />
       <View style={styles.bar}></View>
       <MyRecipeListComponent
-            onPress={() => {
-              navigation.navigate("MyRecipeDetail");
-            }}
-            myRecipeData={myRecipeData}
-            currentWeek={currentWeek}
-            isMyRecipe={true}
-            navigation ={navigation}
+        onPress={() => {
+          navigation.navigate("MyRecipeDetail");
+        }}
+        myRecipeData={myRecipeData}
+        currentWeek={currentWeek}
+        isMyRecipe={true}
+        navigation={navigation}
       />
     </View>
   );

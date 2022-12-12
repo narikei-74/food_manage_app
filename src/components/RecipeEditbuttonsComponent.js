@@ -10,11 +10,11 @@ export const RecipeEditbuttonsComponent = (props) => {
     <View style={styles.container}>
       <OutlineButton
         title="献立編集"
-        onPress={()=>{navigation.navigate("MyRecipeEdit")}}
+        onPress={() => { navigation.navigate("MyRecipeEdit") }}
       />
       <OutlineButton
         title="献立自動作成"
-        onPress={()=>{navigation.navigate("CreateRecipe")}}
+        onPress={() => { navigation.navigate("CreateRecipe") }}
       />
     </View>
   );

@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
   const route = useRoute();
-  const editRecipeID = route.params!=undefined && "editRecipeID" in route.params ? route.params.editRecipeID : null;
-  const index = route.params!=undefined && "i" in route.params ? route.params.i : null;
+  const editRecipeID = route.params != undefined && "editRecipeID" in route.params ? route.params.editRecipeID : null;
+  const index = route.params != undefined && "i" in route.params ? route.params.i : null;
 
   // 現在保存されているマイレシピ
   const recipeData = useSelector((state) => state.recipeData)._z.data;
@@ -18,7 +18,7 @@ const RecipeListScreen = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <RecipeListComponent
         onPress={(recipe) => {
-          navigation.navigate("RecipeDetail",{recipe:recipe});
+          navigation.navigate("RecipeDetail", { recipe: recipe });
         }}
         myRecipeData={recipeData}
         currentWeek={false}
