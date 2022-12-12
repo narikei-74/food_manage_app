@@ -7,7 +7,7 @@ import { UserContext } from "../context/UserContext";
  */
 const GetMyRecipeDataService = async () => {
   // const { currentUser } = useContext(UserContext);
-  return data = await fetch("http://18.183.189.68:8080/myrecipedata/get", { method: 'post', body: JSON.stringify({ UserID: 88 }) })
+  return data = await fetch("http://18.183.189.68:8080/myrecipedata/get", { method: 'post', body: JSON.stringify({ UserID: 93 }) })
     .then(res => res.json())
     .then((resJson) => {
       return resJson;

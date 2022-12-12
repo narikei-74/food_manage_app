@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
           storage.remove({ key: "userInfo" })
         }}
       />
+      <Text>{currentUser && currentUser.userId}</Text>
     </View>
   );
 };

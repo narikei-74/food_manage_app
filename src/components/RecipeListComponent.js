@@ -7,12 +7,14 @@ import { useRoute } from "@react-navigation/native";
 import { addMyRecipe, updateMyRecipe } from "../utils/api";
 import { UserContext } from "../context/UserContext";
 import { DateContext } from "../context/DateContext";
+import { HasMyRecipeDataContext } from "../context/HasMyRecipeDataContext";
 
 const RecipeListComponent = (props) => {
   const { onPress, myRecipeData, currentWeek, isMyRecipe, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
   const { currentUser } = useContext(UserContext);
   const { currentDate } = useContext(DateContext);
+  const { setHasMyRecipeData } = useContext(HasMyRecipeDataContext);
   const route = useRoute();
 
   const previousScreen = route.params != undefined && "previousScreen" in route.params ? route.params.previousScreen : "";
@@ -48,8 +50,8 @@ const RecipeListComponent = (props) => {
               containerStyle={{ width: 100, alignItems: "center", right: -120 }}
               onPress={() => {
                 editRecipeID
-                  ? updateMyRecipe(editRecipeID, currentUser.userId, recipe.ID, index, currentDate, navigation)
-                  : addMyRecipe(currentUser.userId, recipe.ID, index, currentDate, navigation)
+                  ? updateMyRecipe(editRecipeID, currentUser.userId, recipe.ID, index, currentDate, navigation, setHasMyRecipeData)
+                  : addMyRecipe(currentUser.userId, recipe.ID, index, currentDate, navigation, setHasMyRecipeData)
               }}
             />
           }

@@ -1,14 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
-export const HasMyRecipeDataContext = createContext({ hasMyRecipeData: false });
+export const HasMyRecipeDataContext = createContext({ hasMyRecipeData: false, setHasMyRecipeData: () => { } });
 
 export const HasMyRecipeDataProvider = (props) => {
-  const [hasMyRecipeData, setHasMyRecipeData] = useState(false);
+  const [hasMyRecipe, setHasMyRecipe] = useState(false);
+  const setHasMyRecipeData = useCallback((bool) => {
+    setHasMyRecipe(bool);
+  }, []);
 
   return (
     <HasMyRecipeDataContext.Provider
       value={{
-        hasMyRecipeData: hasMyRecipeData,
+        hasMyRecipeData: hasMyRecipe,
         setHasMyRecipeData: setHasMyRecipeData,
       }}
     >
