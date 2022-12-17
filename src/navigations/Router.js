@@ -9,8 +9,6 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import MyRecipeEditScreen from "../screens/MyRecipeEditScreen";
 import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { UserProvider } from "../context/UserContext";
-import { DateProvider } from "../context/DateContext";
 
 const Stack = createStackNavigator();
 

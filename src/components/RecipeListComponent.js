@@ -1,32 +1,26 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
-import FindCurrentWeekRecipeService from "../services/FindCurrentWeekRecipeService";
 import { Button } from "@rneui/themed";
 import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import { addMyRecipe, updateMyRecipe } from "../utils/api";
 import { UserContext } from "../context/UserContext";
-import { DateContext } from "../context/DateContext";
+import { useSelector } from "react-redux";
 
 const RecipeListComponent = (props) => {
-  const { onPress, recipeData, isMyRecipe, editRecipeID, navigation, index } =
-    props;
+  const { onPress, recipeData, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
   const { currentUser } = useContext(UserContext);
-  const { currentDate } = useContext(DateContext);
   const route = useRoute();
+
+  const currentDate = useSelector((state) => state.currentDate).currentDate;
 
   const previousScreen =
     route.params != undefined && "previousScreen" in route.params
       ? route.params.previousScreen
       : "";
 
-  const myRecipe =
-    isMyRecipe === true
-      ? FindCurrentWeekRecipeService(recipeData, currentDate)
-      : recipeData;
-
-  const recipeView = myRecipe?.map((recipe, i) => {
+  const recipeView = recipeData?.map((recipe, i) => {
     return (
       <TouchableOpacity
         style={styles.foodBlock}
