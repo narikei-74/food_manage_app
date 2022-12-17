@@ -4,7 +4,7 @@ import RecipeListComponent from "../components/RecipeListComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
-import { fetchRecipe } from "../redux/RecipeSlice";
+import { fetchRecipe, resetError } from "../redux/RecipeSlice";
 
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
@@ -32,34 +32,23 @@ const RecipeListScreen = ({ navigation }) => {
         </View>
       );
     } else {
-      if (recipes.error === undefined) {
-        return (
-          <RecipeListComponent
-            onPress={(recipe) => {
-              navigation.navigate("RecipeDetail", { recipe: recipe });
-            }}
-            recipeData={recipes.data}
-            currentWeek={false}
-            editRecipeID={editRecipeID}
-            navigation={navigation}
-            index={index}
-          />
-        );
-      } else {
+      if (recipes.error !== undefined) {
         alert(recipes.error);
-        return (
-          <RecipeListComponent
-            onPress={(recipe) => {
-              navigation.navigate("RecipeDetail", { recipe: recipe });
-            }}
-            recipeData={[]}
-            currentWeek={false}
-            editRecipeID={editRecipeID}
-            navigation={navigation}
-            index={index}
-          />
-        );
+        dispatch(resetError());
       }
+
+      return (
+        <RecipeListComponent
+          onPress={(recipe) => {
+            navigation.navigate("RecipeDetail", { recipe: recipe });
+          }}
+          recipeData={recipes.data}
+          currentWeek={false}
+          editRecipeID={editRecipeID}
+          navigation={navigation}
+          index={index}
+        />
+      );
     }
   };
 

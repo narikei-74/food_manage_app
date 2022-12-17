@@ -17,10 +17,14 @@ const initialState = {
 export const RecipeSlice = createSlice({
   name: "recipe",
   initialState,
-  reducers: {},
+  reducers: {
+    resetError: (state, action) => {
+      state.error = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipe.fulfilled, (state, action) => {
-      if ((action.payload.success = true)) {
+      if (action.payload.success === true) {
         state.data = action.payload.data;
         state.loader = false;
       } else {
@@ -35,4 +39,5 @@ export const RecipeSlice = createSlice({
   },
 });
 
+export const { resetError } = RecipeSlice.actions;
 export default RecipeSlice.reducer;

@@ -1,25 +1,25 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
-import { Icon } from '@rneui/themed';
+import { Icon } from "@rneui/themed";
 import { useRoute } from "@react-navigation/native";
-import { addMyRecipe } from "../utils/api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentDateMyRecipe } from "../utils/function";
 import { MiniButton } from "./atoms/MiniButton";
 
 const MyRecipeListComponent = (props) => {
-  const { onPress, myRecipeData, navigation, index } = props;
+  const { onPress, navigation } = props;
   const styles = RecipeListStyle();
   const route = useRoute();
 
-  const currentUser = useSelector((state) => state.currentUser).data;
-  const currentDate = useSelector((state) => state.currentDate).currentDate;
-  const myRecipe = getCurrentDateMyRecipe(myRecipeData, currentDate);
+  const myRecipeData = useSelector((state) => state.myRecipe);
 
-  const previousScreen =
-    route.params != undefined && "previousScreen" in route.params
-      ? route.params.previousScreen
-      : "";
+  if (myRecipeData.loader == false) {
+    const currentDate = useSelector((state) => state.currentDate).currentDate;
+    const myRecipe = getCurrentDateMyRecipe(myRecipeData.data, currentDate);
+    const previousScreen =
+      route.params != undefined && "previousScreen" in route.params
+        ? route.params.previousScreen
+        : "";
 
   const recipeView = () => {
     const items = [];
@@ -76,7 +76,14 @@ const MyRecipeListComponent = (props) => {
     return items;
   };
 
-  return <View style={styles.blocks}>{recipeView()}</View>;
+    return <View style={styles.blocks}>{recipeView()}</View>;
+  } else {
+    return (
+      <View style={styles.blocks}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 };
 
 export default MyRecipeListComponent;
