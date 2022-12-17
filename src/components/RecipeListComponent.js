@@ -7,10 +7,9 @@ import { useRoute } from "@react-navigation/native";
 import { addMyRecipe, updateMyRecipe } from "../utils/api";
 import { UserContext } from "../context/UserContext";
 import { DateContext } from "../context/DateContext";
-import { HasMyRecipeDataContext } from "../context/HasMyRecipeDataContext";
 
 const RecipeListComponent = (props) => {
-  const { onPress, myRecipeData, isMyRecipe, editRecipeID, navigation, index } =
+  const { onPress, recipeData, isMyRecipe, editRecipeID, navigation, index } =
     props;
   const styles = RecipeListStyle();
   const { currentUser } = useContext(UserContext);
@@ -24,8 +23,8 @@ const RecipeListComponent = (props) => {
 
   const myRecipe =
     isMyRecipe === true
-      ? FindCurrentWeekRecipeService(myRecipeData, currentDate)
-      : myRecipeData;
+      ? FindCurrentWeekRecipeService(recipeData, currentDate)
+      : recipeData;
 
   const recipeView = myRecipe?.map((recipe, i) => {
     return (
@@ -65,16 +64,14 @@ const RecipeListComponent = (props) => {
                       recipe.ID,
                       index,
                       currentDate,
-                      navigation,
-                      setHasMyRecipeData
+                      navigation
                     )
                   : addMyRecipe(
                       currentUser.userId,
                       recipe.ID,
                       index,
                       currentDate,
-                      navigation,
-                      setHasMyRecipeData
+                      navigation
                     );
               }}
             />
