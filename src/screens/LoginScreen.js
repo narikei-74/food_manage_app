@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import { FillButton } from "../components/atoms/FillButton";
 import { useDispatch, useSelector } from "react-redux";
 import { addGuestUser, saveStoreCurrentUser } from "../redux/UserSlice";
+import { LoginScreenStyle } from "../styles/LoginScreenStyle";
 
 const LoginScreen = ({ navigation }) => {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
+  const styles = LoginScreenStyle();
 
   useEffect(() => {
     dispatch(saveStoreCurrentUser());
