@@ -1,10 +1,11 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
-import { Button } from "@rneui/themed";
+import { Icon } from '@rneui/themed';
 import { useRoute } from "@react-navigation/native";
 import { addMyRecipe } from "../utils/api";
 import { useSelector } from "react-redux";
 import { getCurrentDateMyRecipe } from "../utils/function";
+import { MiniButton } from "./atoms/MiniButton";
 
 const MyRecipeListComponent = (props) => {
   const { onPress, myRecipeData, navigation, index } = props;
@@ -36,13 +37,8 @@ const MyRecipeListComponent = (props) => {
               >
                 <Text>{recipe.Recipe.Name}</Text>
                 {route.name == "MyRecipeEdit" && (
-                  <Button
+                  <MiniButton
                     title={"編集"}
-                    containerStyle={{
-                      width: 100,
-                      alignItems: "center",
-                      right: -120,
-                    }}
                     onPress={() => {
                       navigation.navigate("RecipeList", {
                         editRecipeID: recipe.ID,
@@ -52,51 +48,26 @@ const MyRecipeListComponent = (props) => {
                     }}
                   />
                 )}
-                {route.name == "RecipeList" &&
-                  previousScreen == "MyRecipeEdit" && (
-                    <Button
-                      title={"追加"}
-                      containerStyle={{
-                        width: 100,
-                        alignItems: "center",
-                        right: -120,
-                      }}
-                      onPress={() =>
-                        addMyRecipe(
-                          currentUser.ID,
-                          recipe.Recipe.ID,
-                          index,
-                          currentDate,
-                          navigation
-                        )
-                      }
-                    />
-                  )}
               </ImageBackground>
             </TouchableOpacity>
           ) : route.name == "MyRecipeEdit" ? (
-            <TouchableOpacity
-              style={styles.foodBlock}
-              onPress={() => onPress(null)}
-            >
-              <Button
-                title={"+"}
-                containerStyle={{
-                  width: 100,
-                  alignItems: "center",
-                  right: -120,
-                }}
+            <View style={styles.emptyBlock}>
+              <Icon
+                raised
+                name='add'
+                type='material'
+                color='#f50'
                 onPress={() => {
                   navigation.navigate("RecipeList", {
                     editRecipeID: null,
                     previousScreen: route.name,
                     i: i,
                   });
-                }}
-              />
-            </TouchableOpacity>
+                }} />
+            </View>
           ) : (
-            <View style={styles.foodBlock}></View>
+            <View style={styles.emptyBlock}>
+            </View>
           )}
         </View>
       );

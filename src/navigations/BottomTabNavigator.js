@@ -16,7 +16,7 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="MyRecipeList"
         component={MyRecipeListScreen}
-        options={{ title: "私の献立" }}
+        options={{ title: "マイレシピ" }}
       />
       <Tab.Screen
         name="RecipeList"

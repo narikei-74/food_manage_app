@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import { addMyRecipe, updateMyRecipe } from "../utils/api";
 import { useSelector } from "react-redux";
+import { MiniButton } from "./atoms/MiniButton";
+import { FillButton } from "./atoms/FillButton";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
@@ -32,23 +34,9 @@ const RecipeListComponent = (props) => {
           imageStyle={{ borderRadius: 4 }}
         >
           <Text>{recipe.Name}</Text>
-          {route.name == "MyRecipeEdit" && (
-            <Button
-              title={"編集"}
-              containerStyle={{ width: 100, alignItems: "center", right: -120 }}
-              onPress={() => {
-                navigation.navigate("RecipeList", {
-                  editRecipeID: recipe.ID,
-                  previousScreen: route.name,
-                  i: i,
-                });
-              }}
-            />
-          )}
           {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
-            <Button
-              title={"追加"}
-              containerStyle={{ width: 100, alignItems: "center", right: -120 }}
+            <FillButton
+              title={"マイレシピに追加"}
               onPress={() => {
                 editRecipeID
                   ? updateMyRecipe(
