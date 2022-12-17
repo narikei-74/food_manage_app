@@ -1,20 +1,51 @@
-import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
 import { Button } from "@rneui/themed";
-import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
-import { addMyRecipe, updateMyRecipe } from "../utils/api";
-import { useSelector } from "react-redux";
-import { MiniButton } from "./atoms/MiniButton";
+import { useDispatch, useSelector } from "react-redux";
 import { FillButton } from "./atoms/FillButton";
+import {
+  addMyRecipeIntoDB,
+  fetchMyRecipe,
+  updateMyRecipeIntoDB,
+  resetIsApiConnected,
+  resetError,
+} from "../redux/MyRecipeSlice";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
   const route = useRoute();
 
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
+  const myRecipe = useSelector((state) => state.myRecipe);
+
+  if (myRecipe.isApiConnected === true) {
+    dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
+    navigation.goBack();
+    dispatch(resetIsApiConnected());
+  }
+
+  if (myRecipe.error !== undefined) {
+    Alert.alert(myRecipe.error);
+    dispatch(resetError());
+  }
+
+  const onPressAdd = async (addData) => {
+    dispatch(addMyRecipeIntoDB(addData));
+  };
+
+  const onPressUpdate = async (updateData) => {
+    dispatch(updateMyRecipeIntoDB(updateData));
+  };
 
   const previousScreen =
     route.params != undefined && "previousScreen" in route.params
@@ -39,21 +70,19 @@ const RecipeListComponent = (props) => {
               title={"マイレシピに追加"}
               onPress={() => {
                 editRecipeID
-                  ? updateMyRecipe(
-                      editRecipeID,
-                      currentUser.ID,
-                      recipe.ID,
-                      index,
-                      currentDate,
-                      navigation
-                    )
-                  : addMyRecipe(
-                      currentUser.ID,
-                      recipe.ID,
-                      index,
-                      currentDate,
-                      navigation
-                    );
+                  ? onPressUpdate({
+                      ID: editRecipeID,
+                      UserID: currentUser.ID,
+                      RecipeID: recipe.ID,
+                      Index: index,
+                      Date: currentDate,
+                    })
+                  : onPressAdd({
+                      UserID: currentUser.ID,
+                      RecipeID: recipe.ID,
+                      Index: index,
+                      Date: currentDate,
+                    });
               }}
             />
           )}

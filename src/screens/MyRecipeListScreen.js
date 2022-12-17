@@ -5,7 +5,7 @@ import WeekBlockComponent from "../components/WeekBlockComponent";
 import { RecipeEditbuttonsComponent } from "../components/RecipeEditbuttonsComponent";
 import { useDispatch, useSelector } from "react-redux";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
-import { fetchMyRecipe } from "../redux/MyRecipeSlice";
+import { fetchMyRecipe, resetError } from "../redux/MyRecipeSlice";
 
 const MyRecipeListScreen = (props) => {
   const styles = BaseStyle();
@@ -33,26 +33,20 @@ const MyRecipeListScreen = (props) => {
         </View>
       );
     } else {
-      if (myRecipe.error === undefined) {
-        return (
-          <MyRecipeListComponent
-            onPress={(recipe) => {
-              navigation.navigate("RecipeDetail", { recipe: recipe });
-            }}
-            myRecipeData={myRecipe.data}
-            isMyRecipe={true}
-          />
-        );
-      } else {
+      if (myRecipe.error !== undefined) {
         alert(myRecipe.error);
+        dispatch(resetError());
+      }
+
+      return (
         <MyRecipeListComponent
           onPress={(recipe) => {
             navigation.navigate("RecipeDetail", { recipe: recipe });
           }}
-          myRecipeData={[]}
+          myRecipeData={myRecipe.data}
           isMyRecipe={true}
-        />;
-      }
+        />
+      );
     }
   };
 
