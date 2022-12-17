@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchMyRecipe = createAsyncThunk(
   "myRecipe/fetchMyRecipe",
-  async () => {
+  async (userId) => {
     const res = await fetch("http://18.183.189.68:8080/myrecipedata/get", {
       method: "post",
-      body: JSON.stringify({ UserID: 93 }),
+      body: JSON.stringify({ UserID: userId }),
     });
     return res.json();
   }
