@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
   const onPressRegisterGuest = () => {
     dispatch(addGuestUser());
   };
-  console.log(currentUser);
+
   if (currentUser.loader === true) {
     return (
       <View>

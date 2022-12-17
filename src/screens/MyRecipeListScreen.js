@@ -16,7 +16,7 @@ const MyRecipeListScreen = (props) => {
   const currentUser = useSelector((state) => state.currentUser).data;
 
   useEffect(() => {
-    dispatch(fetchMyRecipe()).catch((error) => error.massage);
+    dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
   }, [dispatch]);
 
   useEffect(() => {
