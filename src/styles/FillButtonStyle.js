@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 
-export const FillButtonStyle = (color) => {
+export const FillButtonStyle = (color, fontSize) => {
   return (
     StyleSheet.create({
       button: {
@@ -10,7 +10,7 @@ export const FillButtonStyle = (color) => {
       },
       title: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: fontSize,
       }
     })
   )

@@ -12,6 +12,7 @@ import Modal from "react-native-modal";
 import { OutlineButton } from "./atoms/OutlineButton";
 import { useDispatch, useSelector } from "react-redux";
 import { editCurrentDate } from "../redux/CurrentDateSlice";
+import { FillButton } from "./atoms/FillButton";
 
 const WeekBlockComponent = () => {
   const styles = WeekBlockStyle();
@@ -32,7 +33,7 @@ const WeekBlockComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contents}>
-        <Text>{formatDate(new Date(currentDate))}</Text>
+        <Text style={styles.dateText}>{formatDate(new Date(currentDate))}</Text>
         <OutlineButton title="日付選択" onPress={showDatePicker} />
       </View>
       <View>
@@ -48,7 +49,7 @@ const WeekBlockComponent = () => {
             }}
           />
           <View style={styles.modalButtonContainer} >
-            <OutlineButton title="とじる" onPress={hideDatePicker} />
+            <FillButton color="#00ACF5" title="とじる" onPress={hideDatePicker} containerStyle={{ width: 100, marginTop: 20 }} />
           </View>
         </Modal>
       </View>

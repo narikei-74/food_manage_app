@@ -15,10 +15,12 @@ const MyRecipeEditScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <WeekBlockComponent
-        currentWeek={currentWeek}
-        setCurrentWeek={setCurrentWeek}
-      />
+      <View style={{ marginTop: 30 }}>
+        <WeekBlockComponent
+          currentWeek={currentWeek}
+          setCurrentWeek={setCurrentWeek}
+        />
+      </View>
       <View style={styles.bar}></View>
       <MyRecipeListComponent
         onPress={() => {

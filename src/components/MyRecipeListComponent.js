@@ -31,14 +31,14 @@ const MyRecipeListComponent = (props) => {
       let item = (
         <View style={styles.foodBlock}>
           {recipe != undefined ? (
-            <TouchableOpacity onPress={() => onPress(recipe.Recipe)}>
+            <TouchableOpacity style={{ width: "100%", height: "100%", alignItems: "center", paddingBottom: "4%" }} onPress={() => onPress(recipe.Recipe)}>
+              <Text style={styles.recipeNameText}>{recipe.Recipe.Name}</Text>
               <ImageBackground
                 source={{ uri: recipe.Recipe.Image_key }}
                 resizeMode="cover"
                 style={styles.image}
                 imageStyle={{ borderRadius: 4 }}
               >
-                <Text>{recipe.Recipe.Name}</Text>
                 {route.name == "MyRecipeEdit" && (
                   <MiniButton
                     title={"編集"}
@@ -59,7 +59,7 @@ const MyRecipeListComponent = (props) => {
                 raised
                 name='add'
                 type='material'
-                color='#f50'
+                color='#F32A00'
                 onPress={() => {
                   navigation.navigate("RecipeList", {
                     editRecipeID: null,

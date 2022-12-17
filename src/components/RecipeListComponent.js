@@ -28,13 +28,13 @@ const RecipeListComponent = (props) => {
         style={styles.foodBlock}
         onPress={() => onPress(recipe)}
       >
+        <Text style={styles.recipeNameText}>{recipe.Name}</Text>
         <ImageBackground
           source={{ uri: recipe.Image_key }}
           resizeMode="cover"
           style={styles.image}
           imageStyle={{ borderRadius: 4 }}
         >
-          <Text>{recipe.Name}</Text>
           {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
             <FillButton
               title={"マイレシピに追加"}
@@ -56,6 +56,15 @@ const RecipeListComponent = (props) => {
                     navigation
                   );
               }}
+              containerStyle={{
+                position: "absolute",
+                justifyContent: "center",
+                left: 0,
+                right: 0,
+                alignItems: "center",
+                bottom: 20,
+              }}
+              fontSize={14}
             />
           )}
         </ImageBackground>

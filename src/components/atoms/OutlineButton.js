@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import { OutlineButtonStyle } from "../../styles/OutlineButtonStyle";
 
 export const OutlineButton = (props) => {
-  const { title, onPress, color = "#FA514B" } = props;
+  const { title, onPress, color = "#F32A00" } = props;
 
   const styles = OutlineButtonStyle(color);
   return (

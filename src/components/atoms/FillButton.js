@@ -2,9 +2,9 @@ import { Button } from "@rneui/themed";
 import { FillButtonStyle } from "../../styles/FillButtonStyle";
 
 export const FillButton = (props) => {
-    const { title, onPress, color = "#FA514B" } = props;
+    const { title, onPress, color = "#F32A00", fontSize = 16, containerStyle = {} } = props;
 
-    const styles = FillButtonStyle(color);
+    const styles = FillButtonStyle(color, fontSize);
     return (
         <Button
             title={title}
@@ -12,14 +12,7 @@ export const FillButton = (props) => {
             style={styles.button}
             titleStyle={styles.title}
             buttonStyle={styles.button}
-            containerStyle={{
-                position: "absolute",
-                justifyContent: "center",
-                left: 0,
-                right: 0,
-                alignItems: "center",
-                bottom: 20,
-            }}
+            containerStyle={containerStyle}
             onPress={onPress}
         />
     );

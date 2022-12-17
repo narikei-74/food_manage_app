@@ -1,12 +1,16 @@
-import { Button } from "@rneui/base";
+import { Button, Icon } from "@rneui/base";
 import { View, Text, Alert } from "react-native";
 import { storage } from "../storage/storage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { useDispatch } from "react-redux";
+import { OutlineButton } from "../components/atoms/OutlineButton";
+import { FillButton } from "../components/atoms/FillButton";
+import { LoginScreenStyle } from "../styles/LoginScreenStyle";
 
 const LoginScreen = ({ navigation }) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const styles = LoginScreenStyle();
 
   useEffect(() => {
     (async () => {
@@ -42,16 +46,27 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <Text>ログインページ</Text>
-      <Button title={"ゲスト利用する"} onPress={onPressRegisterGuest} />
-      <Button
-        title={"削除(テスト用)"}
-        onPress={() => {
-          storage.remove({ key: "userInfo" });
-        }}
-      />
-      <Text>{currentUser && currentUser.userId}</Text>
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Icon
+          name='grain'
+          type='material'
+          color='#F32A00'
+          size={150}
+        />
+      </View>
+      <View style={styles.buttonWrapper}>
+        <FillButton title={"ユーザー登録"} onPress={onPressRegisterGuest} containerStyle={styles.buttonContainer} />
+        <FillButton title={"ゲスト利用する"} onPress={onPressRegisterGuest} containerStyle={styles.buttonContainer} />
+        <FillButton
+          title={"削除(テスト用)"}
+          onPress={() => {
+            storage.remove({ key: "userInfo" });
+          }}
+          containerStyle={styles.buttonContainer}
+        />
+        <Text>{currentUser && currentUser.userId}</Text>
+      </View>
     </View>
   );
 };

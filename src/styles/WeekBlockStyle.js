@@ -4,7 +4,7 @@ const WeekBlockStyle = () => {
   const styles = StyleSheet.create({
     container: {
       width: "100%",
-      height: 130,
+      height: 100,
       top: "4%",
       alignItems: "center",
       textAlign: "center",
@@ -13,30 +13,15 @@ const WeekBlockStyle = () => {
       alignItems: "center",
       justifyContent: "flex-start",
       flex: 1,
-      height: 30,
-    },
-    week: {
-      fontSize: 12,
-      fontWeight: "normal",
-    },
-    weekBar: {
-      flex: 1,
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      marginTop: 10,
-    },
-    day: {
-      width: 38,
-    },
-    currentWeek: {
-      backgroundColor: "#FA514B",
-      borderRadius: "50%",
-      width: 38,
+      height: 10,
+      marginBottom: 0,
     },
     modalButtonContainer: {
       alignItems: 'center'
-    }
+    },
+    dateText: {
+      fontSize: 16,
+    },
   });
 
   return styles;
