@@ -1,13 +1,10 @@
-import { useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { View } from "react-native";
 import { useSelector } from "react-redux";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
-import RecipeListComponent from "../components/RecipeListComponent";
 import WeekBlockComponent from "../components/WeekBlockComponent";
-import GetMyRecipeDataService from "../services/GetMyRecipeDataService";
+import { HasMyRecipeDataContext } from "../context/HasMyRecipeDataContext";
 import BaseStyle from "../styles/BaseStyle";
-import { getDateString, getStartOfWeek, getWeekName } from "../utils/function";
 
 const MyRecipeEditScreen = ({ navigation }) => {
   const styles = BaseStyle();

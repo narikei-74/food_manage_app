@@ -1,11 +1,10 @@
-import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import MyRecipeDataSlice from "./MyRecipeDataSlice";
-import RecipeDataSlice from "./RecipeDataSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import myRecipeReducer from "./MyRecipeSlice";
+import RecipeReducer from "./RecipeSlice";
 
 export const Store = configureStore({
   reducer: {
-    myRecipeData: MyRecipeDataSlice,
-    recipeData: RecipeDataSlice,
+    myRecipe: myRecipeReducer,
+    recipe: RecipeReducer,
   },
 });
