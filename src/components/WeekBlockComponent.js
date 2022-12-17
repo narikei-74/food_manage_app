@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { DateContext } from "../context/DateContext";
+import { useState } from "react";
+import { View, Text } from "react-native";
 import WeekBlockStyle from "../styles/WeekBlockStyle";
 import {
   formatDate,
@@ -11,12 +10,16 @@ import {
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import Modal from "react-native-modal";
 import { OutlineButton } from "./atoms/OutlineButton";
+import { useDispatch, useSelector } from "react-redux";
+import { editCurrentDate } from "../redux/CurrentDateSlice";
 
 const WeekBlockComponent = () => {
   const styles = WeekBlockStyle();
-  const { currentDate, setCurrentDate } = useContext(DateContext);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const dispatch = useDispatch();
+  const currentDate = useSelector((state) => state.currentDate).currentDate;
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -40,7 +43,7 @@ const WeekBlockComponent = () => {
             minDate={getPreviousWeek(getDateString())}
             maxDate={getNextWeek(getDateString())}
             onDayPress={(day) => {
-              setCurrentDate(day.dateString);
+              dispatch(editCurrentDate(day.dateString));
               setDatePickerVisibility(false);
             }}
           />

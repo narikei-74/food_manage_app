@@ -40,7 +40,6 @@ const RecipeListScreen = ({ navigation }) => {
             }}
             recipeData={recipes.data}
             currentWeek={false}
-            isMyRecipe={false}
             editRecipeID={editRecipeID}
             navigation={navigation}
             index={index}
@@ -55,7 +54,6 @@ const RecipeListScreen = ({ navigation }) => {
             }}
             recipeData={[]}
             currentWeek={false}
-            isMyRecipe={false}
             editRecipeID={editRecipeID}
             navigation={navigation}
             index={index}

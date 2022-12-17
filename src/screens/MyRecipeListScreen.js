@@ -1,5 +1,5 @@
 import { View, ScrollView, Text } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import BaseStyle from "../styles/BaseStyle";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import { RecipeEditbuttonsComponent } from "../components/RecipeEditbuttonsComponent";
@@ -12,8 +12,6 @@ const MyRecipeListScreen = (props) => {
   const styles = BaseStyle();
   const { navigation } = props;
 
-  const nowWeek = new Date().getDay();
-  const [currentWeek, setCurrentWeek] = useState(nowWeek);
   const { currentUser } = useContext(UserContext);
 
   const dispatch = useDispatch();
@@ -44,7 +42,6 @@ const MyRecipeListScreen = (props) => {
               navigation.navigate("RecipeDetail", { recipe: recipe });
             }}
             myRecipeData={myRecipe.data}
-            currentWeek={currentWeek}
             isMyRecipe={true}
           />
         );
@@ -55,7 +52,6 @@ const MyRecipeListScreen = (props) => {
             navigation.navigate("RecipeDetail", { recipe: recipe });
           }}
           myRecipeData={[]}
-          currentWeek={currentWeek}
           isMyRecipe={true}
         />;
       }
@@ -65,10 +61,7 @@ const MyRecipeListScreen = (props) => {
   return (
     <ScrollView style={styles.container}>
       {}
-      <WeekBlockComponent
-        currentWeek={currentWeek}
-        setCurrentWeek={setCurrentWeek}
-      />
+      <WeekBlockComponent />
       <RecipeEditbuttonsComponent navigation={navigation} />
       <View style={styles.bar}></View>
       {myRecipeListView()}
