@@ -2,12 +2,18 @@ import { StyleSheet } from "react-native";
 
 const WeekBlockStyle = () => {
   const styles = StyleSheet.create({
-    header: {
+    container: {
       width: "100%",
       height: 130,
       top: "4%",
       alignItems: "center",
       textAlign: "center",
+    },
+    contents: {
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flex: 1,
+      height: 30,
     },
     week: {
       fontSize: 12,
@@ -28,6 +34,9 @@ const WeekBlockStyle = () => {
       borderRadius: "50%",
       width: 38,
     },
+    modalButtonContainer: {
+      alignItems: 'center'
+    }
   });
 
   return styles;
