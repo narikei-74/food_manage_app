@@ -24,7 +24,7 @@ export const RecipeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipe.fulfilled, (state, action) => {
-      if ((action.payload.success = true)) {
+      if (action.payload.success === true) {
         state.data = action.payload.data;
         state.loader = false;
       } else {
