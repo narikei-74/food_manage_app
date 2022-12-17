@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native"
 
-export const OutlineButtonStyle = () => {
+export const OutlineButtonStyle = (color) => {
   return (
     StyleSheet.create({
       button: {
-        borderColor: "#FA514B",
+        borderColor: color,
         borderRadius: 30,
       },
       title: {
-        color: "#FA514B",
+        color: color,
         fontSize: 14,
       }
     })
