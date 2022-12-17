@@ -4,7 +4,6 @@ import BaseStyle from "../styles/BaseStyle";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import { RecipeEditbuttonsComponent } from "../components/RecipeEditbuttonsComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { UserContext } from "../context/UserContext";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
 import { fetchMyRecipe } from "../redux/MyRecipeSlice";
 
@@ -12,10 +11,9 @@ const MyRecipeListScreen = (props) => {
   const styles = BaseStyle();
   const { navigation } = props;
 
-  const { currentUser } = useContext(UserContext);
-
   const dispatch = useDispatch();
   const myRecipe = useSelector((state) => state.myRecipe);
+  const currentUser = useSelector((state) => state.currentUser).data;
 
   useEffect(() => {
     dispatch(fetchMyRecipe()).catch((error) => error.massage);
