@@ -3,16 +3,13 @@ import { Provider } from "react-redux";
 import { Store } from "./src/redux/Store";
 import { UserProvider } from "./src/context/UserContext";
 import { DateProvider } from "./src/context/DateContext";
-import { HasMyRecipeDataProvider } from "./src/context/HasMyRecipeDataContext";
 
 export default App = () => {
   return (
     <Provider store={Store}>
       <UserProvider>
         <DateProvider>
-          <HasMyRecipeDataProvider>
-            <Router />
-          </HasMyRecipeDataProvider>
+          <Router />
         </DateProvider>
       </UserProvider>
     </Provider>

@@ -1,34 +1,71 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import BaseStyle from "../styles/BaseStyle";
 import RecipeListComponent from "../components/RecipeListComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { fetchRecipe } from "../redux/RecipeSlice";
 
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
+
   const route = useRoute();
-  const editRecipeID = route.params != undefined && "editRecipeID" in route.params ? route.params.editRecipeID : null;
-  const index = route.params != undefined && "i" in route.params ? route.params.i : null;
+  const editRecipeID =
+    route.params != undefined && "editRecipeID" in route.params
+      ? route.params.editRecipeID
+      : null;
+  const index =
+    route.params != undefined && "i" in route.params ? route.params.i : null;
 
-  // 現在保存されているマイレシピ
-  const recipeData = useSelector((state) => state.recipeData)._z.data;
+  const dispatch = useDispatch();
+  const recipes = useSelector((state) => state.recipe);
 
-  return (
-    <ScrollView style={styles.container}>
-      <RecipeListComponent
-        onPress={(recipe) => {
-          navigation.navigate("RecipeDetail", { recipe: recipe });
-        }}
-        myRecipeData={recipeData}
-        currentWeek={false}
-        isMyRecipe={false}
-        editRecipeID={editRecipeID}
-        navigation={navigation}
-        index={index}
-      />
-    </ScrollView>
-  );
+  useEffect(() => {
+    dispatch(fetchRecipe()).catch((error) => error.massage);
+  }, [dispatch]);
+
+  const recipeListView = () => {
+    if (recipes.loader === true) {
+      return (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      );
+    } else {
+      if (recipes.error === undefined) {
+        return (
+          <RecipeListComponent
+            onPress={(recipe) => {
+              navigation.navigate("RecipeDetail", { recipe: recipe });
+            }}
+            myRecipeData={recipes.data}
+            currentWeek={false}
+            isMyRecipe={false}
+            editRecipeID={editRecipeID}
+            navigation={navigation}
+            index={index}
+          />
+        );
+      } else {
+        alert(recipes.error);
+        return (
+          <RecipeListComponent
+            onPress={(recipe) => {
+              navigation.navigate("RecipeDetail", { recipe: recipe });
+            }}
+            myRecipeData={[]}
+            currentWeek={false}
+            isMyRecipe={false}
+            editRecipeID={editRecipeID}
+            navigation={navigation}
+            index={index}
+          />
+        );
+      }
+    }
+  };
+
+  return <ScrollView style={styles.container}>{recipeListView()}</ScrollView>;
 };
 
 export default RecipeListScreen;
