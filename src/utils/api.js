@@ -56,8 +56,6 @@ export const updateMyRecipe = async (
   })
     .then((res) => res.json())
     .then((resJson) => {
-      console.log("updateのレスポンス");
-      console.log(ID);
       if ("success" in resJson && resJson.success == true) {
         setHasMyRecipeData(false);
         // navigation.goBack();
