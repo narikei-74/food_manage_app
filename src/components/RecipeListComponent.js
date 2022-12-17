@@ -4,7 +4,6 @@ import { Button } from "@rneui/themed";
 import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import { addMyRecipe, updateMyRecipe } from "../utils/api";
-import { UserContext } from "../context/UserContext";
 import { useSelector } from "react-redux";
 import { MiniButton } from "./atoms/MiniButton";
 import { FillButton } from "./atoms/FillButton";
@@ -12,9 +11,9 @@ import { FillButton } from "./atoms/FillButton";
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
-  const { currentUser } = useContext(UserContext);
   const route = useRoute();
 
+  const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
 
   const previousScreen =
@@ -41,20 +40,20 @@ const RecipeListComponent = (props) => {
               onPress={() => {
                 editRecipeID
                   ? updateMyRecipe(
-                    editRecipeID,
-                    currentUser.userId,
-                    recipe.ID,
-                    index,
-                    currentDate,
-                    navigation
-                  )
+                      editRecipeID,
+                      currentUser.ID,
+                      recipe.ID,
+                      index,
+                      currentDate,
+                      navigation
+                    )
                   : addMyRecipe(
-                    currentUser.userId,
-                    recipe.ID,
-                    index,
-                    currentDate,
-                    navigation
-                  );
+                      currentUser.ID,
+                      recipe.ID,
+                      index,
+                      currentDate,
+                      navigation
+                    );
               }}
             />
           )}

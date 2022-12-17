@@ -1,10 +1,8 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
 import { Icon } from '@rneui/themed';
-import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import { addMyRecipe } from "../utils/api";
-import { UserContext } from "../context/UserContext";
 import { useSelector } from "react-redux";
 import { getCurrentDateMyRecipe } from "../utils/function";
 import { MiniButton } from "./atoms/MiniButton";
@@ -12,10 +10,9 @@ import { MiniButton } from "./atoms/MiniButton";
 const MyRecipeListComponent = (props) => {
   const { onPress, myRecipeData, navigation, index } = props;
   const styles = RecipeListStyle();
-
-  const { currentUser } = useContext(UserContext);
   const route = useRoute();
 
+  const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
   const myRecipe = getCurrentDateMyRecipe(myRecipeData, currentDate);
 
