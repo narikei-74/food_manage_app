@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { useSelector } from "react-redux";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
 import WeekBlockComponent from "../components/WeekBlockComponent";
-import { HasMyRecipeDataContext } from "../context/HasMyRecipeDataContext";
 import BaseStyle from "../styles/BaseStyle";
 
 const MyRecipeEditScreen = ({ navigation }) => {
   const styles = BaseStyle();
-  // 指定されている曜日
+
   const nowWeek = new Date().getDay();
   const [currentWeek, setCurrentWeek] = useState(nowWeek);
-  // 現在保存されているマイレシピ
-  // const [myRecipeData, setMyRecipeData] = useState(GetMyRecipeDataService());
-  const myRecipeData = useSelector((state) => state.myRecipeData)._z.data;
+
+  const myRecipeData = useSelector((state) => state.myRecipe).data;
 
   return (
     <View style={styles.container}>

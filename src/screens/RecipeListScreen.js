@@ -38,7 +38,7 @@ const RecipeListScreen = ({ navigation }) => {
             onPress={(recipe) => {
               navigation.navigate("RecipeDetail", { recipe: recipe });
             }}
-            myRecipeData={recipes.data}
+            recipeData={recipes.data}
             currentWeek={false}
             isMyRecipe={false}
             editRecipeID={editRecipeID}
@@ -53,7 +53,7 @@ const RecipeListScreen = ({ navigation }) => {
             onPress={(recipe) => {
               navigation.navigate("RecipeDetail", { recipe: recipe });
             }}
-            myRecipeData={[]}
+            recipeData={[]}
             currentWeek={false}
             isMyRecipe={false}
             editRecipeID={editRecipeID}
