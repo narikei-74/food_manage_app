@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editCurrentDate } from "../redux/CurrentDateSlice";
 import { FillButton } from "./atoms/FillButton";
 import { Icon } from "@rneui/themed";
+import { useRoute } from "@react-navigation/native";
 
 const WeekBlockComponent = ({ navigation }) => {
   const styles = WeekBlockStyle();
@@ -30,16 +31,30 @@ const WeekBlockComponent = ({ navigation }) => {
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
+  const route = useRoute();
 
   return (
     <View style={styles.container}>
       <View style={styles.contents}>
         <Text style={styles.dateText}>
-          ⇦&nbsp;&nbsp;
+          ー&nbsp;&nbsp;
           {formatDate(new Date(currentDate))}
-          &nbsp;&nbsp;⇨
+          &nbsp;&nbsp;ー
         </Text>
         <View style={styles.iconWrapper}>
+          {route.name == "MyRecipeList" &&
+            <View style={styles.iconContainer}>
+              <Icon
+                raised
+                name='pencil'
+                type='simple-line-icon'
+                color='#F32A00'
+                onPress={() => navigation.navigate("MyRecipeEdit")}
+                size={20}
+              />
+              <Text>レシピ編集</Text>
+            </View>
+          }
           <View style={styles.iconContainer}>
             <Icon
               raised
@@ -51,28 +66,19 @@ const WeekBlockComponent = ({ navigation }) => {
             />
             <Text>カレンダー</Text>
           </View>
-          <View style={styles.iconContainer}>
-            <Icon
-              raised
-              name='pencil'
-              type='simple-line-icon'
-              color='#F32A00'
-              onPress={() => navigation.navigate("MyRecipeEdit")}
-              size={20}
-            />
-            <Text>レシピ編集</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <Icon
-              raised
-              name='psychology'
-              type='material'
-              color='#F32A00'
-              onPress={() => navigation.navigate("CreateRecipe")}
-              size={20}
-            />
-            <Text>自動作成</Text>
-          </View>
+          {route.name == "MyRecipeList" &&
+            <View style={styles.iconContainer}>
+              <Icon
+                raised
+                name='psychology'
+                type='material'
+                color='#F32A00'
+                onPress={() => navigation.navigate("CreateRecipe")}
+                size={20}
+              />
+              <Text>自動作成</Text>
+            </View>
+          }
         </View>
       </View>
       <View>

@@ -7,8 +7,8 @@ const BaseStyle = () => {
       backgroundColor: "#fff",
     },
     bar: {
-      height: 4,
-      backgroundColor: "#aaa",
+      height: 2,
+      backgroundColor: "#eee",
     },
   });
 

@@ -5,8 +5,8 @@ const WeekBlockStyle = () => {
     container: {
       flex: 1,
       width: "100%",
-      height: 130,
-      top: "4%",
+      height: 140,
+      top: "1%",
       alignItems: "center",
       textAlign: "center",
     },
@@ -22,21 +22,22 @@ const WeekBlockStyle = () => {
       alignItems: 'center'
     },
     dateText: {
-      fontSize: 16,
+      fontSize: 15,
     },
     iconWrapper: {
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "center",
       width: "70%",
       alignItems: "center",
       marginRight: 30,
       marginLeft: 30,
+      marginTop: 12,
+      marginBottom: 18,
     },
     iconContainer: {
-      // width: 100,
       alignItems: "center",
-      justifyContent: "space-between",
-      marginHorizontal: 10,
+      marginRight: 16,
+      marginLeft: 16
     },
   });
 
