@@ -21,60 +21,60 @@ const MyRecipeListComponent = (props) => {
         ? route.params.previousScreen
         : "";
 
-  const recipeView = () => {
-    const items = [];
-    for (let i = 0; i < 6; i++) {
-      let recipe = myRecipe.find((data) => data.Index == i);
-      let item = (
-        <View style={styles.foodBlock}>
-          {recipe != undefined ? (
-            <TouchableOpacity style={{ width: "100%", height: "100%", alignItems: "center", paddingBottom: "4%" }} onPress={() => onPress(recipe.Recipe)}>
-              <Text style={styles.recipeNameText}>{recipe.Recipe.Name}</Text>
-              <ImageBackground
-                source={{ uri: recipe.Recipe.Image_key }}
-                resizeMode="cover"
-                style={styles.image}
-                imageStyle={{ borderRadius: 4 }}
-              >
-                {route.name == "MyRecipeEdit" && (
-                  <MiniButton
-                    title={"編集"}
-                    onPress={() => {
-                      navigation.navigate("RecipeList", {
-                        editRecipeID: recipe.ID,
-                        previousScreen: route.name,
-                        i: i,
-                      });
-                    }}
-                  />
-                )}
-              </ImageBackground>
-            </TouchableOpacity>
-          ) : route.name == "MyRecipeEdit" ? (
-            <View style={styles.emptyBlock}>
-              <Icon
-                raised
-                name='add'
-                type='material'
-                color='#F32A00'
-                onPress={() => {
-                  navigation.navigate("RecipeList", {
-                    editRecipeID: null,
-                    previousScreen: route.name,
-                    i: i,
-                  });
-                }} />
-            </View>
-          ) : (
-            <View style={styles.emptyBlock}>
-            </View>
-          )}
-        </View>
-      );
-      items.push(item);
-    }
-    return items;
-  };
+    const recipeView = () => {
+      const items = [];
+      for (let i = 0; i < 6; i++) {
+        let recipe = myRecipe.find((data) => data.Index == i);
+        let item = (
+          <View style={styles.foodBlock}>
+            {recipe != undefined ? (
+              <TouchableOpacity style={{ width: "100%", height: "100%", alignItems: "center", paddingBottom: "4%" }} onPress={() => onPress(recipe.Recipe)}>
+                <Text style={styles.recipeNameText}>{recipe.Recipe.Name}</Text>
+                <ImageBackground
+                  source={{ uri: recipe.Recipe.Image_key }}
+                  resizeMode="cover"
+                  style={styles.image}
+                  imageStyle={{ borderRadius: 4 }}
+                >
+                  {route.name == "MyRecipeEdit" && (
+                    <MiniButton
+                      title={"編集"}
+                      onPress={() => {
+                        navigation.navigate("RecipeList", {
+                          editRecipeID: recipe.ID,
+                          previousScreen: route.name,
+                          i: i,
+                        });
+                      }}
+                    />
+                  )}
+                </ImageBackground>
+              </TouchableOpacity>
+            ) : route.name == "MyRecipeEdit" ? (
+              <View style={styles.emptyBlock}>
+                <Icon
+                  raised
+                  name='add'
+                  type='material'
+                  color='#F32A00'
+                  onPress={() => {
+                    navigation.navigate("RecipeList", {
+                      editRecipeID: null,
+                      previousScreen: route.name,
+                      i: i,
+                    });
+                  }} />
+              </View>
+            ) : (
+              <View style={styles.emptyBlock}>
+              </View>
+            )}
+          </View>
+        );
+        items.push(item);
+      }
+      return items;
+    };
 
     return <View style={styles.blocks}>{recipeView()}</View>;
   } else {

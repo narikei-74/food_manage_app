@@ -52,8 +52,7 @@ const MyRecipeListScreen = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <WeekBlockComponent />
-      <RecipeEditbuttonsComponent navigation={navigation} />
+      <WeekBlockComponent navigation={navigation} />
       <View style={styles.bar}></View>
       {myRecipeListView()}
     </ScrollView>
