@@ -41,19 +41,19 @@ const WeekBlockComponent = ({ navigation }) => {
           &nbsp;&nbsp;ー
         </Text>
         <View style={styles.iconWrapper}>
-          {route.name == "MyRecipeList" &&
+          {route.name == "MyRecipeList" && (
             <View style={styles.iconContainer}>
               <Icon
                 raised
-                name='pencil'
-                type='simple-line-icon'
-                color='#F32A00'
+                name="pencil"
+                type="simple-line-icon"
+                color="#F32A00"
                 onPress={() => navigation.navigate("MyRecipeEdit")}
                 size={20}
               />
               <Text>レシピ編集</Text>
             </View>
-          }
+          )}
           <View style={styles.iconContainer}>
             <Icon
               raised
@@ -65,19 +65,19 @@ const WeekBlockComponent = ({ navigation }) => {
             />
             <Text>カレンダー</Text>
           </View>
-          {route.name == "MyRecipeList" &&
+          {route.name == "MyRecipeList" && (
             <View style={styles.iconContainer}>
               <Icon
                 raised
-                name='psychology'
-                type='material'
-                color='#F32A00'
+                name="psychology"
+                type="material"
+                color="#F32A00"
                 onPress={() => navigation.navigate("CreateRecipe")}
                 size={20}
               />
               <Text>自動作成</Text>
             </View>
-          }d
+          )}
         </View>
       </View>
       <View>
