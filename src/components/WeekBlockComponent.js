@@ -9,7 +9,6 @@ import {
 } from "../utils/function";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import Modal from "react-native-modal";
-import { OutlineButton } from "./atoms/OutlineButton";
 import { useDispatch, useSelector } from "react-redux";
 import { editCurrentDate } from "../redux/CurrentDateSlice";
 import { FillButton } from "./atoms/FillButton";
@@ -58,9 +57,9 @@ const WeekBlockComponent = ({ navigation }) => {
           <View style={styles.iconContainer}>
             <Icon
               raised
-              name='calendar'
-              type='simple-line-icon'
-              color='#F32A00'
+              name="calendar"
+              type="simple-line-icon"
+              color="#F32A00"
               onPress={showDatePicker}
               size={20}
             />
@@ -78,14 +77,14 @@ const WeekBlockComponent = ({ navigation }) => {
               />
               <Text>自動作成</Text>
             </View>
-          }
+          }d
         </View>
       </View>
       <View>
         <Modal isVisible={isDatePickerVisible}>
           <Calendar
             initialDate={currentDate}
-            monthFormat={'yyyy年 MM月'}
+            monthFormat={"yyyy年 MM月"}
             minDate={getPreviousWeek(getDateString())}
             maxDate={getNextWeek(getDateString())}
             onDayPress={(day) => {
@@ -94,8 +93,13 @@ const WeekBlockComponent = ({ navigation }) => {
             }}
             enableSwipeMonths
           />
-          <View style={styles.modalButtonContainer} >
-            <FillButton color="#00ACF5" title="とじる" onPress={hideDatePicker} containerStyle={{ width: 100, marginTop: 20 }} />
+          <View style={styles.modalButtonContainer}>
+            <FillButton
+              color="#00ACF5"
+              title="とじる"
+              onPress={hideDatePicker}
+              containerStyle={{ width: 100, marginTop: 20 }}
+            />
           </View>
         </Modal>
       </View>
@@ -105,11 +109,45 @@ const WeekBlockComponent = ({ navigation }) => {
 
 //react-native-calendarsの設定
 LocaleConfig.locales.jp = {
-  monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-  monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-  dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
-  dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+  monthNames: [
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+  ],
+  monthNamesShort: [
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+  ],
+  dayNames: [
+    "日曜日",
+    "月曜日",
+    "火曜日",
+    "水曜日",
+    "木曜日",
+    "金曜日",
+    "土曜日",
+  ],
+  dayNamesShort: ["日", "月", "火", "水", "木", "金", "土"],
 };
-LocaleConfig.defaultLocale = 'jp';
+LocaleConfig.defaultLocale = "jp";
 
 export default WeekBlockComponent;
