@@ -1,5 +1,5 @@
 import { Button, Icon } from "@rneui/base";
-import { View, Text, } from "react-native";
+import { View, Text } from "react-native";
 import { storage } from "../storage/storage";
 import { useEffect } from "react";
 import { FillButton } from "../components/atoms/FillButton";
@@ -44,20 +44,23 @@ const LoginScreen = ({ navigation }) => {
       return (
         <View style={styles.container}>
           <View style={styles.logoContainer}>
-            <Icon
-              name='grain'
-              type='material'
-              color='#F32A00'
-              size={150}
-            />
+            <Icon name="grain" type="material" color="#F32A00" size={150} />
           </View>
           <View style={styles.buttonWrapper}>
-            <FillButton title={"ユーザー登録"} onPress={onPressRegisterGuest} containerStyle={styles.buttonContainer} />
-            <FillButton title={"ゲスト利用する"} onPress={onPressRegisterGuest} containerStyle={styles.buttonContainer} />
+            <FillButton
+              title={"ユーザー登録"}
+              onPress={onPressRegisterGuest}
+              containerStyle={styles.buttonContainer}
+            />
+            <FillButton
+              title={"ゲスト利用する"}
+              onPress={onPressRegisterGuest}
+              containerStyle={styles.buttonContainer}
+            />
             <FillButton
               title={"削除(テスト用)"}
               onPress={() => {
-                storage.remove({ key: "userInfo" });
+                storage.remove({ key: "userId" });
               }}
               containerStyle={styles.buttonContainer}
             />
@@ -66,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
       );
     }
-  };
+  }
 };
 
 export default LoginScreen;
