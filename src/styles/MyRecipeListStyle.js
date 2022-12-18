@@ -1,30 +1,29 @@
 import { StyleSheet } from "react-native";
 
-const RecipeListStyle = () => {
+const MyRecipeListStyle = () => {
   const styles = StyleSheet.create({
     blocks: {
       flexDirection: "row",
       flexWrap: "wrap",
-      padding: "2%",
+      justifyContent: "center",
     },
     foodBlock: {
-      width: "48%",
-      height: 225,
+      width: "90%",
+      height: 300,
       borderWidth: 1,
       borderColor: "#eee",
       borderRadius: 10,
       alignItems: "center",
       marginTop: 10,
-      marginLeft: "1%",
-      marginRight: "1%",
-      // shadowColor: "#555",
-      // shadowOffset: { width: 0, height: 0 },
-      // shadowOpacity: 0.4,
-      // shadowRadius: 8,
+      shadowColor: "#555",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.25,
+      shadowRadius: 8,
     },
     image: {
       width: "100%",
-      height: 170,
+      height: 250,
+      opacity: 0.9,
       margin: 0,
       overflow: "hidden",
     },
@@ -34,19 +33,16 @@ const RecipeListStyle = () => {
       bottom: 0,
       borderTopWidth: 3,
       borderTopColor: "#ff4500",
-      height: 55,
+      height: 50,
       alignItems: "center",
       justifyContent: "center",
-      // shadowColor: "#555",
-      // shadowOffset: { width: 0, height: 0 },
-      // shadowOpacity: 0.4,
-      // shadowRadius: 8,
     },
     recipeNameText: {
       color: "#333",
       margin: 0,
-      fontSize: 14,
+      fontSize: 15,
       fontWeight: "bold",
+
     },
     emptyBlock: {
       width: "100%",
@@ -59,4 +55,4 @@ const RecipeListStyle = () => {
   return styles;
 };
 
-export default RecipeListStyle;
+export default MyRecipeListStyle;

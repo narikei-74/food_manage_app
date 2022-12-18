@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import MyRecipeListComponent from "../components/MyRecipeListComponent";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import BaseStyle from "../styles/BaseStyle";
@@ -7,7 +7,7 @@ const MyRecipeEditScreen = ({ navigation }) => {
   const styles = BaseStyle();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <WeekBlockComponent />
       <View style={styles.bar}></View>
       <MyRecipeListComponent
@@ -16,7 +16,7 @@ const MyRecipeEditScreen = ({ navigation }) => {
         }}
         navigation={navigation}
       />
-    </View>
+    </ScrollView>
   );
 };
 

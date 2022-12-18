@@ -14,12 +14,8 @@ export const MiniButton = (props) => {
             titleStyle={styles.title}
             buttonStyle={styles.button}
             containerStyle={{
-                position: "absolute",
-                justifyContent: "center",
-                left: 0,
-                right: 0,
-                alignItems: "center",
-                bottom: 20,
+                marginRight: 8,
+                marginLeft: 8,
             }}
             onPress={onPress}
         />

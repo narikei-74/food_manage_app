@@ -15,7 +15,15 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Login" screenOptions={{
+        headerStyle: {
+          backgroundColor: '#fff',
+        },
+        headerTintColor: '#555',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
         <Stack.Screen
           name="BottomTab"
           component={BottomTabNavigator}
