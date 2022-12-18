@@ -3,7 +3,7 @@ import { MiniButtonStyle } from "../../styles/MiniButtonStyle";
 import { OutlineButtonStyle } from "../../styles/OutlineButtonStyle";
 
 export const MiniButton = (props) => {
-    const { title, onPress, color = "#FA514B" } = props;
+    const { title, onPress, color = "#F32A00" } = props;
 
     const styles = MiniButtonStyle(color);
     return (

@@ -8,13 +8,13 @@ const RecipeDetailScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageContainer}>
+        <Text>{recipe.Name}</Text>
         <Image
           style={styles.imageInner}
           source={{ uri: recipe.Image_key }} />
       </View>
       <View >
         <View>
-          <Text>{recipe.Name}</Text>
           <Text>調理時間:{recipe.Cooking_time}分</Text>
           <Text>
             材料
@@ -38,7 +38,8 @@ const RecipeDetailScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    fontSize: 20
   },
   imageContainer: {
 

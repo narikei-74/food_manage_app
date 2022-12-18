@@ -13,8 +13,9 @@ import { OutlineButton } from "./atoms/OutlineButton";
 import { useDispatch, useSelector } from "react-redux";
 import { editCurrentDate } from "../redux/CurrentDateSlice";
 import { FillButton } from "./atoms/FillButton";
+import { Icon } from "@rneui/themed";
 
-const WeekBlockComponent = () => {
+const WeekBlockComponent = ({ navigation }) => {
   const styles = WeekBlockStyle();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -33,8 +34,46 @@ const WeekBlockComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contents}>
-        <Text style={styles.dateText}>{formatDate(new Date(currentDate))}</Text>
-        <OutlineButton title="日付選択" onPress={showDatePicker} />
+        <Text style={styles.dateText}>
+          ⇦&nbsp;&nbsp;
+          {formatDate(new Date(currentDate))}
+          &nbsp;&nbsp;⇨
+        </Text>
+        <View style={styles.iconWrapper}>
+          <View style={styles.iconContainer}>
+            <Icon
+              raised
+              name='calendar'
+              type='simple-line-icon'
+              color='#F32A00'
+              onPress={showDatePicker}
+              size={20}
+            />
+            <Text>カレンダー</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <Icon
+              raised
+              name='pencil'
+              type='simple-line-icon'
+              color='#F32A00'
+              onPress={() => navigation.navigate("MyRecipeEdit")}
+              size={20}
+            />
+            <Text>レシピ編集</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <Icon
+              raised
+              name='psychology'
+              type='material'
+              color='#F32A00'
+              onPress={() => navigation.navigate("CreateRecipe")}
+              size={20}
+            />
+            <Text>自動作成</Text>
+          </View>
+        </View>
       </View>
       <View>
         <Modal isVisible={isDatePickerVisible}>
@@ -47,6 +86,7 @@ const WeekBlockComponent = () => {
               dispatch(editCurrentDate(day.dateString));
               setDatePickerVisibility(false);
             }}
+            enableSwipeMonths
           />
           <View style={styles.modalButtonContainer} >
             <FillButton color="#00ACF5" title="とじる" onPress={hideDatePicker} containerStyle={{ width: 100, marginTop: 20 }} />

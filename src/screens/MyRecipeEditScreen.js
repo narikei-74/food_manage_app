@@ -8,9 +8,7 @@ const MyRecipeEditScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 30 }}>
-        <WeekBlockComponent />
-      </View>
+      <WeekBlockComponent />
       <View style={styles.bar}></View>
       <MyRecipeListComponent
         onPress={() => {
