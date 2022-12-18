@@ -4,9 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MyRecipeListScreen from "../screens/MyRecipeListScreen";
 import RecipeListScreen from "../screens/RecipeListScreen";
 import FoodStockListScreen from "../screens/FoodStockListScreen";
-import UserInfoSettingScreen from "../screens/UserInfoSettingScreen";
-import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 import LoginScreen from "../screens/LoginScreen";
+import FoodMarketScreen from "../screens/FoodMarketScreen";
 
 const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -29,8 +28,8 @@ const BottomTabNavigator = () => {
         options={{ title: "残り食材一覧" }}
       />
       <Tab.Screen
-        name="UserInfoSetting"
-        component={UserInfoSettingScreen}
+        name="foodMarket"
+        component={FoodMarketScreen}
         options={{ title: "食材購入" }}
       />
       <Tab.Screen
