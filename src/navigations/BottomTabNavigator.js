@@ -11,7 +11,16 @@ const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#F32A00',
+        opacity: 0.8
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}>
       <Tab.Screen
         name="MyRecipeList"
         component={MyRecipeListScreen}

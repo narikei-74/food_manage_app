@@ -58,12 +58,11 @@ const RecipeListComponent = (props) => {
         style={styles.foodBlock}
         onPress={() => onPress(recipe)}
       >
-        <Text style={styles.recipeNameText}>{recipe.Name}</Text>
         <ImageBackground
           source={{ uri: recipe.Image_key }}
           resizeMode="cover"
           style={styles.image}
-          imageStyle={{ borderRadius: 4 }}
+          imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, }}
         >
           {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
             <FillButton
@@ -71,18 +70,18 @@ const RecipeListComponent = (props) => {
               onPress={() => {
                 editRecipeID
                   ? onPressUpdate({
-                      ID: editRecipeID,
-                      UserID: currentUser.ID,
-                      RecipeID: recipe.ID,
-                      Index: index,
-                      Date: currentDate,
-                    })
+                    ID: editRecipeID,
+                    UserID: currentUser.ID,
+                    RecipeID: recipe.ID,
+                    Index: index,
+                    Date: currentDate,
+                  })
                   : onPressAdd({
-                      UserID: currentUser.ID,
-                      RecipeID: recipe.ID,
-                      Index: index,
-                      Date: currentDate,
-                    });
+                    UserID: currentUser.ID,
+                    RecipeID: recipe.ID,
+                    Index: index,
+                    Date: currentDate,
+                  });
               }}
               containerStyle={{
                 position: "absolute",
@@ -96,6 +95,9 @@ const RecipeListComponent = (props) => {
             />
           )}
         </ImageBackground>
+        <View style={styles.recipeNameTextContainer}>
+          <Text style={styles.recipeNameText}>{recipe.Name}</Text>
+        </View>
       </TouchableOpacity>
     );
   });
@@ -103,7 +105,7 @@ const RecipeListComponent = (props) => {
   return (
     <View style={styles.blocks}>
       {recipeView}
-      {route.name == "MyRecipeEdit" && myRecipe.length < 6 && (
+      {/* {route.name == "MyRecipeEdit" && myRecipe.length < 6 && (
         <TouchableOpacity
           style={styles.foodBlock}
           onPress={() => onPress(null)}
@@ -119,7 +121,7 @@ const RecipeListComponent = (props) => {
             }}
           />
         </TouchableOpacity>
-      )}
+      )} */}
     </View>
   );
 };

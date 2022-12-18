@@ -7,7 +7,8 @@ export const MiniButtonStyle = (color) => {
         backgroundColor: color,
         borderRadius: 30,
         borderColor: color,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        opacity: 0.9,
       },
       title: {
         color: "#fff",
