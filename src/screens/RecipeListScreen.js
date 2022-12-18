@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import { fetchRecipe, resetError } from "../redux/RecipeSlice";
+import RecipeListButtonsComponent from "../components/RecipeListButtonsComponent";
 
 const RecipeListScreen = ({ navigation }) => {
   const styles = BaseStyle();
@@ -52,7 +53,12 @@ const RecipeListScreen = ({ navigation }) => {
     }
   };
 
-  return <ScrollView style={styles.container}>{recipeListView()}</ScrollView>;
+  return (
+    <View style={styles.container}>
+      <ScrollView>{recipeListView()}</ScrollView>
+      <RecipeListButtonsComponent navigation={navigation} />
+    </View>
+  );
 };
 
 export default RecipeListScreen;
