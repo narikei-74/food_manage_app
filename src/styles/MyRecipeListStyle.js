@@ -42,14 +42,13 @@ const MyRecipeListStyle = () => {
       margin: 0,
       fontSize: 15,
       fontWeight: "bold",
-
     },
     emptyBlock: {
       width: "100%",
       height: "100%",
       alignItems: "center",
       justifyContent: "center",
-    }
+    },
   });
 
   return styles;
