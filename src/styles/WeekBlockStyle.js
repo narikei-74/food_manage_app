@@ -6,7 +6,7 @@ const WeekBlockStyle = () => {
       flex: 1,
       width: "100%",
       height: 140,
-      top: "1%",
+      top: 18,
       alignItems: "center",
       textAlign: "center",
     },
@@ -19,7 +19,7 @@ const WeekBlockStyle = () => {
       marginBottom: 0,
     },
     modalButtonContainer: {
-      alignItems: 'center'
+      alignItems: "center",
     },
     dateText: {
       fontSize: 15,
@@ -37,7 +37,7 @@ const WeekBlockStyle = () => {
     iconContainer: {
       alignItems: "center",
       marginRight: 16,
-      marginLeft: 16
+      marginLeft: 16,
     },
   });
 
