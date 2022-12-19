@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import { FillButtonStyle } from "../../styles/FillButtonStyle";
 
 export const FillButton = (props) => {
-    const { title, onPress, color = "#F32A00", fontSize = 16, containerStyle = {} } = props;
+    const { title, onPress, color = "#F06A47", fontSize = 16, containerStyle = {} } = props;
 
     const styles = FillButtonStyle(color, fontSize);
     return (

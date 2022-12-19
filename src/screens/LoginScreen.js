@@ -30,21 +30,37 @@ const LoginScreen = ({ navigation }) => {
     if (currentUser.status === true) {
       navigation.navigate("BottomTab", { screen: "MyRecipeList" });
       return (
-        <View>
-          <Button
-            title={"削除(テスト用)"}
-            onPress={() => {
-              storage.remove({ key: "userId" });
-            }}
-          />
-          <Text>{currentUser.data.ID}</Text>
+        <View style={styles.container}>
+          <View style={styles.logoContainer}>
+            <Icon name="grain" type="material" color="#F06A47" size={150} />
+          </View>
+          <View style={styles.buttonWrapper}>
+            <FillButton
+              title={"ユーザー登録"}
+              onPress={onPressRegisterGuest}
+              containerStyle={styles.buttonContainer}
+            />
+            <FillButton
+              title={"ゲスト利用する"}
+              onPress={onPressRegisterGuest}
+              containerStyle={styles.buttonContainer}
+            />
+            <FillButton
+              title={"削除(テスト用)"}
+              onPress={() => {
+                storage.remove({ key: "userId" });
+              }}
+              containerStyle={styles.buttonContainer}
+            />
+            <Text>{currentUser && currentUser.userId}</Text>
+          </View>
         </View>
       );
     } else {
       return (
         <View style={styles.container}>
           <View style={styles.logoContainer}>
-            <Icon name="grain" type="material" color="#F32A00" size={150} />
+            <Icon name="grain" type="material" color="#F06A47" size={150} />
           </View>
           <View style={styles.buttonWrapper}>
             <FillButton
