@@ -40,7 +40,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
             raised
             name="search"
             type="material"
-            color="#F32A00"
+            color="#F06A47"
             onPress={showSearchModal}
             size={35}
           />
@@ -50,7 +50,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
             raised
             name="add"
             type="material"
-            color="#F32A00"
+            color="#F06A47"
             onPress={() => navigation.navigate("CreateRecipe")}
             size={35}
           />

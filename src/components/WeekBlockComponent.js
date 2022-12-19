@@ -47,7 +47,7 @@ const WeekBlockComponent = ({ navigation }) => {
                 raised
                 name="pencil"
                 type="simple-line-icon"
-                color="#F32A00"
+                color="#F06A47"
                 onPress={() => navigation.navigate("MyRecipeEdit")}
                 size={20}
               />
@@ -59,7 +59,7 @@ const WeekBlockComponent = ({ navigation }) => {
               raised
               name="calendar"
               type="simple-line-icon"
-              color="#F32A00"
+              color="#F06A47"
               onPress={showDatePicker}
               size={20}
             />
@@ -71,7 +71,7 @@ const WeekBlockComponent = ({ navigation }) => {
                 raised
                 name="psychology"
                 type="material"
-                color="#F32A00"
+                color="#F06A47"
                 onPress={() => navigation.navigate("CreateRecipe")}
                 size={20}
               />
@@ -92,10 +92,11 @@ const WeekBlockComponent = ({ navigation }) => {
               setDatePickerVisibility(false);
             }}
             enableSwipeMonths
+            theme={{ selectedDayBackgroundColor: "#6EC388", arrowColor: "#6EC388", todayTextColor: "#6EC388" }}
           />
           <View style={styles.modalButtonContainer}>
             <FillButton
-              color="#00ACF5"
+              color="#6EC388"
               title="とじる"
               onPress={hideDatePicker}
               containerStyle={{ width: 100, marginTop: 20 }}

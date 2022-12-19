@@ -13,8 +13,7 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: '#F32A00',
-        opacity: 0.8
+        backgroundColor: '#F06A47',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

@@ -32,7 +32,7 @@ const MyRecipeListStyle = () => {
       position: "absolute",
       bottom: 0,
       borderTopWidth: 3,
-      borderTopColor: "#ff4500",
+      borderTopColor: "#F06A47",
       height: 50,
       alignItems: "center",
       justifyContent: "center",
