@@ -13,7 +13,7 @@ const FoodStockEditButtonComponent = ({ navigation }) => {
           name="pencil"
           type="simple-line-icon"
           color="#F32A00"
-          onPress={() => navigation.navigate("CreateRecipe")}
+          onPress={() => navigation.navigate("FoodStockEdit")}
           size={35}
         />
       </View>

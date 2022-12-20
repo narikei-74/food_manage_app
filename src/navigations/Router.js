@@ -9,21 +9,25 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import MyRecipeEditScreen from "../screens/MyRecipeEditScreen";
 import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 import LoginScreen from "../screens/LoginScreen";
+import FoodStockEditScreen from "../screens/FoodStockEditScreen";
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{
-        headerStyle: {
-          backgroundColor: '#fff',
-        },
-        headerTintColor: '#555',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}>
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#F06A47",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      >
         <Stack.Screen
           name="BottomTab"
           component={BottomTabNavigator}
@@ -48,6 +52,11 @@ const MainNavigator = () => {
           name="CreateRecipe"
           component={CreateRecipeScreen}
           options={{ title: "献立自動作成" }}
+        />
+        <Stack.Screen
+          name="FoodStockEdit"
+          component={FoodStockEditScreen}
+          options={{ title: "残り食材編集" }}
         />
         <Stack.Screen
           name="RecipeList"
