@@ -10,6 +10,22 @@ const BaseStyle = () => {
       height: 2,
       backgroundColor: "#eee",
     },
+    subTitleContainer: {
+      borderBottomWidth: 3,
+      borderBottomColor: "#ff4500",
+      paddingBottom: 4,
+      marginTop: 30,
+    },
+    subTitle: {
+      fontSize: 16,
+      color: "#ff4500",
+      fontWeight: "bold",
+    },
+    wrapper: {
+      width: "90%",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
   });
 
   return styles;

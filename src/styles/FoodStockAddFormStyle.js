@@ -1,0 +1,110 @@
+import { StyleSheet } from "react-native";
+
+export const FoodStockAddFormStyle = (color, fontSize) => {
+  return StyleSheet.create({
+    container: {
+      width: "100%",
+      marginBottom: 60,
+      marginTop: 20,
+    },
+    form: {
+      width: "100%",
+      marginTop: 15,
+      marginBottom: 30,
+      marginLeft: "auto",
+      marginRight: "auto",
+      paddingBottom: 5,
+      borderBottomWidth: 3,
+      borderBottomColor: "#ddd",
+      padding: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    formText: {
+      fontSize: 16,
+    },
+    foodNameContainer: {
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+    foodNameButton: {
+      width: 160,
+      height: 35,
+      borderColor: "#ff4500",
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 5,
+      backgroundColor: "#fff",
+      marginLeft: "auto",
+      marginRight: "auto",
+      marginTop: 15,
+    },
+    foodNameButtonTitle: {
+      fontSize: 16,
+      color: "#ff4500",
+    },
+    inputContainer: {
+      flexDirection: "row",
+      width: 100,
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+    },
+    foodQuantityInput: {
+      borderWidth: 1,
+      borderColor: "#777",
+      width: 60,
+      borderRadius: 4,
+      height: 28,
+      paddingRight: 6,
+      paddingLeft: 6,
+      marginRight: 4,
+    },
+    buttons: {
+      flexDirection: "row",
+      width: 240,
+      marginLeft: "auto",
+      marginRight: "auto",
+      justifyContent: "space-around",
+    },
+    submitButton: {
+      width: 100,
+      borderColor: "#ff4500",
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 5,
+      backgroundColor: "#fff",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    submitButtonTitle: {
+      color: "#ff4500",
+      fontSize: 14,
+    },
+    resetButton: {
+      width: 100,
+      borderColor: "#999",
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 5,
+      backgroundColor: "#999",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    resetButtonTitle: {
+      color: "#fff",
+      fontSize: 14,
+    },
+    keyboardCompBtn: {
+      width: 60,
+      alignItems: "center",
+      padding: 10,
+    },
+    keyboardCompBtnText: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: "hsl(210, 100%, 60%)",
+    },
+  });
+};

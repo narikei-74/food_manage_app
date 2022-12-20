@@ -11,15 +11,17 @@ const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#F06A47',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#F06A47",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Tab.Screen
         name="MyRecipeList"
         component={MyRecipeListScreen}
@@ -28,12 +30,12 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="RecipeList"
         component={RecipeListScreen}
-        options={{ title: "献立一覧" }}
+        options={{ title: "レシピ一覧" }}
       />
       <Tab.Screen
         name="FoodStockList"
         component={FoodStockListScreen}
-        options={{ title: "残り食材一覧" }}
+        options={{ title: "残り食材" }}
       />
       <Tab.Screen
         name="foodMarket"
