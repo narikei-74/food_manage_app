@@ -73,7 +73,7 @@ const FoodStockEditScreen = ({ navigation }) => {
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>食材追加</Text>
         </View>
-        <FoodStockAddFormComponent />
+        <FoodStockAddFormComponent navigation={navigation} />
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>残り食材</Text>
         </View>

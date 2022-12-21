@@ -10,11 +10,11 @@ import { FoodStockAddFormStyle } from "../styles/FoodStockAddFormStyle";
 import { Button } from "@rneui/themed";
 import { useState } from "react";
 
-const FoodStockAddFormComponent = () => {
+const FoodStockAddFormComponent = ({ navigation }) => {
   const styles = FoodStockAddFormStyle();
   const [foodID, setFoodID] = useState(null);
   const [isGram, setIsGram] = useState(true);
-  const [foodName, setFoodName] = useState("豚肉");
+  const [foodName, setFoodName] = useState(null);
   const [foodQuantity, setFoodQuantity] = useState(null);
 
   const resetAddFood = () => {
@@ -31,6 +31,13 @@ const FoodStockAddFormComponent = () => {
           buttonStyle={styles.foodNameButton}
           titleStyle={styles.foodNameButtonTitle}
           title="食材を選択"
+          onPress={() => {
+            navigation.navigate("FoodSelect", {
+              setFoodID: setFoodID,
+              setFoodName: setFoodName,
+              setIsGram: setIsGram,
+            });
+          }}
         />
       ) : (
         <View style={styles.form}>
