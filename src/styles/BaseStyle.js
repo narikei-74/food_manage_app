@@ -22,9 +22,29 @@ const BaseStyle = () => {
       fontWeight: "bold",
     },
     wrapper: {
-      width: "90%",
+      width: "94%",
       marginLeft: "auto",
       marginRight: "auto",
+    },
+    searchBar: {
+      backgroundColor: "#fff",
+      justifyContent: "flex-end",
+      borderBottomColor: "#aaa",
+      borderTopColor: "#fff",
+    },
+    searchBarInput: {
+      backgroundColor: "#ccc",
+      borderRadius: 8,
+      height: 40,
+      marginRight: "auto",
+      marginLeft: "auto",
+    },
+    searchInputText: {
+      color: "#333",
+      fontSize: 16,
+    },
+    comment: {
+      marginTop: 6,
     },
   });
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import MyRecipeListScreen from "../screens/MyRecipeListScreen";
 import MyRecipeDetailScreen from "../screens/MyRecipeDetailScreen";
 import RecipeListScreen from "../screens/RecipeListScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
@@ -10,6 +9,7 @@ import MyRecipeEditScreen from "../screens/MyRecipeEditScreen";
 import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import FoodStockEditScreen from "../screens/FoodStockEditScreen";
+import FoodSelectScreen from "../screens/FoodSelectScreen";
 
 const Stack = createStackNavigator();
 
@@ -57,6 +57,11 @@ const MainNavigator = () => {
           name="FoodStockEdit"
           component={FoodStockEditScreen}
           options={{ title: "残り食材編集" }}
+        />
+        <Stack.Screen
+          name="FoodSelect"
+          component={FoodSelectScreen}
+          options={{ title: "食材選択" }}
         />
         <Stack.Screen
           name="RecipeList"

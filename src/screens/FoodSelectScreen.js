@@ -1,13 +1,15 @@
 import { ScrollView, View, Text } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import FoodListComponent from "../components/FoodListComponent";
 import BaseStyle from "../styles/BaseStyle";
 import { SearchBar } from "@rneui/base";
 
-const FoodMarketScreen = () => {
+const FoodSelectScreen = ({ navigation }) => {
   const styles = BaseStyle();
+  const route = useRoute();
 
   return (
-    <ScrollView style={{ backgroundColor: "#fff" }}>
+    <ScrollView style={styles.container}>
       <SearchBar
         containerStyle={styles.searchBar}
         inputContainerStyle={styles.searchBarInput}
@@ -15,21 +17,19 @@ const FoodMarketScreen = () => {
         placeholder="食材名で検索"
       />
       <View style={styles.wrapper}>
-        <Text style={styles.comment}>
-          ※購入ボタンを押すと、{"\n"}
-          amazonライフの商品ページに遷移します。
-        </Text>
-        <Text style={styles.comment}>
-          ※amazonライフに遷移後、{"\n"}
-          自動で残り食材に購入した食材が追加されます。
-        </Text>
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>食材一覧</Text>
         </View>
-        <FoodListComponent isMarket={true} />
+        <FoodListComponent
+          isMarket={false}
+          setFoodName={route.params.setFoodName}
+          setFoodID={route.params.setFoodID}
+          setIsGram={route.params.setIsGram}
+          navigation={navigation}
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default FoodMarketScreen;
+export default FoodSelectScreen;
