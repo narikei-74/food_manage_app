@@ -5,7 +5,6 @@ import {
   InputAccessoryView,
   TextInput,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { FoodStockAddFormStyle } from "../styles/FoodStockAddFormStyle";
 import { Button } from "@rneui/themed";

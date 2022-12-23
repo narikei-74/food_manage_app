@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import FoodStockEditButtonComponent from "../components/FoodStockEditButtonComponent";
 import FoodStockListComponent from "../components/FoodStockListComponent";
