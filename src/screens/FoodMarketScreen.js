@@ -15,6 +15,10 @@ const FoodMarketScreen = () => {
         placeholder="食材名で検索"
       />
       <View style={styles.wrapper}>
+        <Text style={styles.commentAmazon}>
+          こちらの機能はamazonプライム会員、 特定の地域の方のみ利用可能です。
+          詳しくはamazonライフのページをご覧ください。
+        </Text>
         <Text style={styles.comment}>
           ※購入ボタンを押すと、{"\n"}
           amazonライフの商品ページに遷移します。

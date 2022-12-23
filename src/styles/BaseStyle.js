@@ -44,7 +44,12 @@ const BaseStyle = () => {
       fontSize: 16,
     },
     comment: {
-      marginTop: 6,
+      marginTop: 8,
+    },
+    commentAmazon: {
+      marginTop: 8,
+      color: "red",
+      marginBottom: 15,
     },
   });
 

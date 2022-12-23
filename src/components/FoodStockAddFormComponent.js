@@ -5,10 +5,18 @@ import {
   InputAccessoryView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { FoodStockAddFormStyle } from "../styles/FoodStockAddFormStyle";
 import { Button } from "@rneui/themed";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFoodStockIntoDB,
+  fetchFoodStock,
+  resetError,
+  resetIsApiConnected,
+} from "../redux/FoodStockSlice";
 
 const FoodStockAddFormComponent = ({ navigation }) => {
   const styles = FoodStockAddFormStyle();
@@ -22,6 +30,32 @@ const FoodStockAddFormComponent = ({ navigation }) => {
     setFoodName(null);
     setFoodQuantity(null);
     setIsGram(true);
+  };
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.currentUser).data;
+  const foodStock = useSelector((state) => state.foodStock);
+
+  if (foodStock.isApiConnected === true) {
+    dispatch(fetchFoodStock(user.ID));
+    dispatch(resetIsApiConnected());
+    resetAddFood();
+  }
+
+  if (foodStock.error !== undefined) {
+    Alert.alert(foodStock.error);
+    dispatch(resetError());
+  }
+
+  const onPressAdd = () => {
+    const addData = {
+      UserID: user.ID,
+      FoodID: foodID,
+      Gram: isGram ? parseInt(foodQuantity) : null,
+      Quantity: isGram ? null : parseFloat(foodQuantity),
+    };
+
+    dispatch(addFoodStockIntoDB(addData));
   };
 
   return (
@@ -71,6 +105,7 @@ const FoodStockAddFormComponent = ({ navigation }) => {
             title="追加する"
             buttonStyle={styles.submitButton}
             titleStyle={styles.submitButtonTitle}
+            onPress={onPressAdd}
           />
         )}
         {foodName && (
