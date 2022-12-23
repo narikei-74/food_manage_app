@@ -8,27 +8,37 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFoodStockFromDB, fetchFoodStock } from "../redux/FoodStockSlice";
+import {
+  deleteFoodStockFromDB,
+  fetchFoodStock,
+  updateFoodStockIntoDB,
+} from "../redux/FoodStockSlice";
 import { Button, CheckBox, Icon } from "@rneui/base";
 import { FoodStockListStyle } from "../styles/FoodStockListStyle";
 
 const FoodStockListComponent = (props) => {
-  const { editFlag } = props;
+  const { editFlag, navigation } = props;
   const styles = FoodStockListStyle();
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
   const foodStock = useSelector((state) => state.foodStock);
-  const [foodStockList, setFoodStockList] = useState([]);
+  const foodStockList = foodStock.data;
   const [checkedIDs, setCheckedIDs] = useState([]);
+  const [foodStockUnits, setFoodStockUnits] = useState({});
 
   useEffect(() => {
     dispatch(fetchFoodStock(currentUser.data.ID));
-  }, [dispatch]);
 
-  useEffect(() => {
-    setFoodStockList(foodStock.data);
-  });
+    let units = {};
+    foodStockList.map((foodStock) => {
+      units[foodStock.ID] =
+        foodStock.Food.Unit == 0
+          ? { unit: `${foodStock.Gram}`, isUpdate: false }
+          : { unit: `${foodStock.Quantity}`, isUpdate: false };
+    });
+    setFoodStockUnits(units);
+  }, [dispatch]);
 
   const checked = (food) => {
     if (checkedIDs.includes(food.ID)) {
@@ -39,21 +49,34 @@ const FoodStockListComponent = (props) => {
     setCheckedIDs([...checkedIDs]);
   };
 
-  const changeUnit = (food, unit, type) => {
-    // foodStockList.map((val, i) => {
-    //   if (val.ID == food.ID) {
-    //     if (type == "gram") {
-    //       val.Gram = unit;
-    //     } else {
-    //       val.Quantity = unit;
-    //     }
-    //   }
-    //   return val;
-    // });
-    // setFoodStockList([...foodStockList]);
+  const changeUnit = (food, unit) => {
+    foodStockUnits[food.ID] = { unit: unit, isUpdate: true };
+    setFoodStockUnits({ ...foodStockUnits });
   };
 
-  const onPressSave = () => {};
+  const onPressSave = () => {
+    let updates = [];
+    foodStockList.map((foodStock) => {
+      if (
+        foodStockUnits[foodStock.ID].isUpdate === true &&
+        foodStockUnits[foodStock.ID].unit !== ""
+      ) {
+        let newFoodStock = { ID: foodStock.ID };
+        if (foodStock.Food.Unit == 0) {
+          newFoodStock.Gram = parseInt(foodStockUnits[foodStock.ID].unit);
+        } else {
+          newFoodStock.Quantity = parseFloat(foodStockUnits[foodStock.ID].unit);
+        }
+        updates.push(newFoodStock);
+      }
+    });
+
+    if (updates.length == 0) {
+      alert("食材を保存しました。");
+    }
+    dispatch(updateFoodStockIntoDB(updates));
+    navigation.navigate("FoodStockList");
+  };
 
   const onPressDelete = () => {
     if (checkedIDs.length == 0) {
@@ -131,18 +154,8 @@ const FoodStockListComponent = (props) => {
                 <View style={styles.inputContainer}>
                   <TextInput
                     style={styles.foodQuantityInput}
-                    onChangeText={
-                      foodStock.Gram
-                        ? (text) =>
-                            changeUnit(foodStock, parseInt(text), "gram")
-                        : (text) =>
-                            changeUnit(foodStock, parseFloat(text), "quantity")
-                    }
-                    value={
-                      foodStock.Gram
-                        ? String(foodStock.Gram)
-                        : String(foodStock.Quantity)
-                    }
+                    value={foodStockUnits[foodStock.ID]?.unit}
+                    onChangeText={(text) => changeUnit(foodStock, text)}
                     inputAccessoryViewID="foodQuantity"
                   />
                   <Text style={styles.quantityUnit}>
@@ -178,7 +191,14 @@ const FoodStockListComponent = (props) => {
 
   return (
     <View>
-      {editFlag && <Button title="食材を削除" onPress={onPressDelete} />}
+      {editFlag && <Button title="食材を保存" onPress={onPressSave} />}
+      {editFlag && (
+        <Button
+          buttonStyle={{ backgroundColor: "red" }}
+          title="食材を削除"
+          onPress={onPressDelete}
+        />
+      )}
       <View style={{ marginTop: 8 }}>{foodStockListView()}</View>
     </View>
   );

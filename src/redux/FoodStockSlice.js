@@ -28,9 +28,10 @@ export const addFoodStockIntoDB = createAsyncThunk(
 export const updateFoodStockIntoDB = createAsyncThunk(
   "foodStock/updateFoodStockIntoDB",
   async (updateData) => {
+    const requestData = { Updates: updateData };
     const res = await fetch("http://18.183.189.68:8080/food_stock/update", {
       method: "post",
-      body: JSON.stringify(updateData),
+      body: JSON.stringify(requestData),
     });
     return res.json();
   }
@@ -96,11 +97,13 @@ export const FoodStockSlice = createSlice({
     builder.addCase(updateFoodStockIntoDB.fulfilled, (state, action) => {
       if (action.payload.success === true) {
         state.isApiConnected = true;
+        return "食材を保存しました。";
       } else {
         state.error = "残り食材の更新に失敗しました。";
       }
     });
     builder.addCase(updateFoodStockIntoDB.rejected, (state, action) => {
+      console.log(action.payload);
       state.error = "残り食材の更新に失敗しました。";
     });
     builder.addCase(deleteFoodStockFromDB.fulfilled, (state, action) => {
