@@ -6,7 +6,7 @@ const FoodStockEditButtonStyle = () => {
       position: "absolute",
       top: "auto",
       left: "auto",
-      right: 25,
+      right: 20,
       bottom: 40,
       justifyContent: "center",
       alignItems: "center",

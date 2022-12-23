@@ -12,13 +12,38 @@ export const fetchFoodStock = createAsyncThunk(
   }
 );
 
-// dbに新規残り食材を保存
-export const saveFoodStockIntoDB = createAsyncThunk(
+// dbに残り食材を追加
+export const addFoodStockIntoDB = createAsyncThunk(
   "foodStock/addFoodStockIntoDB",
-  async (saveData) => {
-    const res = await fetch("http://18.183.189.68:8080/food_stock/save", {
+  async (addData) => {
+    const res = await fetch("http://18.183.189.68:8080/food_stock/add", {
       method: "post",
-      body: JSON.stringify(saveData),
+      body: JSON.stringify(addData),
+    });
+    return res.json();
+  }
+);
+
+// dbの残り食材を更新
+export const updateFoodStockIntoDB = createAsyncThunk(
+  "foodStock/updateFoodStockIntoDB",
+  async (updateData) => {
+    const requestData = { Updates: updateData };
+    const res = await fetch("http://18.183.189.68:8080/food_stock/update", {
+      method: "post",
+      body: JSON.stringify(requestData),
+    });
+    return res.json();
+  }
+);
+
+export const deleteFoodStockFromDB = createAsyncThunk(
+  "foodStock/deleteFoodStockFromDB",
+  async (foodIDs) => {
+    requestData = { Data: foodIDs };
+    const res = await fetch("http://18.183.189.68:8080/food_stock/delete", {
+      method: "post",
+      body: JSON.stringify(requestData),
     });
     return res.json();
   }
@@ -35,7 +60,14 @@ const initialState = {
 export const FoodStockSlice = createSlice({
   name: "foodStock",
   initialState,
-  reducers: {},
+  reducers: {
+    resetIsApiConnected: (state) => {
+      state.isApiConnected = false;
+    },
+    resetError: (state) => {
+      state.error = undefined;
+    },
+  },
   extraReducers: (builder) => {
     // fetchFoodStock
     builder.addCase(fetchFoodStock.fulfilled, (state, action) => {
@@ -52,17 +84,40 @@ export const FoodStockSlice = createSlice({
       state.loader = false;
     });
     // saveFoodStockIntoDB
-    builder.addCase(saveFoodStockIntoDB.fulfilled, (state, action) => {
+    builder.addCase(addFoodStockIntoDB.fulfilled, (state, action) => {
       if (action.payload.success === true) {
         state.isApiConnected = true;
       } else {
-        state.error = "残り食材の保存に失敗しました。";
+        state.error = "残り食材の登録に失敗しました。";
       }
     });
-    builder.addCase(saveFoodStockIntoDB.rejected, (state, action) => {
-      state.error = "残り食材の保存に失敗しました。";
+    builder.addCase(addFoodStockIntoDB.rejected, (state, action) => {
+      state.error = "残り食材の登録に失敗しました。";
+    });
+    builder.addCase(updateFoodStockIntoDB.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.isApiConnected = true;
+        return "食材を保存しました。";
+      } else {
+        state.error = "残り食材の更新に失敗しました。";
+      }
+    });
+    builder.addCase(updateFoodStockIntoDB.rejected, (state, action) => {
+      console.log(action.payload);
+      state.error = "残り食材の更新に失敗しました。";
+    });
+    builder.addCase(deleteFoodStockFromDB.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.isApiConnected = true;
+      } else {
+        state.error = "残り食材の削除に失敗しました。";
+      }
+    });
+    builder.addCase(deleteFoodStockFromDB.rejected, (state, action) => {
+      state.error = "残り食材の削除に失敗しました。";
     });
   },
 });
 
+export const { resetIsApiConnected, resetError } = FoodStockSlice.actions;
 export default FoodStockSlice.reducer;

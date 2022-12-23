@@ -9,6 +9,8 @@ import {
 import { FoodStockAddFormStyle } from "../styles/FoodStockAddFormStyle";
 import { Button } from "@rneui/themed";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addFoodStockIntoDB } from "../redux/FoodStockSlice";
 
 const FoodStockAddFormComponent = ({ navigation }) => {
   const styles = FoodStockAddFormStyle();
@@ -22,6 +24,21 @@ const FoodStockAddFormComponent = ({ navigation }) => {
     setFoodName(null);
     setFoodQuantity(null);
     setIsGram(true);
+  };
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.currentUser).data;
+
+  const onPressAdd = () => {
+    const addData = {
+      UserID: user.ID,
+      FoodID: foodID,
+      Gram: isGram ? parseInt(foodQuantity) : null,
+      Quantity: isGram ? null : parseFloat(foodQuantity),
+    };
+
+    dispatch(addFoodStockIntoDB(addData));
+    resetAddFood();
   };
 
   return (
@@ -71,6 +88,7 @@ const FoodStockAddFormComponent = ({ navigation }) => {
             title="追加する"
             buttonStyle={styles.submitButton}
             titleStyle={styles.submitButtonTitle}
+            onPress={onPressAdd}
           />
         )}
         {foodName && (

@@ -1,55 +1,40 @@
 import { StyleSheet } from "react-native";
 
-export const FoodStockAddFormStyle = (color, fontSize) => {
+export const FoodStockListStyle = () => {
   return StyleSheet.create({
-    container: {
-      width: "100%",
-      marginBottom: 60,
-      marginTop: 20,
+    list: {
+      marginTop: 10,
     },
-    form: {
+    listItem: {
       width: "100%",
-      marginTop: 15,
-      marginBottom: 30,
-      marginLeft: "auto",
       marginRight: "auto",
+      marginLeft: "auto",
       paddingBottom: 5,
+      paddingTop: 5,
+      paddingRight: 5,
+      paddingLeft: 8,
       borderBottomWidth: 3,
       borderBottomColor: "#ddd",
-      padding: 10,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
+      height: 50,
+      backgroundColor: "#fff",
     },
-    formText: {
+    foodName: {
       fontSize: 16,
       fontWeight: "bold",
       color: "#555",
     },
-    foodNameContainer: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center",
-    },
-    foodNameButton: {
-      width: 160,
-      height: 35,
-      borderColor: "#ff4500",
-      borderWidth: 1,
-      borderRadius: 6,
-      padding: 5,
-      backgroundColor: "#fff",
-      marginLeft: "auto",
-      marginRight: "auto",
-      marginTop: 15,
-    },
-    foodNameButtonTitle: {
-      fontSize: 16,
-      color: "#ff4500",
+    checkBox: {
+      height: "100%",
+      padding: 0,
+      margin: 0,
+      marginLeft: -1,
+      justifyContent: "center",
     },
     inputContainer: {
       flexDirection: "row",
-      width: 100,
       justifyContent: "flex-end",
       alignItems: "flex-end",
     },
@@ -62,6 +47,10 @@ export const FoodStockAddFormStyle = (color, fontSize) => {
       paddingRight: 6,
       paddingLeft: 6,
       marginRight: 4,
+    },
+    quantityUnit: {
+      fontSize: 16,
+      color: "#555",
     },
     buttons: {
       flexDirection: "row",
