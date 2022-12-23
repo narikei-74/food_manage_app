@@ -36,6 +36,18 @@ export const updateFoodStockIntoDB = createAsyncThunk(
   }
 );
 
+export const deleteFoodStockFromDB = createAsyncThunk(
+  "foodStock/deleteFoodStockFromDB",
+  async (foodIDs) => {
+    requestData = { Data: foodIDs };
+    const res = await fetch("http://18.183.189.68:8080/food_stock/delete", {
+      method: "post",
+      body: JSON.stringify(requestData),
+    });
+    return res.json();
+  }
+);
+
 // 初期状態
 const initialState = {
   data: [],
@@ -87,6 +99,19 @@ export const FoodStockSlice = createSlice({
       } else {
         state.error = "残り食材の更新に失敗しました。";
       }
+    });
+    builder.addCase(updateFoodStockIntoDB.rejected, (state, action) => {
+      state.error = "残り食材の更新に失敗しました。";
+    });
+    builder.addCase(deleteFoodStockFromDB.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.isApiConnected = true;
+      } else {
+        state.error = "残り食材の削除に失敗しました。";
+      }
+    });
+    builder.addCase(deleteFoodStockFromDB.rejected, (state, action) => {
+      state.error = "残り食材の削除に失敗しました。";
     });
   },
 });

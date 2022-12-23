@@ -23,6 +23,8 @@ export const FoodListStyle = () => {
     },
     foodName: {
       fontSize: 16,
+      fontWeight: "bold",
+      color: "#555",
     },
     button: {
       height: 35,
