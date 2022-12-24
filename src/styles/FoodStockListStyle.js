@@ -97,5 +97,42 @@ export const FoodStockListStyle = () => {
       fontWeight: "bold",
       color: "hsl(210, 100%, 60%)",
     },
+    foodStockActions: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      marginTop: 15,
+      marginBottom: 10,
+    },
+    saveBtn: {
+      width: 74,
+      height: 32,
+      backgroundColor: "#fff",
+      borderColor: "#ff4500",
+      borderWidth: 1,
+      borderRadius: 6,
+      marginRight: 14,
+      padding: 4,
+    },
+    saveBtnTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: "#ff4500",
+      margin: 0,
+      marginRight: 6,
+    },
+    deleteBtn: {
+      width: 74,
+      height: 32,
+      backgroundColor: "#cc0000",
+      fontSize: 12,
+      borderRadius: 6,
+      padding: 4,
+    },
+    deleteBtnTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      margin: 0,
+      marginRight: 6,
+    },
   });
 };
