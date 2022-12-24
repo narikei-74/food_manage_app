@@ -134,7 +134,7 @@ const FoodStockListComponent = (props) => {
               type="material"
               color="#999"
               size={80}
-              style={{ marginTop: 120 }}
+              style={editFlag ? { marginTop: 65 } : { marginTop: 120 }}
             />
             <Text
               style={{
