@@ -87,6 +87,7 @@ export const FoodStockSlice = createSlice({
     builder.addCase(addFoodStockIntoDB.fulfilled, (state, action) => {
       if (action.payload.success === true) {
         state.isApiConnected = true;
+        state.loader = true;
       } else {
         state.error = "残り食材の登録に失敗しました。";
       }
@@ -97,13 +98,12 @@ export const FoodStockSlice = createSlice({
     builder.addCase(updateFoodStockIntoDB.fulfilled, (state, action) => {
       if (action.payload.success === true) {
         state.isApiConnected = true;
-        return "食材を保存しました。";
+        state.loader = true;
       } else {
         state.error = "残り食材の更新に失敗しました。";
       }
     });
     builder.addCase(updateFoodStockIntoDB.rejected, (state, action) => {
-      console.log(action.payload);
       state.error = "残り食材の更新に失敗しました。";
     });
     builder.addCase(deleteFoodStockFromDB.fulfilled, (state, action) => {
