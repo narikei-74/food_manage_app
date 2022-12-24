@@ -5,12 +5,15 @@ import {
   Keyboard,
   InputAccessoryView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteFoodStockFromDB,
   fetchFoodStock,
+  resetError,
+  resetIsApiConnected,
   updateFoodStockIntoDB,
 } from "../redux/FoodStockSlice";
 import { Button, CheckBox, Icon } from "@rneui/base";
@@ -29,7 +32,9 @@ const FoodStockListComponent = (props) => {
 
   useEffect(() => {
     dispatch(fetchFoodStock(currentUser.data.ID));
+  }, [dispatch]);
 
+  useEffect(() => {
     let units = {};
     foodStockList.map((foodStock) => {
       units[foodStock.ID] =
@@ -38,7 +43,17 @@ const FoodStockListComponent = (props) => {
           : { unit: `${foodStock.Quantity}`, isUpdate: false };
     });
     setFoodStockUnits(units);
-  }, [dispatch]);
+  }, [foodStockList]);
+
+  if (foodStock.isApiConnected === true) {
+    dispatch(fetchFoodStock(currentUser.data.ID));
+    dispatch(resetIsApiConnected());
+  }
+
+  if (foodStock.error !== undefined) {
+    Alert.alert(foodStock.error);
+    dispatch(resetError());
+  }
 
   const checked = (food) => {
     if (checkedIDs.includes(food.ID)) {
