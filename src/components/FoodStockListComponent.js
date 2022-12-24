@@ -64,7 +64,17 @@ const FoodStockListComponent = (props) => {
     setCheckedIDs([...checkedIDs]);
   };
 
-  const changeUnit = (food, unit) => {
+  const changeUnit = (food, unit, unitType) => {
+    // 数値以外はじく
+    if (isNaN(unit) === true) {
+      return;
+    }
+
+    // 単位がグラムのとき少数をはじく
+    if (unitType == 0 && unit.indexOf(".") != -1) {
+      return;
+    }
+
     foodStockUnits[food.ID] = { unit: unit, isUpdate: true };
     setFoodStockUnits({ ...foodStockUnits });
   };
@@ -86,10 +96,9 @@ const FoodStockListComponent = (props) => {
       }
     });
 
-    if (updates.length == 0) {
-      alert("食材を保存しました。");
+    if (updates.length != 0) {
+      dispatch(updateFoodStockIntoDB(updates));
     }
-    dispatch(updateFoodStockIntoDB(updates));
     navigation.navigate("FoodStockList");
   };
 
@@ -170,7 +179,9 @@ const FoodStockListComponent = (props) => {
                   <TextInput
                     style={styles.foodQuantityInput}
                     value={foodStockUnits[foodStock.ID]?.unit}
-                    onChangeText={(text) => changeUnit(foodStock, text)}
+                    onChangeText={(text) =>
+                      changeUnit(foodStock, text, foodStock.Food.Unit)
+                    }
                     inputAccessoryViewID="foodQuantity"
                   />
                   <Text style={styles.quantityUnit}>
@@ -206,13 +217,33 @@ const FoodStockListComponent = (props) => {
 
   return (
     <View>
-      {editFlag && <Button title="食材を保存" onPress={onPressSave} />}
       {editFlag && (
-        <Button
-          buttonStyle={{ backgroundColor: "red" }}
-          title="食材を削除"
-          onPress={onPressDelete}
-        />
+        <View style={styles.foodStockActions}>
+          <Button
+            buttonStyle={styles.saveBtn}
+            title="保存"
+            icon={{
+              name: "save",
+              type: "material",
+              size: 15,
+              color: "#ff4500",
+            }}
+            onPress={onPressSave}
+            titleStyle={styles.saveBtnTitle}
+          />
+          <Button
+            buttonStyle={styles.deleteBtn}
+            title="削除"
+            icon={{
+              name: "delete",
+              type: "material",
+              size: 15,
+              color: "white",
+            }}
+            onPress={onPressDelete}
+            titleStyle={styles.deleteBtnTitle}
+          />
+        </View>
       )}
       <View style={{ marginTop: 8 }}>{foodStockListView()}</View>
     </View>
