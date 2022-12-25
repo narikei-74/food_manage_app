@@ -3,10 +3,12 @@ import { useRoute } from "@react-navigation/native";
 import FoodListComponent from "../components/FoodListComponent";
 import BaseStyle from "../styles/BaseStyle";
 import { SearchBar } from "@rneui/base";
+import { useState } from "react";
 
 const FoodSelectScreen = ({ navigation }) => {
   const styles = BaseStyle();
   const route = useRoute();
+  const [searchInputText, setSearchInputText] = useState("");
 
   return (
     <ScrollView style={styles.container}>
@@ -15,6 +17,13 @@ const FoodSelectScreen = ({ navigation }) => {
         inputContainerStyle={styles.searchBarInput}
         inputStyle={styles.searchInputText}
         placeholder="食材名で検索"
+        onChangeText={(text) => {
+          setSearchInputText(text);
+        }}
+        value={searchInputText}
+        onClear={() => {
+          setSearchInputText("");
+        }}
       />
       <View style={styles.wrapper}>
         <View style={styles.subTitleContainer}>
@@ -26,6 +35,7 @@ const FoodSelectScreen = ({ navigation }) => {
           setFoodID={route.params.setFoodID}
           setIsGram={route.params.setIsGram}
           navigation={navigation}
+          searchInputText={searchInputText}
         />
       </View>
     </ScrollView>

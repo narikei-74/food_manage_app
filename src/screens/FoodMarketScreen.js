@@ -2,9 +2,11 @@ import { ScrollView, View, Text } from "react-native";
 import FoodListComponent from "../components/FoodListComponent";
 import BaseStyle from "../styles/BaseStyle";
 import { SearchBar } from "@rneui/base";
+import { useState } from "react";
 
 const FoodMarketScreen = () => {
   const styles = BaseStyle();
+  const [searchInputText, setSearchInputText] = useState("");
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -13,6 +15,13 @@ const FoodMarketScreen = () => {
         inputContainerStyle={styles.searchBarInput}
         inputStyle={styles.searchInputText}
         placeholder="食材名で検索"
+        onChangeText={(text) => {
+          setSearchInputText(text);
+        }}
+        value={searchInputText}
+        onClear={() => {
+          setSearchInputText("");
+        }}
       />
       <View style={styles.wrapper}>
         <Text style={styles.commentAmazon}>
@@ -30,7 +39,7 @@ const FoodMarketScreen = () => {
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>食材一覧</Text>
         </View>
-        <FoodListComponent isMarket={true} />
+        <FoodListComponent isMarket={true} searchInputText={searchInputText} />
       </View>
     </ScrollView>
   );
