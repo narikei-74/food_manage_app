@@ -32,10 +32,6 @@ const FoodMarketScreen = () => {
           ※購入ボタンを押すと、{"\n"}
           amazonライフの商品ページに遷移します。
         </Text>
-        <Text style={styles.comment}>
-          ※amazonライフに遷移後、{"\n"}
-          自動で残り食材に購入した食材が追加されます。
-        </Text>
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>食材一覧</Text>
         </View>
