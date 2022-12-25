@@ -41,6 +41,18 @@ const FoodStockAddFormComponent = ({ navigation }) => {
     resetAddFood();
   };
 
+  const onChangeText = (unit, isGram) => {
+    // 数値以外はじく
+    if (isNaN(unit) === true) {
+      return;
+    }
+    // 単位がグラムのとき少数をはじく
+    if (isGram === true && unit.indexOf(".") != -1) {
+      return;
+    }
+    setFoodQuantity(unit);
+  };
+
   return (
     <View style={styles.container}>
       {!foodName ? (
@@ -64,7 +76,7 @@ const FoodStockAddFormComponent = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.foodQuantityInput}
-              onChangeText={(text) => setFoodQuantity(text)}
+              onChangeText={(text) => onChangeText(text, isGram)}
               value={foodQuantity}
               inputAccessoryViewID="foodQuantity"
             />
