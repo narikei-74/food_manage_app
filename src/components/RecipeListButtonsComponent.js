@@ -51,7 +51,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
             name="add"
             type="material"
             color="#F06A47"
-            onPress={() => navigation.navigate("CreateRecipe")}
+            onPress={() => navigation.navigate("CreatePrivateRecipe")}
             size={35}
           />
         </View>
@@ -146,7 +146,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
           <Button
             buttonStyle={styles.searchButton}
             title="検索"
-            onPress={() => {}}
+            onPress={() => { }}
           />
         </View>
         <View style={styles.modalButtonContainer}>

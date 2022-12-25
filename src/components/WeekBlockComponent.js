@@ -96,7 +96,7 @@ const WeekBlockComponent = ({ navigation }) => {
           />
           <View style={styles.modalButtonContainer}>
             <FillButton
-              color="#6EC388"
+              color="#888"
               title="とじる"
               onPress={hideDatePicker}
               containerStyle={{ width: 100, marginTop: 20 }}
