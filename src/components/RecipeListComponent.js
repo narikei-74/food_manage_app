@@ -17,6 +17,7 @@ import {
   resetIsApiConnected,
   resetError,
 } from "../redux/MyRecipeSlice";
+import { getCurrentDateMyRecipe } from "../utils/function";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
@@ -39,6 +40,9 @@ const RecipeListComponent = (props) => {
     dispatch(resetError());
   }
 
+  //選択日のレシピデータ
+  const CurrentDateMyRecipe = getCurrentDateMyRecipe(myRecipe.data, currentDate);
+
   const onPressAdd = async (addData) => {
     dispatch(addMyRecipeIntoDB(addData));
   };
@@ -46,6 +50,23 @@ const RecipeListComponent = (props) => {
   const onPressUpdate = async (updateData) => {
     dispatch(updateMyRecipeIntoDB(updateData));
   };
+
+  //レシピの重複チェック
+  const isDuplicationRecipe = (recipe) => {
+    let isDuplication = false
+    CurrentDateMyRecipe.map((myRec) => {
+      if (myRec.Recipe.ID == recipe.ID) {
+        isDuplication = true;
+        Alert.alert(
+          "",
+          "この品はすでに追加されています。",
+          [{
+            text: "確認",
+          }]);
+      }
+    })
+    return isDuplication
+  }
 
   const previousScreen =
     route.params != undefined && "previousScreen" in route.params
@@ -68,20 +89,23 @@ const RecipeListComponent = (props) => {
             <FillButton
               title={"マイレシピに追加"}
               onPress={() => {
-                editRecipeID
-                  ? onPressUpdate({
-                    ID: editRecipeID,
-                    UserID: currentUser.ID,
-                    RecipeID: recipe.ID,
-                    Index: index,
-                    Date: currentDate,
-                  })
-                  : onPressAdd({
-                    UserID: currentUser.ID,
-                    RecipeID: recipe.ID,
-                    Index: index,
-                    Date: currentDate,
-                  });
+                const isDuplication = isDuplicationRecipe(recipe);
+                if (!isDuplication) {
+                  editRecipeID
+                    ? onPressUpdate({
+                      ID: editRecipeID,
+                      UserID: currentUser.ID,
+                      RecipeID: recipe.ID,
+                      Index: index,
+                      Date: currentDate,
+                    })
+                    : onPressAdd({
+                      UserID: currentUser.ID,
+                      RecipeID: recipe.ID,
+                      Index: index,
+                      Date: currentDate,
+                    });
+                };
               }}
               containerStyle={{
                 position: "absolute",
@@ -105,23 +129,6 @@ const RecipeListComponent = (props) => {
   return (
     <View style={styles.blocks}>
       {recipeView}
-      {/* {route.name == "MyRecipeEdit" && myRecipe.length < 6 && (
-        <TouchableOpacity
-          style={styles.foodBlock}
-          onPress={() => onPress(null)}
-        >
-          <Button
-            title={"+"}
-            containerStyle={{ width: 100, alignItems: "center", right: -120 }}
-            onPress={() => {
-              navigation.navigate("RecipeList", {
-                editRecipeID: null,
-                previousScreen: route.name,
-              });
-            }}
-          />
-        </TouchableOpacity>
-      )} */}
     </View>
   );
 };

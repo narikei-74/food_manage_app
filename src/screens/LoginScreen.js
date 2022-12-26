@@ -6,6 +6,7 @@ import { FillButton } from "../components/atoms/FillButton";
 import { useDispatch, useSelector } from "react-redux";
 import { addGuestUser, saveStoreCurrentUser } from "../redux/UserSlice";
 import { LoginScreenStyle } from "../styles/LoginScreenStyle";
+import { CommonActions } from "@react-navigation/native";
 
 const LoginScreen = ({ navigation }) => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -28,7 +29,14 @@ const LoginScreen = ({ navigation }) => {
     );
   } else {
     if (currentUser.status === true) {
-      navigation.navigate("BottomTab", { screen: "MyRecipeList" });
+      const resetAction = CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: "BottomTab" }
+        ],
+        actions: [navigation.navigate("BottomTab", { screen: "MyRecipeList" })]
+      });
+      navigation.dispatch(resetAction);
       return (
         <View style={styles.container}>
           <View style={styles.logoContainer}>

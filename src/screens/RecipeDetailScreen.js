@@ -21,22 +21,22 @@ const RecipeDetailScreen = () => {
           </View>
         </View>
         <View style={styles.cookInfoContainer}>
-
           <Text style={styles.materialTitle}>
             材料
           </Text>
-          {recipe.Recipe_materials.map((material, i) => {
-            return (
-              <ListItem key={i} bottomDivider>
-                <ListItem.Content>
-                  <ListItem.Title right>{material.Food.Name}</ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-            )
-          })}
-
+          <View style={styles.materialContainer}>
+            {recipe.Recipe_materials.map((material, i) => {
+              return (
+                <View key={i} style={styles.materialTextContainer}>
+                  <Text style={styles.textLeft}>{material.Food.Name}</Text>
+                  <Text style={styles.textRight}>・・・{material.Quantity_label}</Text>
+                </View>
+              )
+            })}
+          </View>
         </View>
         <View style={styles.cookTextContainer}>
+          <Text style={styles.materialTitle}>作り方</Text>
           <Text>
             {recipe.How_to_cook}
           </Text>
@@ -52,12 +52,10 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    // alignItems: 'center',
     fontSize: 20,
     marginTop: 30,
   },
   contents: {
-    // height: "100%",
   },
   imageContainer: {
     width: "90%",
@@ -77,25 +75,48 @@ const styles = StyleSheet.create({
   nameText: {
     fontWeight: "bold",
     fontSize: 18,
-    marginTop: 5,
+    margin: 20,
   },
   timerContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   timeText: {
     merginLeft: 5,
     fontSize: 16
   },
   cookInfoContainer: {
-    marginTop: 50,
-    // height: 500
+    marginTop: 100,
+    alignItems: "center"
   },
   materialTitle: {
-    fontSize: 16
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: 10
+  },
+  materialContainer: {
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10
+  },
+  materialTextContainer:
+  {
+    height: 35,
+    padding: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
   },
   cookTextContainer: {
-    height: "100%"
+    width: "90%",
+    alignItems: "center",
+    height: "100%",
+    margin: 20,
+  },
+  textLeft: {
+  },
+  textRight: {
   }
 })
 

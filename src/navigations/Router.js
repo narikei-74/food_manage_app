@@ -10,6 +10,7 @@ import CreateRecipeScreen from "../screens/CreateRecipeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import FoodStockEditScreen from "../screens/FoodStockEditScreen";
 import FoodSelectScreen from "../screens/FoodSelectScreen";
+import { CreatePrivateRecipeScreen } from "../screens/CreatePrivateRecipeScreen";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,7 @@ const MainNavigator = () => {
         <Stack.Screen
           name="BottomTab"
           component={BottomTabNavigator}
-          options={{ headerShown: false, title: "戻る" }}
+          options={{ headerShown: false, title: "戻る", gestureEnabled: false }}
         />
         <Stack.Screen
           name="MyRecipeDetail"
@@ -72,6 +73,11 @@ const MainNavigator = () => {
           name="Login"
           component={LoginScreen}
           options={{ title: "ログイン" }}
+        />
+        <Stack.Screen
+          name="CreatePrivateRecipe"
+          component={CreatePrivateRecipeScreen}
+          options={{ title: "プライベートレシピ作成" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
