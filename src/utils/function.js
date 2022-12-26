@@ -51,3 +51,12 @@ export const getCurrentDateMyRecipe = (recipeData, currentDate) => {
   );
   return currentDateRecipe;
 };
+
+/**
+ * カタカナをひらがなに変換
+ */
+export const kanaToHira = (str) => {
+  return str.replace(/[\u30A1-\u30FA]/g, (ch) =>
+    String.fromCharCode(ch.charCodeAt(0) - 0x60)
+  );
+};
