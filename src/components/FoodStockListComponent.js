@@ -31,10 +31,6 @@ const FoodStockListComponent = (props) => {
   const [foodStockUnits, setFoodStockUnits] = useState({});
 
   useEffect(() => {
-    dispatch(fetchFoodStock(currentUser.data.ID));
-  }, [dispatch]);
-
-  useEffect(() => {
     let units = {};
     foodStockList.map((foodStock) => {
       units[foodStock.ID] =

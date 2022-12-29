@@ -5,6 +5,7 @@ import CurrentDateReducer from "./CurrentDateSlice";
 import CurrentUserReducer from "./UserSlice";
 import FoodStockReducer from "./FoodStockSlice";
 import FoodReducer from "./FoodSlice";
+import NotEnoughFoodReducer from "./NotEnoughFoodSlice";
 
 export const Store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const Store = configureStore({
     currentUser: CurrentUserReducer,
     foodStock: FoodStockReducer,
     food: FoodReducer,
+    notEnoughFood: NotEnoughFoodReducer,
   },
 });
