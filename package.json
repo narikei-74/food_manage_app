@@ -21,6 +21,7 @@
     "@types/react-native-modal": "^4.1.1",
     "axios": "^1.2.0",
     "date-fns": "^2.29.3",
+    "dayjs": "^1.11.7",
     "expo": "~46.0.16",
     "expo-cli": "^6.0.8",
     "expo-image-picker": "~13.3.1",
