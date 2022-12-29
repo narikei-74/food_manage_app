@@ -15,6 +15,8 @@ export const NotEnoughFoodSlice = createSlice({
   initialState,
   reducers: {
     fetchNotEnoughFood: (state, action) => {
+      state.loader = false;
+
       if (action.payload.myRecipes.length == 0) {
         state.data = [];
         return;

@@ -241,7 +241,7 @@ const FoodStockListComponent = (props) => {
           />
         </View>
       )}
-      <View style={{ marginTop: 8 }}>{foodStockListView()}</View>
+      <View style={{ marginTop: 14 }}>{foodStockListView()}</View>
     </View>
   );
 };
