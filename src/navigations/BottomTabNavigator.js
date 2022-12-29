@@ -35,7 +35,7 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="FoodStockList"
         component={FoodStockListScreen}
-        options={{ title: "残り食材" }}
+        options={{ title: "食材管理" }}
       />
       <Tab.Screen
         name="foodMarket"
