@@ -8,6 +8,8 @@ import { fetchFood } from "../redux/FoodSlice";
 import Modal from "react-native-modal";
 import { FillButton } from "../components/atoms/FillButton";
 import { OutlineButton } from "../components/atoms/OutlineButton";
+import * as ImagePicker from 'expo-image-picker';
+import { Image } from "react-native";
 
 export const CreatePrivateRecipeScreen = () => {
     const [recipeName, setRecipeName] = useState("");
@@ -17,6 +19,7 @@ export const CreatePrivateRecipeScreen = () => {
     const [howToCook, setHowToCook] = useState("");
     const [isOkPublic, setisOkPublic] = useState(false);
     const [isMaterialModalOpen, setIsMaterialModalOpen] = useState(false);
+    const [image, setImage] = useState();
     const dispatch = useDispatch();
     const food = useSelector((state) => state.food);
     const foodList = food.data;
@@ -62,10 +65,31 @@ export const CreatePrivateRecipeScreen = () => {
         selectedFoods = selectedFoods.filter((v) => !v.match(food));
         setMaterials([...new Set(selectedFoods)]);
     }
+    //画像選択
+    const pickImage = async () => {
+
+        //許可を取得
+        let { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const options = {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1,
+            allowEditing: true,
+            aspect: [4, 3],
+        };
+
+        //カメラロールから画像選択
+        if (status == "granted") {
+            let res = await ImagePicker.launchImageLibraryAsync(options);
+            if (!res.cancelled) {
+                setImage(res.uri);
+            }
+        }
+    }
 
     // 必要な情報:名前 所要時間 画像 カテゴリ(主菜副菜など) 作り方 材料 (UserId) 公開してもよいか(審査の後に〜文言を入れる)
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}
+            contentContainerStyle={{ alignItems: "center" }}>
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>新しいレシピを作成しましょう</Text>
             </View>
@@ -118,6 +142,16 @@ export const CreatePrivateRecipeScreen = () => {
                 <OutlineButton
                     title="材料選択"
                     onPress={() => { setIsMaterialModalOpen(true); }}
+                />
+            </View>
+            <View>
+                <OutlineButton
+                    title="画像選択"
+                    onPress={() => pickImage()}
+                />
+                <Image
+                    style={image ? { height: 200 } : ""}
+                    source={{ uri: image }}
                 />
             </View>
             <View style={styles.sectionContainer}>
@@ -201,15 +235,14 @@ export const CreatePrivateRecipeScreen = () => {
                     />
                 </View>
             </Modal>
-        </View>
+        </ScrollView>
     )
 
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: "center",
+        flexGrow: 1,
         backgroundColor: "#fff",
     },
     titleContainer: {
