@@ -36,6 +36,18 @@ export const updateMyRecipeIntoDB = createAsyncThunk(
   }
 );
 
+// dbのマイレシピを削除
+export const deleteMyRecipeFromDB = createAsyncThunk(
+  "myRecipe/deleteMyRecipeFromDB",
+  async (myRecipeID) => {
+    const res = await fetch("http://18.183.189.68:8080/myrecipedata/delete", {
+      method: "post",
+      body: JSON.stringify({ RecipeID: myRecipeID }),
+    });
+    return res.json();
+  }
+);
+
 // 初期状態
 const initialState = {
   data: [],
@@ -91,6 +103,17 @@ export const MyRecipeSlice = createSlice({
     });
     builder.addCase(updateMyRecipeIntoDB.rejected, (state, action) => {
       state.error = "マイレシピの更新に失敗しました。";
+    });
+    // deleteMyRecipeFromDB
+    builder.addCase(deleteMyRecipeFromDB.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.isApiConnected = true;
+      } else {
+        state.error = "マイレシピの削除に失敗しました。";
+      }
+    });
+    builder.addCase(deleteMyRecipeFromDB.rejected, (state, action) => {
+      state.error = "マイレシピの削除に失敗しました。";
     });
   },
 });

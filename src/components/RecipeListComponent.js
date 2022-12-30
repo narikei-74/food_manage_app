@@ -6,7 +6,6 @@ import {
   Alert,
 } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
-import { Button } from "@rneui/themed";
 import { useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { FillButton } from "./atoms/FillButton";
@@ -31,7 +30,6 @@ const RecipeListComponent = (props) => {
 
   if (myRecipe.isApiConnected === true) {
     dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
-    navigation.goBack();
     dispatch(resetIsApiConnected());
   }
 
@@ -41,32 +39,36 @@ const RecipeListComponent = (props) => {
   }
 
   //選択日のレシピデータ
-  const CurrentDateMyRecipe = getCurrentDateMyRecipe(myRecipe.data, currentDate);
+  const CurrentDateMyRecipe = getCurrentDateMyRecipe(
+    myRecipe.data,
+    currentDate
+  );
 
   const onPressAdd = async (addData) => {
     dispatch(addMyRecipeIntoDB(addData));
+    navigation.goBack();
   };
 
   const onPressUpdate = async (updateData) => {
     dispatch(updateMyRecipeIntoDB(updateData));
+    navigation.goBack();
   };
 
   //レシピの重複チェック
   const isDuplicationRecipe = (recipe) => {
-    let isDuplication = false
+    let isDuplication = false;
     CurrentDateMyRecipe.map((myRec) => {
       if (myRec.Recipe.ID == recipe.ID) {
         isDuplication = true;
-        Alert.alert(
-          "",
-          "この品はすでに追加されています。",
-          [{
+        Alert.alert("", "この品はすでに追加されています。", [
+          {
             text: "確認",
-          }]);
+          },
+        ]);
       }
-    })
-    return isDuplication
-  }
+    });
+    return isDuplication;
+  };
 
   const previousScreen =
     route.params != undefined && "previousScreen" in route.params
@@ -83,7 +85,7 @@ const RecipeListComponent = (props) => {
           source={{ uri: recipe.Image_key }}
           resizeMode="cover"
           style={styles.image}
-          imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, }}
+          imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
         >
           {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
             <FillButton
@@ -93,19 +95,19 @@ const RecipeListComponent = (props) => {
                 if (!isDuplication) {
                   editRecipeID
                     ? onPressUpdate({
-                      ID: editRecipeID,
-                      UserID: currentUser.ID,
-                      RecipeID: recipe.ID,
-                      Index: index,
-                      Date: currentDate,
-                    })
+                        ID: editRecipeID,
+                        UserID: currentUser.ID,
+                        RecipeID: recipe.ID,
+                        Index: index,
+                        Date: currentDate,
+                      })
                     : onPressAdd({
-                      UserID: currentUser.ID,
-                      RecipeID: recipe.ID,
-                      Index: index,
-                      Date: currentDate,
-                    });
-                };
+                        UserID: currentUser.ID,
+                        RecipeID: recipe.ID,
+                        Index: index,
+                        Date: currentDate,
+                      });
+                }
               }}
               containerStyle={{
                 position: "absolute",
@@ -126,11 +128,7 @@ const RecipeListComponent = (props) => {
     );
   });
 
-  return (
-    <View style={styles.blocks}>
-      {recipeView}
-    </View>
-  );
+  return <View style={styles.blocks}>{recipeView}</View>;
 };
 
 export default RecipeListComponent;

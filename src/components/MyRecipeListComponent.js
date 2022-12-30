@@ -1,17 +1,23 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useRoute } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentDateMyRecipe } from "../utils/function";
 import { MiniButton } from "./atoms/MiniButton";
 import MyRecipeListStyle from "../styles/MyRecipeListStyle";
+import { deleteMyRecipeFromDB } from "../redux/MyRecipeSlice";
 
 const MyRecipeListComponent = (props) => {
   const { onPress, navigation } = props;
   const styles = MyRecipeListStyle();
   const route = useRoute();
+  const dispatch = useDispatch();
 
   const myRecipeData = useSelector((state) => state.myRecipe);
+
+  const deleteMyRecipeEvent = (ID) => {
+    dispatch(deleteMyRecipeFromDB(ID));
+  };
 
   if (myRecipeData.loader == false) {
     const currentDate = useSelector((state) => state.currentDate).currentDate;
@@ -121,11 +127,7 @@ const MyRecipeListComponent = (props) => {
                         <MiniButton
                           title={"削除"}
                           onPress={() => {
-                            navigation.navigate("RecipeList", {
-                              editRecipeID: recipe.ID,
-                              previousScreen: route.name,
-                              i: i,
-                            });
+                            deleteMyRecipeEvent(recipe.ID);
                           }}
                           color="#888"
                         />
