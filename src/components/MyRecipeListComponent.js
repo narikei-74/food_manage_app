@@ -12,8 +12,7 @@ import {
   resetIsApiConnected,
 } from "../redux/MyRecipeSlice";
 import { useState } from "react";
-import Modal from "react-native-modal";
-import { Button } from "@rneui/themed";
+import DeleteConfirmModalComponent from "./DeleteConfirmModalComponent";
 
 const MyRecipeListComponent = (props) => {
   const { onPress, navigation } = props;
@@ -195,32 +194,11 @@ const MyRecipeListComponent = (props) => {
     return (
       <View style={styles.blocks}>
         {recipeView()}
-        <Modal isVisible={isVisibleDeleteConfirm}>
-          <View style={styles.confirmModal}>
-            <Text style={styles.confirmModalText}>
-              削除してもよろしいですか？
-            </Text>
-            <View style={styles.confirmModalButtons}>
-              <Button
-                onPress={() => {
-                  setIsVisibleDeleteConfirm(false);
-                }}
-                title="キャンセル"
-                titleStyle={styles.confirmModalCancelText}
-                buttonStyle={styles.confirmModalCancel}
-              />
-              <Button
-                onPress={() => {
-                  deleteMyRecipeEvent();
-                  setIsVisibleDeleteConfirm(false);
-                }}
-                title="OK"
-                titleStyle={styles.confirmModalOKText}
-                buttonStyle={styles.confirmModalOK}
-              />
-            </View>
-          </View>
-        </Modal>
+        <DeleteConfirmModalComponent
+          deleteEvent={deleteMyRecipeEvent}
+          isVisibleDeleteConfirm={isVisibleDeleteConfirm}
+          setIsVisibleDeleteConfirm={setIsVisibleDeleteConfirm}
+        />
       </View>
     );
   } else {

@@ -18,6 +18,7 @@ import {
 } from "../redux/FoodStockSlice";
 import { Button, CheckBox, Icon } from "@rneui/base";
 import { FoodStockListStyle } from "../styles/FoodStockListStyle";
+import DeleteConfirmModalComponent from "./DeleteConfirmModalComponent";
 
 const FoodStockListComponent = (props) => {
   const { editFlag, navigation } = props;
@@ -29,6 +30,7 @@ const FoodStockListComponent = (props) => {
   const foodStockList = foodStock.data;
   const [checkedIDs, setCheckedIDs] = useState([]);
   const [foodStockUnits, setFoodStockUnits] = useState({});
+  const [isVisibleDeleteConfirm, setIsVisibleDeleteConfirm] = useState(false);
 
   useEffect(() => {
     let units = {};
@@ -98,12 +100,7 @@ const FoodStockListComponent = (props) => {
     navigation.navigate("FoodStockList");
   };
 
-  const onPressDelete = () => {
-    if (checkedIDs.length == 0) {
-      alert("削除する食材にチェックを入れてください。");
-      return;
-    }
-
+  const deleteFoodStockEvent = () => {
     dispatch(deleteFoodStockFromDB(checkedIDs));
   };
 
@@ -236,12 +233,24 @@ const FoodStockListComponent = (props) => {
               size: 15,
               color: "white",
             }}
-            onPress={onPressDelete}
+            onPress={() => {
+              if (checkedIDs.length == 0) {
+                alert("削除する食材にチェックを入れてください。");
+                return;
+              }
+
+              setIsVisibleDeleteConfirm(true);
+            }}
             titleStyle={styles.deleteBtnTitle}
           />
         </View>
       )}
       <View style={{ marginTop: 14 }}>{foodStockListView()}</View>
+      <DeleteConfirmModalComponent
+        deleteEvent={deleteFoodStockEvent}
+        isVisibleDeleteConfirm={isVisibleDeleteConfirm}
+        setIsVisibleDeleteConfirm={setIsVisibleDeleteConfirm}
+      />
     </View>
   );
 };
