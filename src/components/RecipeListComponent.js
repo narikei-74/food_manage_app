@@ -11,10 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FillButton } from "./atoms/FillButton";
 import {
   addMyRecipeIntoDB,
-  fetchMyRecipe,
   updateMyRecipeIntoDB,
-  resetIsApiConnected,
-  resetError,
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
 
@@ -27,16 +24,6 @@ const RecipeListComponent = (props) => {
   const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
   const myRecipe = useSelector((state) => state.myRecipe);
-
-  if (myRecipe.isApiConnected === true) {
-    dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
-    dispatch(resetIsApiConnected());
-  }
-
-  if (myRecipe.error !== undefined) {
-    Alert.alert(myRecipe.error);
-    dispatch(resetError());
-  }
 
   //選択日のレシピデータ
   const CurrentDateMyRecipe = getCurrentDateMyRecipe(

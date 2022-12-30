@@ -47,7 +47,11 @@ const NotEnoughFoodListComponent = () => {
         );
       } else {
         return notEnoughFoods.data.map((food, i) => {
-          if (food.gram < 0 || food.quantity < 0) {
+          if (
+            food.gram < 0 ||
+            food.quantity < 0 ||
+            (food.gram == 0 && food.quantity == 0)
+          ) {
             return;
           }
 
@@ -66,7 +70,7 @@ const NotEnoughFoodListComponent = () => {
 
   return (
     <View style={{ marginTop: 15 }}>
-      {notEnoughFoods.length != 0 && (
+      {notEnoughFoods.data.length != 0 && (
         <Text style={styles.warningText}>
           以下の食材が足りていません。食材を購入しましょう。
         </Text>

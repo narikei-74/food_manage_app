@@ -5,18 +5,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentDateMyRecipe } from "../utils/function";
 import { MiniButton } from "./atoms/MiniButton";
 import MyRecipeListStyle from "../styles/MyRecipeListStyle";
-import { deleteMyRecipeFromDB } from "../redux/MyRecipeSlice";
+import {
+  deleteMyRecipeFromDB,
+  fetchMyRecipe,
+  resetError,
+  resetIsApiConnected,
+} from "../redux/MyRecipeSlice";
+import { useState } from "react";
+import Modal from "react-native-modal";
+import { Button } from "@rneui/themed";
 
 const MyRecipeListComponent = (props) => {
   const { onPress, navigation } = props;
   const styles = MyRecipeListStyle();
   const route = useRoute();
+  const [isVisibleDeleteConfirm, setIsVisibleDeleteConfirm] = useState(false);
+  const [deleteMyRecipeID, setDeleteMyRecipeID] = useState(null);
+
   const dispatch = useDispatch();
 
+  const currentUser = useSelector((state) => state.currentUser).data;
   const myRecipeData = useSelector((state) => state.myRecipe);
 
-  const deleteMyRecipeEvent = (ID) => {
-    dispatch(deleteMyRecipeFromDB(ID));
+  if (myRecipeData.isApiConnected === true) {
+    dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
+    dispatch(resetIsApiConnected());
+  }
+
+  if (myRecipeData.error !== undefined) {
+    Alert.alert(myRecipeData.error);
+    dispatch(resetError());
+  }
+
+  const deleteMyRecipeEvent = () => {
+    dispatch(deleteMyRecipeFromDB(deleteMyRecipeID));
   };
 
   if (myRecipeData.loader == false) {
@@ -127,7 +149,8 @@ const MyRecipeListComponent = (props) => {
                         <MiniButton
                           title={"削除"}
                           onPress={() => {
-                            deleteMyRecipeEvent(recipe.ID);
+                            setDeleteMyRecipeID(recipe.ID);
+                            setIsVisibleDeleteConfirm(true);
                           }}
                           color="#888"
                         />
@@ -157,7 +180,9 @@ const MyRecipeListComponent = (props) => {
                   />
                 </View>
               ) : (
-                <View style={styles.emptyBlock}></View>
+                <View style={styles.emptyBlock}>
+                  <Icon name="grain" type="material" color="#bbb" size={90} />
+                </View>
               )}
             </View>
           );
@@ -167,7 +192,37 @@ const MyRecipeListComponent = (props) => {
       }
     };
 
-    return <View style={styles.blocks}>{recipeView()}</View>;
+    return (
+      <View style={styles.blocks}>
+        {recipeView()}
+        <Modal isVisible={isVisibleDeleteConfirm}>
+          <View style={styles.confirmModal}>
+            <Text style={styles.confirmModalText}>
+              削除してもよろしいですか？
+            </Text>
+            <View style={styles.confirmModalButtons}>
+              <Button
+                onPress={() => {
+                  setIsVisibleDeleteConfirm(false);
+                }}
+                title="キャンセル"
+                titleStyle={styles.confirmModalCancelText}
+                buttonStyle={styles.confirmModalCancel}
+              />
+              <Button
+                onPress={() => {
+                  deleteMyRecipeEvent();
+                  setIsVisibleDeleteConfirm(false);
+                }}
+                title="OK"
+                titleStyle={styles.confirmModalOKText}
+                buttonStyle={styles.confirmModalOK}
+              />
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
   } else {
     return (
       <View style={styles.blocks}>
