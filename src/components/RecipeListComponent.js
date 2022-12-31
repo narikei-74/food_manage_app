@@ -15,7 +15,7 @@ import {
   updateMyRecipeIntoDB,
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
-import { fetchRecipe } from "../redux/RecipeSlice";
+import { fetchAddRecipe } from "../redux/RecipeSlice";
 import { useState } from "react";
 
 const RecipeListComponent = (props) => {
@@ -67,11 +67,12 @@ const RecipeListComponent = (props) => {
       : "";
   return (
     <FlatList
+      style={styles.blocks}
       data={recipeData}
       numColumns={2}
       onEndReached={() => {
         if (currentOffsetRecipe + 20 == recipeData.length) {
-          dispatch(fetchRecipe(recipeData.length - 1));
+          dispatch(fetchAddRecipe(recipeData.length - 1));
         }
       }}
       renderItem={({ item }) => (

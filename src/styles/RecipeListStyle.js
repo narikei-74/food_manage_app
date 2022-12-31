@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 
 const RecipeListStyle = () => {
   const styles = StyleSheet.create({
+    blocks: {
+      padding: "2%",
+    },
     foodBlock: {
       width: "48%",
       height: 225,

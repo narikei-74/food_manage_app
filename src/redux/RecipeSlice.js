@@ -11,6 +11,17 @@ export const fetchRecipe = createAsyncThunk(
   }
 );
 
+export const fetchAddRecipe = createAsyncThunk(
+  "recipe/fetchAddRecipe",
+  async (offset) => {
+    const res = await fetch("http://18.183.189.68:8080/recipedata/get", {
+      method: "post",
+      body: JSON.stringify({ Offset: offset }),
+    });
+    return res.json();
+  }
+);
+
 const initialState = {
   data: [],
   loader: true,
@@ -28,14 +39,25 @@ export const RecipeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchRecipe.fulfilled, (state, action) => {
       if (action.payload.success === true) {
-        state.data = [...state.data, ...action.payload.data];
-        state.loader = false;
+        state.data = action.payload.data;
       } else {
         state.error = "レシピ情報を取得できませんでした。";
-        state.loader = false;
       }
+      state.loader = false;
     });
     builder.addCase(fetchRecipe.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loader = false;
+    });
+    builder.addCase(fetchAddRecipe.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.data = [...state.data, ...action.payload.data];
+      } else {
+        state.error = "レシピ情報を取得できませんでした。";
+      }
+      state.loader = false;
+    });
+    builder.addCase(fetchAddRecipe.rejected, (state, action) => {
       state.error = action.error.message;
       state.loader = false;
     });
