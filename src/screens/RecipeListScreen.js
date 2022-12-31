@@ -22,7 +22,7 @@ const RecipeListScreen = ({ navigation }) => {
   const recipes = useSelector((state) => state.recipe);
 
   useEffect(() => {
-    dispatch(fetchRecipe()).catch((error) => error.massage);
+    dispatch(fetchRecipe(0)).catch((error) => error.massage);
   }, [dispatch]);
 
   const recipeListView = () => {
@@ -36,26 +36,26 @@ const RecipeListScreen = ({ navigation }) => {
       if (recipes.error !== undefined) {
         alert(recipes.error);
         dispatch(resetError());
+      } else {
+        return (
+          <RecipeListComponent
+            onPress={(recipe) => {
+              navigation.navigate("RecipeDetail", { recipe: recipe });
+            }}
+            recipeData={recipes.data}
+            currentWeek={false}
+            editRecipeID={editRecipeID}
+            navigation={navigation}
+            index={index}
+          />
+        );
       }
-
-      return (
-        <RecipeListComponent
-          onPress={(recipe) => {
-            navigation.navigate("RecipeDetail", { recipe: recipe });
-          }}
-          recipeData={recipes.data}
-          currentWeek={false}
-          editRecipeID={editRecipeID}
-          navigation={navigation}
-          index={index}
-        />
-      );
     }
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView>{recipeListView()}</ScrollView>
+      {recipeListView()}
       <RecipeListButtonsComponent navigation={navigation} />
     </View>
   );
