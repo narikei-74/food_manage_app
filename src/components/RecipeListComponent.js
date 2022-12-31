@@ -16,6 +16,7 @@ import {
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
 import { fetchRecipe } from "../redux/RecipeSlice";
+import { useState } from "react";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
@@ -26,6 +27,7 @@ const RecipeListComponent = (props) => {
   const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
   const myRecipe = useSelector((state) => state.myRecipe);
+  const [currentOffsetRecipe, setCurrentOffsetRecipe] = useState(0);
 
   //選択日のレシピデータ
   const CurrentDateMyRecipe = getCurrentDateMyRecipe(
@@ -68,7 +70,9 @@ const RecipeListComponent = (props) => {
       data={recipeData}
       numColumns={2}
       onEndReached={() => {
-        dispatch(fetchRecipe(recipeData.length - 1));
+        if (currentOffsetRecipe + 20 == recipeData.length) {
+          dispatch(fetchRecipe(recipeData.length - 1));
+        }
       }}
       renderItem={({ item }) => (
         <TouchableOpacity
