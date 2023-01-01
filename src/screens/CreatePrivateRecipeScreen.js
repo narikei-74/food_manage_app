@@ -357,9 +357,11 @@ export const CreatePrivateRecipeScreen = () => {
                             <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", height: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
                                 {materials.map((material) => {
                                     return (
-                                        <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{foodList.map((v) => {
-                                            if (v.ID == material.FoodID) return v.Name
-                                        })}
+                                        <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>
+                                            {material.Unit ? material.Unit : "　"}
+                                            {foodList.map((v) => {
+                                                if (v.ID == material.FoodID) return v.Name
+                                            })}
                                             {material.Quantity_label != undefined ? material.Quantity_label : ""}
                                         </Text>
                                     )
