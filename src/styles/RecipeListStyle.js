@@ -3,8 +3,6 @@ import { StyleSheet } from "react-native";
 const RecipeListStyle = () => {
   const styles = StyleSheet.create({
     blocks: {
-      flexDirection: "row",
-      flexWrap: "wrap",
       padding: "2%",
     },
     foodBlock: {
@@ -17,10 +15,6 @@ const RecipeListStyle = () => {
       marginTop: 10,
       marginLeft: "1%",
       marginRight: "1%",
-      // shadowColor: "#555",
-      // shadowOffset: { width: 0, height: 0 },
-      // shadowOpacity: 0.4,
-      // shadowRadius: 8,
     },
     image: {
       width: "100%",
@@ -53,7 +47,7 @@ const RecipeListStyle = () => {
       height: "100%",
       alignItems: "center",
       justifyContent: "center",
-    }
+    },
   });
 
   return styles;

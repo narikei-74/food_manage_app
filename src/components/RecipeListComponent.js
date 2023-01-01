@@ -4,6 +4,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Alert,
+  FlatList,
 } from "react-native";
 import RecipeListStyle from "../styles/RecipeListStyle";
 import { useRoute } from "@react-navigation/native";
@@ -14,6 +15,8 @@ import {
   updateMyRecipeIntoDB,
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
+import { fetchAddRecipe } from "../redux/RecipeSlice";
+import { useState } from "react";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipeData, editRecipeID, navigation, index } = props;
@@ -24,6 +27,7 @@ const RecipeListComponent = (props) => {
   const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
   const myRecipe = useSelector((state) => state.myRecipe);
+  const [currentOffsetRecipe, setCurrentOffsetRecipe] = useState(0);
 
   //選択日のレシピデータ
   const CurrentDateMyRecipe = getCurrentDateMyRecipe(
@@ -61,61 +65,68 @@ const RecipeListComponent = (props) => {
     route.params != undefined && "previousScreen" in route.params
       ? route.params.previousScreen
       : "";
-
-  const recipeView = recipeData?.map((recipe, i) => {
-    return (
-      <TouchableOpacity
-        style={styles.foodBlock}
-        onPress={() => onPress(recipe)}
-      >
-        <ImageBackground
-          source={{ uri: recipe.Image_key }}
-          resizeMode="cover"
-          style={styles.image}
-          imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+  return (
+    <FlatList
+      style={styles.blocks}
+      data={recipeData}
+      numColumns={2}
+      onEndReached={() => {
+        if (currentOffsetRecipe + 20 == recipeData.length) {
+          dispatch(fetchAddRecipe(recipeData.length - 1));
+        }
+      }}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.foodBlock}
+          onPress={() => onPress(item)}
         >
-          {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
-            <FillButton
-              title={"マイレシピに追加"}
-              onPress={() => {
-                const isDuplication = isDuplicationRecipe(recipe);
-                if (!isDuplication) {
-                  editRecipeID
-                    ? onPressUpdate({
-                        ID: editRecipeID,
-                        UserID: currentUser.ID,
-                        RecipeID: recipe.ID,
-                        Index: index,
-                        Date: currentDate,
-                      })
-                    : onPressAdd({
-                        UserID: currentUser.ID,
-                        RecipeID: recipe.ID,
-                        Index: index,
-                        Date: currentDate,
-                      });
-                }
-              }}
-              containerStyle={{
-                position: "absolute",
-                justifyContent: "center",
-                left: 0,
-                right: 0,
-                alignItems: "center",
-                bottom: 20,
-              }}
-              fontSize={14}
-            />
-          )}
-        </ImageBackground>
-        <View style={styles.recipeNameTextContainer}>
-          <Text style={styles.recipeNameText}>{recipe.Name}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  });
-
-  return <View style={styles.blocks}>{recipeView}</View>;
+          <ImageBackground
+            source={{ uri: item.Image_key }}
+            resizeMode="cover"
+            style={styles.image}
+            imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+          >
+            {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
+              <FillButton
+                title={"マイレシピに追加"}
+                onPress={() => {
+                  const isDuplication = isDuplicationRecipe(item);
+                  if (!isDuplication) {
+                    editRecipeID
+                      ? onPressUpdate({
+                          ID: editRecipeID,
+                          UserID: currentUser.ID,
+                          RecipeID: item.ID,
+                          Index: index,
+                          Date: currentDate,
+                        })
+                      : onPressAdd({
+                          UserID: currentUser.ID,
+                          RecipeID: item.ID,
+                          Index: index,
+                          Date: currentDate,
+                        });
+                  }
+                }}
+                containerStyle={{
+                  position: "absolute",
+                  justifyContent: "center",
+                  left: 0,
+                  right: 0,
+                  alignItems: "center",
+                  bottom: 20,
+                }}
+                fontSize={14}
+              />
+            )}
+          </ImageBackground>
+          <View style={styles.recipeNameTextContainer}>
+            <Text style={styles.recipeNameText}>{item.Name}</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+    />
+  );
 };
 
 export default RecipeListComponent;
