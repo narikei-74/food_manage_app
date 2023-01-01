@@ -10,7 +10,6 @@ import { FillButton } from "../components/atoms/FillButton";
 import { OutlineButton } from "../components/atoms/OutlineButton";
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from "react-native";
-import { MiniButton } from "../components/atoms/MiniButton";
 
 export const CreatePrivateRecipeScreen = () => {
     const [recipeName, setRecipeName] = useState("");
@@ -59,6 +58,11 @@ export const CreatePrivateRecipeScreen = () => {
 
     //送信処理
     const submitRecipe = () => {
+        const validationMessage = validate();
+        if (validationMessage != "") {
+            Alert.alert(validationMessage);
+            return false;
+        }
         const data = {
             Name: recipeName,
             Cooking_time: time,
@@ -67,7 +71,7 @@ export const CreatePrivateRecipeScreen = () => {
             Private_flag: 1,
             Is_ok_publick: isOkPublic ? 1 : 0,
             UserId: currentUser.ID,
-            Recipe_materials: [],
+            Recipe_materials: materials,
             Recipe_categories: [],
             Image_key: "",
         }
@@ -82,6 +86,29 @@ export const CreatePrivateRecipeScreen = () => {
             body: JSON.stringify(submitData),
         });
 
+    }
+
+    //バリデーション
+    const validate = () => {
+        if (recipeName == "") {
+            return "レシピ名を入力してください。"
+        }
+        if (time == "") {
+            return "所要時間を選択してください。"
+        }
+        if (category == null) {
+            return "カテゴリを選択してください。"
+        }
+        if (howToCook[0] == "") {
+            return "作り方を入力してください。"
+        }
+        if (materials.length == 0) {
+            return "材料を選択してください。"
+        }
+        if (!currentUser.ID) {
+            return "エラーが発生しました。"
+        }
+        return ""
     }
 
     //作り方をセット
