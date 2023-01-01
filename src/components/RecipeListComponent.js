@@ -61,6 +61,26 @@ const RecipeListComponent = (props) => {
     return isDuplication;
   };
 
+  const dishCategoryInfo = (dishCategory) => {
+    let returnObject = {}
+    if (dishCategory == 1) {
+      returnObject = { str: "主食", color: "#E9D0A6" }
+    }
+    else if (dishCategory == 2) {
+      returnObject = { str: "主菜", color: "#F06A47" }
+    }
+    else if (dishCategory == 3) {
+      returnObject = { str: "副菜", color: "#6EC388" }
+    }
+    else if (dishCategory == 4) {
+      returnObject = { str: "汁物", color: "#C66600" }
+    }
+    else {
+      returnObject = { str: "", color: "#C66600" }
+    }
+    return returnObject
+  }
+
   const previousScreen =
     route.params != undefined && "previousScreen" in route.params
       ? route.params.previousScreen
@@ -86,6 +106,11 @@ const RecipeListComponent = (props) => {
             style={styles.image}
             imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
           >
+            <View style={{ margin: 5, width: 50, height: 30, backgroundColor: dishCategoryInfo(item.Dish_category).color, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
+              <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                {dishCategoryInfo(item.Dish_category).str}
+              </Text>
+            </View>
             {route.name == "RecipeList" && previousScreen == "MyRecipeEdit" && (
               <FillButton
                 title={"マイレシピに追加"}
@@ -94,18 +119,18 @@ const RecipeListComponent = (props) => {
                   if (!isDuplication) {
                     editRecipeID
                       ? onPressUpdate({
-                          ID: editRecipeID,
-                          UserID: currentUser.ID,
-                          RecipeID: item.ID,
-                          Index: index,
-                          Date: currentDate,
-                        })
+                        ID: editRecipeID,
+                        UserID: currentUser.ID,
+                        RecipeID: item.ID,
+                        Index: index,
+                        Date: currentDate,
+                      })
                       : onPressAdd({
-                          UserID: currentUser.ID,
-                          RecipeID: item.ID,
-                          Index: index,
-                          Date: currentDate,
-                        });
+                        UserID: currentUser.ID,
+                        RecipeID: item.ID,
+                        Index: index,
+                        Date: currentDate,
+                      });
                   }
                 }}
                 containerStyle={{
