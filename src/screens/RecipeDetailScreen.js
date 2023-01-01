@@ -7,6 +7,15 @@ import { View, Text, Image } from "react-native";
 const RecipeDetailScreen = () => {
   const route = useRoute();
   const { recipe } = route.params;
+  const toJson = (recipe) => {
+    try {
+      return JSON.parse(recipe.How_to_cook)
+    } catch {
+      return [recipe.How_to_cook];
+    };
+  }
+  const json = toJson(recipe);
+
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.contents}>
@@ -28,7 +37,10 @@ const RecipeDetailScreen = () => {
             {recipe.Recipe_materials.map((material, i) => {
               return (
                 <View key={i} style={styles.materialTextContainer}>
-                  <Text style={styles.textLeft}>{material.Food.Name}</Text>
+                  <Text style={styles.textLeft}>
+                    {material.Unit ? material.Unit : "　"}
+                    {material.Food.Name}
+                  </Text>
                   <Text style={styles.textRight}>・・・{material.Quantity_label}</Text>
                 </View>
               )
@@ -37,9 +49,16 @@ const RecipeDetailScreen = () => {
         </View>
         <View style={styles.cookTextContainer}>
           <Text style={styles.materialTitle}>作り方</Text>
-          <Text>
-            {recipe.How_to_cook}
-          </Text>
+          <View style={{ justifyContent: "flex-start" }}>
+            {json.map((text, index) => {
+              return (
+                <View style={styles.howToContainer}>
+                  <Text key={index} style={styles.howToNum}>{index + 1}. </Text>
+                  <Text style={styles.howToText}>{text}</Text>
+                </View>
+              )
+            })}
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -109,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   cookTextContainer: {
-    width: "90%",
+    width: "85%",
     alignItems: "center",
     height: "100%",
     margin: 20,
@@ -117,6 +136,21 @@ const styles = StyleSheet.create({
   textLeft: {
   },
   textRight: {
+  },
+  howToContainer: {
+    flexDirection: "row",
+    // justifyContent: "center",
+    margin: 8,
+    paddingBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc"
+  },
+  howToNum: {
+    fontSize: 18
+  }
+  ,
+  howToText: {
+
   }
 })
 
