@@ -1,5 +1,5 @@
 import { CheckBox } from "@rneui/base";
-import { Input } from "@rneui/themed"
+import { Icon, Input } from "@rneui/themed"
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import ModalSelector from "react-native-modal-selector";
@@ -10,19 +10,26 @@ import { FillButton } from "../components/atoms/FillButton";
 import { OutlineButton } from "../components/atoms/OutlineButton";
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from "react-native";
+import { recipeTags } from "../config/RecipeConfig";
 
 export const CreatePrivateRecipeScreen = () => {
     const [recipeName, setRecipeName] = useState("");
-    const [time, setTime] = useState("");
-    const [category, setCategory] = useState(1);
+    const [time, setTime] = useState(""); //所要時間
+    const [category, setCategory] = useState(null);
+    const [materialNum, setMaterialNum] = useState([]); //材料の一時的な個数を保持
+    const [units, setUnits] = useState([]); //材料の一時的な個ユニットを保持
     const [materials, setMaterials] = useState([]);
-    const [howToCook, setHowToCook] = useState("");
+    const [tags, setTags] = useState([]);
+    const [howToCook, setHowToCook] = useState([""]);
     const [isOkPublic, setisOkPublic] = useState(false);
     const [isMaterialModalOpen, setIsMaterialModalOpen] = useState(false);
+    const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [image, setImage] = useState();
     const dispatch = useDispatch();
     const food = useSelector((state) => state.food);
     const foodList = food.data;
+    const currentUser = useSelector((state) => state.currentUser).data;
+    const tagList = recipeTags;
 
     useEffect(() => {
         dispatch(fetchFood());
@@ -37,7 +44,7 @@ export const CreatePrivateRecipeScreen = () => {
         { key: index++, label: "30分", value: 30 },
         { key: index++, label: "40分", value: 40 },
         { key: index++, label: "50分", value: 50 },
-        { key: index++, label: "60分", value: 60 },
+        { key: index++, label: "60分以上", value: 60 },
     ];
     const categories = [
         { key: index++, label: "主食", value: 1 },
@@ -48,23 +55,149 @@ export const CreatePrivateRecipeScreen = () => {
     const foodMaterials = [];
     foodList.map((food, i) => {
         foodMaterials.push({
-            key: i,
-            label: food.Name
+            key: food.ID,
+            label: food.Name,
         });
     });
 
+    //送信処理
+    const submitRecipe = () => {
+        const validationMessage = validate();
+        if (validationMessage != "") { //バリデーション
+            Alert.alert(validationMessage);
+            return false;
+        }
+        const data = {
+            Name: recipeName,
+            Cooking_time: time,
+            Dish_category: category,
+            How_to_cook: JSON.stringify(howToCook),
+            Private_flag: 1,
+            Is_ok_publick: isOkPublic ? 1 : 0,
+            UserId: currentUser.ID,
+            Recipe_materials: materials,
+            Recipe_categories: tags,
+            Image_key: "",
+        }
+
+        const submitData = {
+            Image: "",
+            Data: data
+        }
+        console.log(submitData); //デバッグ用 送信されるデータ
+
+        const res = fetch("http://18.183.189.68:8080/recipedata/add", {
+            method: "post",
+            body: JSON.stringify(submitData),
+        });
+        //ここに成功なら前の画面に戻る処理を入れる
+    }
+
+    //バリデーション
+    const validate = () => {
+        if (recipeName == "") {
+            return "レシピ名を入力してください。"
+        }
+        if (time == "") {
+            return "所要時間を選択してください。"
+        }
+        if (category == null) {
+            return "カテゴリを選択してください。"
+        }
+        if (howToCook[0] == "") {
+            return "作り方を入力してください。"
+        }
+        if (materials.length == 0) {
+            return "材料を選択してください。"
+        }
+        if (!currentUser.ID) {
+            return "エラーが発生しました。"
+        }
+        return ""
+    }
+
+    //作り方をセット
+    const onChangeHowTo = (value, index) => {
+        let howToText = howToCook;
+        howToText[index] = value;
+        setHowToCook([...howToText]);
+    }
+
+    //材料の個数をセット
+    const addFoodNum = (value) => {
+        let mat = materialNum;
+        mat = { ...mat, ...value };
+
+        setMaterialNum(mat);
+    }
+
+    //材料のユニットをセット
+    const addUnit = (value) => {
+        let uni = units;
+        uni = { ...uni, ...value };
+        setUnits(uni);
+    }
+
     //材料追加
     const addFood = (food) => {
+        const id = food.ID;
+        if (!id) {
+            return false;
+        }
         const selectedFoods = materials;
-        selectedFoods.push(food);
+
+        let insertValue = {};
+        insertValue.FoodID = id;
+
+        //個,g,単位なしで分岐
+        if (!materialNum[id]) {
+            Alert.alert("量を入力してください。");
+            return false;
+        }
+        else if (food.Unit == 2) {
+            insertValue.Quantity = materialNum[id];
+            insertValue.Gram = null;
+            insertValue.Quantity_label = `${materialNum[id]}個`;
+        } else if (food.Unit == 1) {
+            insertValue.Quantity = null;
+            insertValue.Gram = materialNum[id];
+            insertValue.Quantity_label = `${materialNum[id]}g`;
+        } else {
+            insertValue.Quantity = null;
+            insertValue.Gram = null;
+            insertValue.Quantity_label = `${materialNum[id]}`;
+        }
+
+        if (units[id]) {
+            insertValue.Unit = units[id];
+        } else {
+            insertValue.Unit = null;
+        }
+
+        selectedFoods.push(insertValue);
+
         setMaterials([...new Set(selectedFoods)]);
     }
     //材料削除
-    const removeFood = (food) => {
+    const removeFood = (id) => {
         let selectedFoods = materials;
-        selectedFoods = selectedFoods.filter((v) => !v.match(food));
+        selectedFoods = selectedFoods.filter((v) => !String(v.FoodID).match(String(id)));
         setMaterials([...new Set(selectedFoods)]);
     }
+
+    //タグ追加
+    const addTag = (tag) => {
+        let selectedTags = [...tags];
+        selectedTags.push(tag);
+        setTags(selectedTags);
+    }
+    //タグ削除
+    const removeTag = (tag) => {
+        let selectedTags = tags;
+        selectedTags = selectedTags.filter((v) => !v.Category_name.match(tag.Category_name));
+        setTags([...new Set(selectedTags)]);
+    }
+
     //画像選択
     const pickImage = async () => {
 
@@ -93,11 +226,21 @@ export const CreatePrivateRecipeScreen = () => {
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>新しいレシピを作成しましょう</Text>
             </View>
+            <View>
+                <OutlineButton
+                    title="画像選択"
+                    onPress={() => pickImage()}
+                />
+                <Image
+                    style={image ? { height: 200 } : ""}
+                    source={{ uri: image }}
+                />
+            </View>
             <View style={styles.sectionContainer}>
                 <Input
                     label="レシピ名"
                     placeholder="入力してください"
-                    onChange={(val) => setRecipeName(val)}
+                    onChangeText={(val) => setRecipeName(val)}
                 />
             </View>
             <View style={styles.dropDownContainer}>
@@ -146,23 +289,35 @@ export const CreatePrivateRecipeScreen = () => {
             </View>
             <View>
                 <OutlineButton
-                    title="画像選択"
-                    onPress={() => pickImage()}
-                />
-                <Image
-                    style={image ? { height: 200 } : ""}
-                    source={{ uri: image }}
+                    title="タグ選択"
+                    onPress={() => { setIsTagModalOpen(true); }}
                 />
             </View>
             <View style={styles.sectionContainer}>
-                <Text>作り方</Text>
-                <TextInput
-                    placeholder={"1.まず、鶏もも肉は食べやすい大きさ（3〜4㎝四方くらい）にカットし... \n 2.揚げ油を160～170℃に熱し..."}
-                    multiline={true}
-                    numberOfLines={4}
-                    style={styles.textarea}
-                    scrollEnabled={true}
-                    onChange={(value) => setHowToCook(value)}
+                <Text style={{ fontSize: 18 }}>作り方</Text>
+                {howToCook.map((val, index) => {
+                    return (
+                        <View style={{ width: "100%", marginTop: 10 }}>
+                            <Text>{index + 1}.</Text>
+                            <TextInput
+                                key={index}
+                                placeholder={"まず、鶏もも肉は食べやすい大きさ（3〜4㎝四方くらい）にカットし..."}
+                                multiline={true}
+                                numberOfLines={4}
+                                style={styles.textarea}
+                                scrollEnabled={true}
+                                onChangeText={(value) => onChangeHowTo(value, index)}
+                            />
+                        </View>
+                    )
+                })}
+                <Icon
+                    raised
+                    name="add"
+                    type="material"
+                    color="#F06A47"
+                    size={20}
+                    onPress={() => { onChangeHowTo("", howToCook.length) }}
                 />
             </View>
             <View style={styles}>
@@ -186,7 +341,7 @@ export const CreatePrivateRecipeScreen = () => {
                             },
                             {
                                 text: "送信",
-                                onPress: () => console.log("ここに送信処理を記述")
+                                onPress: submitRecipe
                             }
                         ]
                     )}
@@ -196,14 +351,22 @@ export const CreatePrivateRecipeScreen = () => {
                 <View
                     style={{ width: "100%", backgroundColor: "#fff", alignItems: "center", borderRadius: 10 }}>
                     <Text style={styles.titleText}>材料選択</Text>
-
-                    <View style={{ flexWrap: "wrap", flexDirection: "row", justifyContent: "space-around", width: "80%", maxHeight: 300, }}>
-                        {materials.map((material) => {
-                            return (
-                                <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{material}</Text>
-                            )
-                        })}
-                    </View>
+                    {materials.length != 0 &&
+                        <>
+                            <Text style={{ marginBottom: 5 }}>追加した材料(スクロールして確認できます)</Text>
+                            <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", height: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
+                                {materials.map((material) => {
+                                    return (
+                                        <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{foodList.map((v) => {
+                                            if (v.ID == material.FoodID) return v.Name
+                                        })}
+                                            {material.Quantity_label != undefined ? material.Quantity_label : ""}
+                                        </Text>
+                                    )
+                                })}
+                            </ScrollView>
+                        </>
+                    }
                     {materials.length != 0 ?
                         <OutlineButton
                             title="クリア"
@@ -211,17 +374,43 @@ export const CreatePrivateRecipeScreen = () => {
                         />
                         : ""}
                     <ScrollView style={{ width: "80%", borderWidth: 1, marginBottom: 30, borderRadius: 10, borderColor: '#EFEFF4' }}>
-                        {foodMaterials.map((food, i) => {
+                        {foodList.map((food, i) => {
                             return (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        materials.includes(food.label)
-                                            ? removeFood(food.label)
-                                            : addFood(food.label)
-                                    }}
-                                    style={{ width: "100%", height: 40, padding: 3, justifyContent: "center", borderBottomWidth: 1, borderBottomColor: '#EFEFF4', alignItems: "center" }}>
-                                    <Text style={{ color: "#007AFF" }}>{food.label}</Text>
-                                </TouchableOpacity>
+                                <View
+                                    key={i}
+                                    style={{ width: "100%", flexDirection: "row", height: 40, padding: 3, borderBottomWidth: 1, borderBottomColor: '#EFEFF4', alignItems: "center" }}>
+                                    <View style={{ width: "50%", flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <Text style={{ color: "#111" }}>{food.Name}</Text>
+                                    </View>
+                                    <View style={{ width: "20%", flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <TextInput
+                                            keyboardType={food.Unit != 0 ? "numeric" : "default"}
+                                            style={{ width: 40, height: "80%", borderWidth: 1, borderColor: "#ccc", borderRadius: 4, marginRight: 5 }}
+                                            onChangeText={(text) => {
+                                                addFoodNum({ [food.ID]: text })
+                                            }} />
+
+                                        <Text>{food.Unit == 2 ? "個" : (food.Unit == 1 ? "g" : "")}</Text>
+                                    </View>
+                                    <View style={{ width: "20%", flexDirection: "row", justifyContent: "center" }}>
+                                        <TextInput
+                                            style={{ width: 20, height: "80%", borderWidth: 1, borderColor: "#ccc", borderRadius: 4 }}
+                                            onChangeText={(text) => {
+                                                addUnit({ [food.ID]: text })
+                                            }} />
+                                    </View>
+                                    <TouchableOpacity
+                                        style={{ width: "10%", flexDirection: "row", justifyContent: "flex-end" }}
+                                        onPress={() => {
+                                            materials.find(val => val.FoodID == food.ID)
+                                                ? removeFood(food.ID)
+                                                : addFood(food)
+                                        }} >
+                                        <Text style={{ color: "#F06A47" }}>{materials.find(val => val.FoodID == food.ID)
+                                            ? "削除" : "追加"}</Text>
+                                    </TouchableOpacity>
+
+                                </View>
                             )
                         })}
                     </ScrollView>
@@ -231,6 +420,64 @@ export const CreatePrivateRecipeScreen = () => {
                         color="#F06A47"
                         title="決定"
                         onPress={() => setIsMaterialModalOpen(false)}
+                        containerStyle={{ width: 100, marginTop: 20 }}
+                    />
+                </View>
+            </Modal>
+            <Modal isVisible={isTagModalOpen} scrollEnabled={true} style={{ flex: 1 }} scrollOffset={100} >
+                <View
+                    style={{ width: "100%", backgroundColor: "#fff", alignItems: "center", borderRadius: 10 }}>
+                    <Text style={styles.titleText}>タグ選択</Text>
+                    {tags.length != 0 &&
+                        <>
+                            <Text style={{ marginBottom: 5 }}>追加したタグ(スクロールして確認できます)</Text>
+                            <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", height: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
+                                {tags.map((tag) => {
+                                    return (
+                                        <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{tag.Category_name}
+                                        </Text>
+                                    )
+                                })}
+                            </ScrollView>
+                        </>
+                    }
+                    {tags.length != 0 ?
+                        <OutlineButton
+                            title="クリア"
+                            onPress={() => setTags([])}
+                        />
+                        : ""}
+                    <ScrollView style={{ width: "80%", height: 400, borderWidth: 1, marginBottom: 30, borderRadius: 10, borderColor: '#EFEFF4' }}>
+                        {tagList.map((tag, i) => {
+                            return (
+                                <View
+                                    key={i}
+                                    style={{ width: "100%", flexDirection: "row", height: 40, padding: 3, borderBottomWidth: 1, borderBottomColor: '#EFEFF4', alignItems: "center" }}>
+                                    <View style={{ width: "50%", flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <Text style={{ color: "#111" }}>{tag.Category_name}</Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                        style={{ width: "50%", flexDirection: "row", justifyContent: "flex-end" }}
+                                        onPress={() => {
+                                            tags.find(val => val.Category_name == tag.Category_name)
+                                                ? removeTag(tag)
+                                                : addTag(tag)
+                                        }} >
+                                        <Text style={{ color: "#F06A47" }}>{tags.find(val => val.Category_name == tag.Category_name)
+                                            ? "削除" : "追加"}</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            )
+                        })}
+                    </ScrollView>
+                </View>
+                <View style={styles.modalButtonContainer}>
+                    <FillButton
+                        color="#F06A47"
+                        title="決定"
+                        onPress={() => setIsTagModalOpen(false)}
                         containerStyle={{ width: 100, marginTop: 20 }}
                     />
                 </View>
@@ -256,14 +503,17 @@ const styles = StyleSheet.create({
     sectionContainer: {
         width: "80%",
         marginBottom: 10,
+        alignItems: "center",
+        marginTop: 10
     },
     textarea: {
-        height: 200,
+        height: 100,
+        width: "100%",
         borderWidth: 1,
         borderRadius: 10,
         borderColor: 'gray',
         padding: 10,
-        extAlignVertical: 2
+        extAlignVertical: 2,
     },
     dropDownContainer: {
         width: "70%",
