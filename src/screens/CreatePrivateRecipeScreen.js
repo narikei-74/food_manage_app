@@ -10,6 +10,7 @@ import { FillButton } from "../components/atoms/FillButton";
 import { OutlineButton } from "../components/atoms/OutlineButton";
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from "react-native";
+import { recipeTags } from "../config/RecipeConfig";
 
 export const CreatePrivateRecipeScreen = () => {
     const [recipeName, setRecipeName] = useState("");
@@ -18,14 +19,17 @@ export const CreatePrivateRecipeScreen = () => {
     const [materialNum, setMaterialNum] = useState([]); //材料の一時的な個数を保持
     const [units, setUnits] = useState([]); //材料の一時的な個ユニットを保持
     const [materials, setMaterials] = useState([]);
+    const [tags, setTags] = useState([]);
     const [howToCook, setHowToCook] = useState([""]);
     const [isOkPublic, setisOkPublic] = useState(false);
     const [isMaterialModalOpen, setIsMaterialModalOpen] = useState(false);
+    const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [image, setImage] = useState();
     const dispatch = useDispatch();
     const food = useSelector((state) => state.food);
     const foodList = food.data;
     const currentUser = useSelector((state) => state.currentUser).data;
+    const tagList = recipeTags;
 
     useEffect(() => {
         dispatch(fetchFood());
@@ -59,7 +63,7 @@ export const CreatePrivateRecipeScreen = () => {
     //送信処理
     const submitRecipe = () => {
         const validationMessage = validate();
-        if (validationMessage != "") {
+        if (validationMessage != "") { //バリデーション
             Alert.alert(validationMessage);
             return false;
         }
@@ -72,7 +76,7 @@ export const CreatePrivateRecipeScreen = () => {
             Is_ok_publick: isOkPublic ? 1 : 0,
             UserId: currentUser.ID,
             Recipe_materials: materials,
-            Recipe_categories: [],
+            Recipe_categories: tags,
             Image_key: "",
         }
 
@@ -80,12 +84,13 @@ export const CreatePrivateRecipeScreen = () => {
             Image: "",
             Data: data
         }
+        console.log(submitData); //デバッグ用 送信されるデータ
 
         const res = fetch("http://18.183.189.68:8080/recipedata/add", {
             method: "post",
             body: JSON.stringify(submitData),
         });
-
+        //ここに成功なら前の画面に戻る処理を入れる
     }
 
     //バリデーション
@@ -179,6 +184,20 @@ export const CreatePrivateRecipeScreen = () => {
         selectedFoods = selectedFoods.filter((v) => !String(v.FoodID).match(String(id)));
         setMaterials([...new Set(selectedFoods)]);
     }
+
+    //タグ追加
+    const addTag = (tag) => {
+        let selectedTags = [...tags];
+        selectedTags.push(tag);
+        setTags(selectedTags);
+    }
+    //タグ削除
+    const removeTag = (tag) => {
+        let selectedTags = tags;
+        selectedTags = selectedTags.filter((v) => !v.Category_name.match(tag.Category_name));
+        setTags([...new Set(selectedTags)]);
+    }
+
     //画像選択
     const pickImage = async () => {
 
@@ -268,6 +287,12 @@ export const CreatePrivateRecipeScreen = () => {
                     onPress={() => { setIsMaterialModalOpen(true); }}
                 />
             </View>
+            <View>
+                <OutlineButton
+                    title="タグ選択"
+                    onPress={() => { setIsTagModalOpen(true); }}
+                />
+            </View>
             <View style={styles.sectionContainer}>
                 <Text style={{ fontSize: 18 }}>作り方</Text>
                 {howToCook.map((val, index) => {
@@ -329,7 +354,7 @@ export const CreatePrivateRecipeScreen = () => {
                     {materials.length != 0 &&
                         <>
                             <Text style={{ marginBottom: 5 }}>追加した材料(スクロールして確認できます)</Text>
-                            <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", maxHeight: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
+                            <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", height: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
                                 {materials.map((material) => {
                                     return (
                                         <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{foodList.map((v) => {
@@ -395,6 +420,64 @@ export const CreatePrivateRecipeScreen = () => {
                         color="#F06A47"
                         title="決定"
                         onPress={() => setIsMaterialModalOpen(false)}
+                        containerStyle={{ width: 100, marginTop: 20 }}
+                    />
+                </View>
+            </Modal>
+            <Modal isVisible={isTagModalOpen} scrollEnabled={true} style={{ flex: 1 }} scrollOffset={100} >
+                <View
+                    style={{ width: "100%", backgroundColor: "#fff", alignItems: "center", borderRadius: 10 }}>
+                    <Text style={styles.titleText}>タグ選択</Text>
+                    {tags.length != 0 &&
+                        <>
+                            <Text style={{ marginBottom: 5 }}>追加したタグ(スクロールして確認できます)</Text>
+                            <ScrollView style={{ flexWrap: "wrap", flexDirection: "row", width: "80%", height: 100, borderWidth: 1, borderRadius: 4, borderColor: "#ccc", padding: 10 }}>
+                                {tags.map((tag) => {
+                                    return (
+                                        <Text style={{ color: "#F06A47", marginRight: 5, marginBottom: 3 }}>{tag.Category_name}
+                                        </Text>
+                                    )
+                                })}
+                            </ScrollView>
+                        </>
+                    }
+                    {tags.length != 0 ?
+                        <OutlineButton
+                            title="クリア"
+                            onPress={() => setTags([])}
+                        />
+                        : ""}
+                    <ScrollView style={{ width: "80%", height: 400, borderWidth: 1, marginBottom: 30, borderRadius: 10, borderColor: '#EFEFF4' }}>
+                        {tagList.map((tag, i) => {
+                            return (
+                                <View
+                                    key={i}
+                                    style={{ width: "100%", flexDirection: "row", height: 40, padding: 3, borderBottomWidth: 1, borderBottomColor: '#EFEFF4', alignItems: "center" }}>
+                                    <View style={{ width: "50%", flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <Text style={{ color: "#111" }}>{tag.Category_name}</Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                        style={{ width: "50%", flexDirection: "row", justifyContent: "flex-end" }}
+                                        onPress={() => {
+                                            tags.find(val => val.Category_name == tag.Category_name)
+                                                ? removeTag(tag)
+                                                : addTag(tag)
+                                        }} >
+                                        <Text style={{ color: "#F06A47" }}>{tags.find(val => val.Category_name == tag.Category_name)
+                                            ? "削除" : "追加"}</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            )
+                        })}
+                    </ScrollView>
+                </View>
+                <View style={styles.modalButtonContainer}>
+                    <FillButton
+                        color="#F06A47"
+                        title="決定"
+                        onPress={() => setIsTagModalOpen(false)}
                         containerStyle={{ width: 100, marginTop: 20 }}
                     />
                 </View>
