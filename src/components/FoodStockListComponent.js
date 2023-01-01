@@ -36,7 +36,7 @@ const FoodStockListComponent = (props) => {
     let units = {};
     foodStockList.map((foodStock) => {
       units[foodStock.ID] =
-        foodStock.Food.Unit == 0
+        foodStock.Food.Unit == 1
           ? { unit: `${foodStock.Gram}`, isUpdate: false }
           : { unit: `${foodStock.Quantity}`, isUpdate: false };
     });
@@ -69,7 +69,7 @@ const FoodStockListComponent = (props) => {
     }
 
     // 単位がグラムのとき少数をはじく
-    if (unitType == 0 && unit.indexOf(".") != -1) {
+    if (unitType == 1 && unit.indexOf(".") != -1) {
       return;
     }
 
@@ -85,7 +85,7 @@ const FoodStockListComponent = (props) => {
         foodStockUnits[foodStock.ID].unit !== ""
       ) {
         let newFoodStock = { ID: foodStock.ID };
-        if (foodStock.Food.Unit == 0) {
+        if (foodStock.Food.Unit == 1) {
           newFoodStock.Gram = parseInt(foodStockUnits[foodStock.ID].unit);
         } else {
           newFoodStock.Quantity = parseFloat(foodStockUnits[foodStock.ID].unit);
@@ -178,7 +178,7 @@ const FoodStockListComponent = (props) => {
                     inputAccessoryViewID="foodQuantity"
                   />
                   <Text style={styles.quantityUnit}>
-                    {foodStock.Gram ? "g" : "個"}
+                    {foodStock.Food.Unit == 1 ? "g" : "個"}
                   </Text>
                 </View>
                 <InputAccessoryView
@@ -197,7 +197,7 @@ const FoodStockListComponent = (props) => {
               </View>
             ) : (
               <Text style={styles.quantityUnit}>
-                {foodStock.Gram
+                {foodStock.Food.Unit == 1
                   ? foodStock.Gram + "g"
                   : foodStock.Quantity + "個"}
               </Text>

@@ -31,10 +31,6 @@ const RecipeListStyle = () => {
       height: 55,
       alignItems: "center",
       justifyContent: "center",
-      // shadowColor: "#555",
-      // shadowOffset: { width: 0, height: 0 },
-      // shadowOpacity: 0.4,
-      // shadowRadius: 8,
     },
     recipeNameText: {
       color: "#333",

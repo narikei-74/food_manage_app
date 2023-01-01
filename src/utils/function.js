@@ -103,7 +103,7 @@ export const makeMyRecipeMaterialsData = (myRecipes, additionalDate) => {
           quantity: food.Quantity,
         });
       } else {
-        if (myRecipeMaterials[duplicationFood].unit == 0) {
+        if (myRecipeMaterials[duplicationFood].unit == 1) {
           myRecipeMaterials[duplicationFood].gram += food.Gram;
         } else {
           myRecipeMaterials[duplicationFood].quantity += food.Quantity;
@@ -130,7 +130,7 @@ export const makeNotEnoughFoods = (materials, foodStock) => {
       return;
     }
 
-    if (materialFood.unit == 0) {
+    if (materialFood.unit == 1) {
       materialFood.gram -= currentFoodStock.Gram;
     } else {
       materialFood.quantity -= currentFoodStock.Quantity;
