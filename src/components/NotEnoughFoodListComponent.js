@@ -59,7 +59,7 @@ const NotEnoughFoodListComponent = () => {
             <View style={styles.listItem} key={i} bottomDivider>
               <Text style={styles.foodName}>{food.Name}</Text>
               <Text style={styles.quantityUnit}>
-                {food.unit == 0 ? food.gram + "g" : food.quantity + "個"}
+                {food.unit == 1 ? food.gram + "g" : food.quantity + "個"}
               </Text>
             </View>
           );

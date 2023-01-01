@@ -55,7 +55,7 @@ const FoodListComponent = (props) => {
   const selectFood = (food) => {
     setFoodID(food.ID);
     setFoodName(food.Name);
-    food.Unit ? setIsGram(false) : setIsGram(true);
+    food.Unit == 1 ? setIsGram(true) : setIsGram(false);
     navigation.goBack();
   };
 
