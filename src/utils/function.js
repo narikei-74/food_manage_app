@@ -151,3 +151,15 @@ export const makeNotEnoughFoods = (materials, foodStock) => {
   });
   return notEnoughFoods;
 };
+
+/**
+ * 調理時間合計の計算
+ */
+export const totalCookingTime = (myRecipes) => {
+  let totalTime = 0;
+  myRecipes.forEach((recipe) => {
+    totalTime += recipe.Recipe.Cooking_time;
+  });
+
+  return totalTime;
+};

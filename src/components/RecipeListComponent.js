@@ -142,6 +142,7 @@ const RecipeListComponent = (props) => {
                           RecipeID: item.ID,
                           Index: index,
                           Date: currentDate,
+                          People_num: route.params.peopleNum,
                         });
                   }
                 }}

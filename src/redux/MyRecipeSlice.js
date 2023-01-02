@@ -36,6 +36,20 @@ export const updateMyRecipeIntoDB = createAsyncThunk(
   }
 );
 
+export const updateMyRecipePeopleNumIntoDB = createAsyncThunk(
+  "myRecipe/updateMyRecipePeopleNumIntoDB",
+  async (updateData) => {
+    const res = await fetch(
+      "http://18.183.189.68:8080/myrecipedata/people_num/update",
+      {
+        method: "post",
+        body: JSON.stringify({ Data: updateData }),
+      }
+    );
+    return res.json();
+  }
+);
+
 // dbのマイレシピを削除
 export const deleteMyRecipeFromDB = createAsyncThunk(
   "myRecipe/deleteMyRecipeFromDB",
@@ -54,6 +68,7 @@ const initialState = {
   isApiConnected: false,
   loader: true,
   error: undefined,
+  modalMessage: undefined,
 };
 
 export const MyRecipeSlice = createSlice({
@@ -114,6 +129,20 @@ export const MyRecipeSlice = createSlice({
     });
     builder.addCase(deleteMyRecipeFromDB.rejected, (state, action) => {
       state.error = "マイレシピの削除に失敗しました。";
+    });
+    builder.addCase(
+      updateMyRecipePeopleNumIntoDB.fulfilled,
+      (state, action) => {
+        if (action.payload.success === true) {
+          state.isApiConnected = true;
+          state.modalMessage = "人数を保存しました。";
+        } else {
+          state.error = "人数の保存に失敗しました。";
+        }
+      }
+    );
+    builder.addCase(updateMyRecipePeopleNumIntoDB, (state, action) => {
+      state.error = "人数の保存に失敗しました。";
     });
   },
 });
