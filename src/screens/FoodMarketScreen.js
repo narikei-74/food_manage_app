@@ -4,6 +4,7 @@ import BaseStyle from "../styles/BaseStyle";
 import { SearchBar } from "@rneui/base";
 import { useState } from "react";
 import SwitchFoodManageButtonsComponent from "../components/SwitchFoodManageButtonsComponent";
+import NotEnoughFoodListComponent from "../components/NotEnoughFoodListComponent";
 
 const FoodMarketScreen = () => {
   const styles = BaseStyle();
@@ -24,6 +25,7 @@ const FoodMarketScreen = () => {
         onClear={() => {
           setSearchInputText("");
         }}
+        disabled={switchFoodManage == 1 ? true : false}
       />
       <View style={styles.wrapper}>
         <Text style={styles.commentAmazon}>
@@ -44,7 +46,14 @@ const FoodMarketScreen = () => {
             {switchFoodManage == 0 ? "食材一覧" : "足りない食材"}
           </Text>
         </View>
-        <FoodListComponent isMarket={true} searchInputText={searchInputText} />
+        {switchFoodManage == 0 ? (
+          <FoodListComponent
+            isMarket={true}
+            searchInputText={searchInputText}
+          />
+        ) : (
+          <NotEnoughFoodListComponent isMarket={true} />
+        )}
       </View>
     </ScrollView>
   );

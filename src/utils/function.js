@@ -112,6 +112,7 @@ export const makeMyRecipeMaterialsData = (myRecipes, additionalDate) => {
           unit: food.Food.Unit,
           gram: food.Gram,
           quantity: food.Quantity,
+          Amazon_url: food.Food.Amazon_url,
         });
       } else {
         if (myRecipeMaterials[duplicationFood].unit == 1) {
