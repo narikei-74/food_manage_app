@@ -49,6 +49,49 @@ const MyRecipeListStyle = () => {
       backgroundColor: "#e3e3e3",
       borderRadius: 10,
     },
+    recipeInfoContainer: {
+      flexDirection: "row",
+      marginTop: 20,
+      marginBottom: 10,
+      width: "90%",
+      marginLeft: "auto",
+      marginRight: "auto",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    peopleNum: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: "#555",
+    },
+    totalCookingTime: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: "#555",
+      marginRight: 10,
+    },
+    inputPeopleNum: {
+      borderWidth: 1,
+      borderColor: "#555",
+      borderRadius: 4,
+      width: 55,
+      height: 30,
+      marginLeft: 6,
+      marginRight: 6,
+      padding: 4,
+      fontSize: 18,
+    },
+    peopleNumButton: {
+      width: 90,
+      height: 32,
+      padding: 4,
+      backgroundColor: "#ff4500",
+      marginLeft: 15,
+      borderRadius: 6,
+    },
+    peopleNumButtonTitle: {
+      fontSize: 14,
+    },
   });
 
   return styles;
