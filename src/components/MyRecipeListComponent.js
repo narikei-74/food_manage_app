@@ -13,6 +13,7 @@ import {
 } from "../redux/MyRecipeSlice";
 import { useState } from "react";
 import DeleteConfirmModalComponent from "./DeleteConfirmModalComponent";
+import { awsInfo } from "../config/Info";
 
 const MyRecipeListComponent = (props) => {
   const { onPress, navigation } = props;
@@ -42,24 +43,20 @@ const MyRecipeListComponent = (props) => {
 
   //主菜　副菜アイコンの情報
   const dishCategoryInfo = (dishCategory) => {
-    let returnObject = {}
+    let returnObject = {};
     if (dishCategory == 1) {
-      returnObject = { str: "主食", color: "#E9D0A6" }
+      returnObject = { str: "主食", color: "#E9D0A6" };
+    } else if (dishCategory == 2) {
+      returnObject = { str: "主菜", color: "#F06A47" };
+    } else if (dishCategory == 3) {
+      returnObject = { str: "副菜", color: "#6EC388" };
+    } else if (dishCategory == 4) {
+      returnObject = { str: "汁物", color: "#C66600" };
+    } else {
+      returnObject = { str: "主菜", color: "#F06A47" };
     }
-    else if (dishCategory == 2) {
-      returnObject = { str: "主菜", color: "#F06A47" }
-    }
-    else if (dishCategory == 3) {
-      returnObject = { str: "副菜", color: "#6EC388" }
-    }
-    else if (dishCategory == 4) {
-      returnObject = { str: "汁物", color: "#C66600" }
-    }
-    else {
-      returnObject = { str: "主菜", color: "#F06A47" }
-    }
-    return returnObject
-  }
+    return returnObject;
+  };
 
   if (myRecipeData.loader == false) {
     const currentDate = useSelector((state) => state.currentDate).currentDate;
@@ -136,7 +133,7 @@ const MyRecipeListComponent = (props) => {
                   onPress={() => onPress(recipe.Recipe)}
                 >
                   <ImageBackground
-                    source={{ uri: recipe.Recipe.Image_key }}
+                    source={{ uri: awsInfo.imageUrl + recipe.Recipe.Image_key }}
                     resizeMode="cover"
                     style={styles.image}
                     imageStyle={{
@@ -144,7 +141,19 @@ const MyRecipeListComponent = (props) => {
                       borderTopRightRadius: 9,
                     }}
                   >
-                    <View style={{ margin: 10, width: 50, height: 30, backgroundColor: dishCategoryInfo(recipe.Recipe.Dish_category).color, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
+                    <View
+                      style={{
+                        margin: 10,
+                        width: 50,
+                        height: 30,
+                        backgroundColor: dishCategoryInfo(
+                          recipe.Recipe.Dish_category
+                        ).color,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 15,
+                      }}
+                    >
                       <Text style={{ fontWeight: "bold", color: "#fff" }}>
                         {dishCategoryInfo(recipe.Recipe.Dish_category).str}
                       </Text>
