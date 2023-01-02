@@ -42,11 +42,11 @@ const BottomTabNavigator = () => {
         component={FoodMarketScreen}
         options={{ title: "食材購入" }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Login"
         component={LoginScreen}
         options={{ title: "ログイン" }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

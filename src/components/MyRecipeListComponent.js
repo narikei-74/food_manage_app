@@ -157,7 +157,7 @@ const MyRecipeListComponent = (props) => {
         for (let i = 0; i < 6; i++) {
           let recipe = myRecipe.find((data) => data.Index == i);
           let item = (
-            <View style={styles.foodBlock}>
+            <View key={i} style={styles.foodBlock}>
               {recipe != undefined ? (
                 <TouchableOpacity
                   style={{

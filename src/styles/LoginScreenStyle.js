@@ -17,6 +17,7 @@ export const LoginScreenStyle = () => {
       },
       buttonContainer: {
         width: 200,
+        marginTop: 50,
         marginBottom: 30,
         padding: 5,
       }

@@ -15,7 +15,7 @@ const MyRecipeEditScreen = ({ navigation }) => {
       </View>
       <MyRecipeListComponent
         onPress={() => {
-          navigation.navigate("MyRecipeDetail");
+          navigation.navigate("RecipeDetail");
         }}
         navigation={navigation}
       />
