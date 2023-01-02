@@ -20,6 +20,7 @@ import { awsInfo } from "../config/Info";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipes, editRecipeID, navigation, index } = props;
+  console.log(recipes.search);
   const styles = RecipeListStyle();
   const route = useRoute();
   const recipeData = recipes.data;
@@ -87,9 +88,14 @@ const RecipeListComponent = (props) => {
       data={recipeData}
       numColumns={2}
       onEndReached={() => {
-        if (recipeData.currentOffset + 20 == recipeData.length) {
-          dispatch(fetchAddRecipe(recipeData.length - 1, recipes.search));
-          dispatch(editOffset(recipeData.currentOffset + 20));
+        if (recipes.currentOffset + 20 == recipeData.length) {
+          dispatch(
+            fetchAddRecipe({
+              offset: recipeData.length - 1,
+              searchInfo: recipes.search,
+            })
+          );
+          dispatch(editOffset(recipes.currentOffset + 20));
         }
       }}
       renderItem={({ item }) => (
