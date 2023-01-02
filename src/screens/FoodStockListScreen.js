@@ -15,6 +15,7 @@ const FoodStockListScreen = ({ navigation }) => {
       <SwitchFoodManageButtonsComponent
         setSwitchFoodManage={setSwitchFoodManage}
         switchFoodManage={switchFoodManage}
+        isMarket={false}
       />
       <ScrollView style={styles.wrapper}>
         {switchFoodManage == 0 ? (

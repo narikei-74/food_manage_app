@@ -15,20 +15,19 @@ import {
   updateMyRecipeIntoDB,
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
-import { fetchAddRecipe } from "../redux/RecipeSlice";
-import { useState } from "react";
+import { editOffset, fetchAddRecipe } from "../redux/RecipeSlice";
 import { awsInfo } from "../config/Info";
 
 const RecipeListComponent = (props) => {
-  const { onPress, recipeData, editRecipeID, navigation, index } = props;
+  const { onPress, recipes, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
   const route = useRoute();
+  const recipeData = recipes.data;
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser).data;
   const currentDate = useSelector((state) => state.currentDate).currentDate;
   const myRecipe = useSelector((state) => state.myRecipe);
-  const [currentOffsetRecipe, setCurrentOffsetRecipe] = useState(0);
 
   //選択日のレシピデータ
   const CurrentDateMyRecipe = getCurrentDateMyRecipe(
@@ -88,8 +87,9 @@ const RecipeListComponent = (props) => {
       data={recipeData}
       numColumns={2}
       onEndReached={() => {
-        if (currentOffsetRecipe + 20 == recipeData.length) {
-          dispatch(fetchAddRecipe(recipeData.length - 1));
+        if (recipeData.currentOffset + 20 == recipeData.length) {
+          dispatch(fetchAddRecipe(recipeData.length - 1, recipes.search));
+          dispatch(editOffset(recipeData.currentOffset + 20));
         }
       }}
       renderItem={({ item }) => (

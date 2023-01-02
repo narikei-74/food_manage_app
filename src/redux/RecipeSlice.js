@@ -2,10 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchRecipe = createAsyncThunk(
   "recipe/fetchRecipe",
-  async (offset) => {
+  async (data) => {
+    console.log(data);
     const res = await fetch("http://18.183.189.68:8080/recipedata/get", {
       method: "post",
-      body: JSON.stringify({ Offset: offset }),
+      body: JSON.stringify({
+        Offset: data.offset,
+        SearchInfo: data.searchInfo,
+      }),
     });
     return res.json();
   }
@@ -13,10 +17,13 @@ export const fetchRecipe = createAsyncThunk(
 
 export const fetchAddRecipe = createAsyncThunk(
   "recipe/fetchAddRecipe",
-  async (offset) => {
+  async (data) => {
     const res = await fetch("http://18.183.189.68:8080/recipedata/get", {
       method: "post",
-      body: JSON.stringify({ Offset: offset }),
+      body: JSON.stringify({
+        Offset: data.offset,
+        SearchInfo: data.searchInfo,
+      }),
     });
     return res.json();
   }
@@ -35,6 +42,13 @@ export const addPrivateRecipe = createAsyncThunk(
 
 const initialState = {
   data: [],
+  search: {
+    RecipeName: "",
+    Material: "",
+    Category: 0,
+    Free: "",
+  },
+  currentOffset: 0,
   isApiConnected: false,
   loader: true,
   error: undefined,
@@ -44,11 +58,23 @@ export const RecipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
+    startLoader: (state) => {
+      state.loader = true;
+    },
     resetError: (state, action) => {
       state.error = undefined;
     },
     resetIsApiConnected: (state) => {
       state.isApiConnected = false;
+    },
+    addSearch: (state, action) => {
+      state.search = action.payload;
+    },
+    resetSearch: (state) => {
+      state.search = {};
+    },
+    editOffset: (state, action) => {
+      state.search = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -88,5 +114,12 @@ export const RecipeSlice = createSlice({
   },
 });
 
-export const { resetError, resetIsApiConnected } = RecipeSlice.actions;
+export const {
+  resetError,
+  resetIsApiConnected,
+  addSearch,
+  resetSearch,
+  editOffset,
+  startLoader,
+} = RecipeSlice.actions;
 export default RecipeSlice.reducer;

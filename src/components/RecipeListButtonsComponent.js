@@ -13,22 +13,50 @@ import RecipeListButtonsStyle from "../styles/RecipeListButtonsStyle";
 import { FillButton } from "./atoms/FillButton";
 import SelectDropdown from "react-native-select-dropdown";
 import { Button } from "@rneui/themed";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addSearch,
+  editOffset,
+  fetchRecipe,
+  startLoader,
+} from "../redux/RecipeSlice";
 
 const RecipeListButtonsComponent = ({ navigation }) => {
   const styles = RecipeListButtonsStyle();
+  const recipe = useSelector((state) => state.recipe);
+
   const [isSearchModalVisible, setSearchModalVisibility] = useState(false);
-  const [SearchRecipeName, setSearchRecipeName] = useState("");
-  const [SearchMaterial, setSearchMaterial] = useState("");
-  const [SearchCategory, setSearchCategory] = useState("");
-  const [SearchFree, setSearchFree] = useState("");
+  const [SearchRecipeName, setSearchRecipeName] = useState(
+    recipe.search.RecipeName
+  );
+  const [SearchMaterial, setSearchMaterial] = useState(recipe.search.Material);
+  const [SearchCategory, setSearchCategory] = useState(recipe.search.Category);
+  const [SearchFree, setSearchFree] = useState(recipe.search.Free);
 
   const dishCategories = ["未選択", "主食", "主菜", "副菜", "汁物"];
+
+  const dispatch = useDispatch();
 
   const showSearchModal = () => {
     setSearchModalVisibility(true);
   };
 
   const hideSearchModal = () => {
+    setSearchModalVisibility(false);
+  };
+
+  const searchRecipe = () => {
+    const searchInfo = {
+      RecipeName: SearchRecipeName,
+      Material: SearchMaterial,
+      Category: SearchCategory,
+      Free: SearchFree,
+    };
+
+    dispatch(startLoader());
+    dispatch(addSearch(searchInfo));
+    dispatch(editOffset(0));
+    dispatch(fetchRecipe({ offset: 0, searchInfo: searchInfo }));
     setSearchModalVisibility(false);
   };
 
@@ -110,7 +138,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
               buttonStyle={styles.searchCategory}
               data={dishCategories}
               onSelect={(selectedItem, index) => {
-                setSearchCategory(selectedItem);
+                setSearchCategory(parseInt(index));
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
@@ -118,7 +146,9 @@ const RecipeListButtonsComponent = ({ navigation }) => {
               rowTextForSelection={(item, index) => {
                 return item;
               }}
-              defaultValue={SearchCategory ? SearchCategory : "未選択"}
+              defaultValue={
+                SearchCategory != 0 ? dishCategories[SearchCategory] : "未選択"
+              }
             />
           </View>
           <View style={styles.inputContainer}>
@@ -146,7 +176,9 @@ const RecipeListButtonsComponent = ({ navigation }) => {
           <Button
             buttonStyle={styles.searchButton}
             title="検索"
-            onPress={() => { }}
+            onPress={() => {
+              searchRecipe();
+            }}
           />
         </View>
         <View style={styles.modalButtonContainer}>

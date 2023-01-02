@@ -3,10 +3,12 @@ import FoodListComponent from "../components/FoodListComponent";
 import BaseStyle from "../styles/BaseStyle";
 import { SearchBar } from "@rneui/base";
 import { useState } from "react";
+import SwitchFoodManageButtonsComponent from "../components/SwitchFoodManageButtonsComponent";
 
 const FoodMarketScreen = () => {
   const styles = BaseStyle();
   const [searchInputText, setSearchInputText] = useState("");
+  const [switchFoodManage, setSwitchFoodManage] = useState(0);
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -32,8 +34,15 @@ const FoodMarketScreen = () => {
           ※購入ボタンを押すと、{"\n"}
           amazonライフの商品ページに遷移します。
         </Text>
+        <SwitchFoodManageButtonsComponent
+          switchFoodManage={switchFoodManage}
+          setSwitchFoodManage={setSwitchFoodManage}
+          isMarket={true}
+        />
         <View style={styles.subTitleContainer}>
-          <Text style={styles.subTitle}>食材一覧</Text>
+          <Text style={styles.subTitle}>
+            {switchFoodManage == 0 ? "食材一覧" : "足りない食材"}
+          </Text>
         </View>
         <FoodListComponent isMarket={true} searchInputText={searchInputText} />
       </View>
