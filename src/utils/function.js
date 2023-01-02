@@ -44,6 +44,17 @@ export const getNextWeek = (date) => {
 };
 
 /**
+ * ユニークな値を生成
+ */
+export const makeUniqueID = () => {
+  var strong = 1000;
+  return (
+    new Date().getTime().toString(16) +
+    Math.floor(strong * Math.random()).toString(16)
+  );
+};
+
+/**
  * 現在選択済みの日付のレシピデータを取得
  */
 export const getCurrentDateMyRecipe = (recipeData, currentDate) => {

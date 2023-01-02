@@ -22,8 +22,20 @@ export const fetchAddRecipe = createAsyncThunk(
   }
 );
 
+export const addPrivateRecipe = createAsyncThunk(
+  "recipe/addPrivateRecipe",
+  async (data) => {
+    const res = await fetch("http://18.183.189.68:8080/recipedata/add", {
+      method: "post",
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  }
+);
+
 const initialState = {
   data: [],
+  isApiConnected: false,
   loader: true,
   error: undefined,
 };
@@ -34,6 +46,9 @@ export const RecipeSlice = createSlice({
   reducers: {
     resetError: (state, action) => {
       state.error = undefined;
+    },
+    resetIsApiConnected: (state) => {
+      state.isApiConnected = false;
     },
   },
   extraReducers: (builder) => {
@@ -61,8 +76,17 @@ export const RecipeSlice = createSlice({
       state.error = action.error.message;
       state.loader = false;
     });
+    builder.addCase(addPrivateRecipe.fulfilled, (state, action) => {
+      console.log(action.payload);
+      if (action.payload.success === true) {
+        state.isApiConnected = true;
+      } else {
+        state.error = "レシピの作成に失敗しました。";
+      }
+      state.loader = false;
+    });
   },
 });
 
-export const { resetError } = RecipeSlice.actions;
+export const { resetError, resetIsApiConnected } = RecipeSlice.actions;
 export default RecipeSlice.reducer;
