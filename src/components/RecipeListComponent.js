@@ -20,7 +20,6 @@ import { awsInfo } from "../config/Info";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipes, editRecipeID, navigation, index } = props;
-  console.log(recipes.search);
   const styles = RecipeListStyle();
   const route = useRoute();
   const recipeData = recipes.data;

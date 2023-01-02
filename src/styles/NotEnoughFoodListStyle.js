@@ -35,5 +35,13 @@ export const NotEnoughFoodListStyle = () => {
       color: "#555",
       fontWeight: "bold",
     },
+    button: {
+      height: 35,
+      backgroundColor: "#fff",
+    },
+    buttonTitle: {
+      fontSize: 16,
+      color: "#0000ff",
+    },
   });
 };

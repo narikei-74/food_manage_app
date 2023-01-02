@@ -102,7 +102,6 @@ export const RecipeSlice = createSlice({
       state.loader = false;
     });
     builder.addCase(addPrivateRecipe.fulfilled, (state, action) => {
-      console.log(action.payload);
       if (action.payload.success === true) {
         state.isApiConnected = true;
       } else {

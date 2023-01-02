@@ -1,12 +1,23 @@
-import { View, Text } from "react-native";
+import { View, Text, Linking, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { Icon } from "@rneui/base";
 import { NotEnoughFoodListStyle } from "../styles/NotEnoughFoodListStyle";
+import { Button } from "@rneui/themed";
 
-const NotEnoughFoodListComponent = () => {
+const NotEnoughFoodListComponent = (props) => {
   const styles = NotEnoughFoodListStyle();
+  const { isMarket } = props;
 
   const notEnoughFoods = useSelector((state) => state.notEnoughFood);
+
+  const openAmazonPage = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("ページを開けませんでした。");
+    }
+  };
 
   const notEnoughFoodsView = () => {
     if (notEnoughFoods.loader === true) {
@@ -58,9 +69,18 @@ const NotEnoughFoodListComponent = () => {
           return (
             <View style={styles.listItem} key={i} bottomDivider>
               <Text style={styles.foodName}>{food.Name}</Text>
-              <Text style={styles.quantityUnit}>
-                {food.unit == 1 ? food.gram + "g" : food.quantity + "個"}
-              </Text>
+              {isMarket === true ? (
+                <Button
+                  buttonStyle={styles.button}
+                  titleStyle={styles.buttonTitle}
+                  onPress={() => openAmazonPage(food.Amazon_url)}
+                  title="購入"
+                />
+              ) : (
+                <Text style={styles.quantityUnit}>
+                  {food.unit == 1 ? food.gram + "g" : food.quantity + "個"}
+                </Text>
+              )}
             </View>
           );
         });

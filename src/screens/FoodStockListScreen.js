@@ -30,7 +30,7 @@ const FoodStockListScreen = ({ navigation }) => {
         {switchFoodManage == 0 ? (
           <FoodStockListComponent editFlag={false} />
         ) : (
-          <NotEnoughFoodListComponent />
+          <NotEnoughFoodListComponent isMarket={false} />
         )}
       </ScrollView>
       <FoodStockEditButtonComponent navigation={navigation} />
