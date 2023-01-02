@@ -43,24 +43,24 @@ const LoginScreen = ({ navigation }) => {
             <Icon name="grain" type="material" color="#F06A47" size={150} />
           </View>
           <View style={styles.buttonWrapper}>
-            <FillButton
+            {/* <FillButton
               title={"ユーザー登録"}
               onPress={onPressRegisterGuest}
               containerStyle={styles.buttonContainer}
-            />
+            /> */}
             <FillButton
-              title={"ゲスト利用する"}
+              title={"はじめる"}
               onPress={onPressRegisterGuest}
               containerStyle={styles.buttonContainer}
             />
-            <FillButton
+            {/* <FillButton
               title={"削除(テスト用)"}
               onPress={() => {
                 storage.remove({ key: "userId" });
               }}
               containerStyle={styles.buttonContainer}
-            />
-            <Text>{currentUser && currentUser.userId}</Text>
+            /> */}
+            {/* <Text>{currentUser && currentUser.userId}</Text> */}
           </View>
         </View>
       );
@@ -71,24 +71,24 @@ const LoginScreen = ({ navigation }) => {
             <Icon name="grain" type="material" color="#F06A47" size={150} />
           </View>
           <View style={styles.buttonWrapper}>
-            <FillButton
+            {/* <FillButton
               title={"ユーザー登録"}
               onPress={onPressRegisterGuest}
               containerStyle={styles.buttonContainer}
-            />
+            /> */}
             <FillButton
-              title={"ゲスト利用する"}
+              title={"はじめる"}
               onPress={onPressRegisterGuest}
               containerStyle={styles.buttonContainer}
             />
-            <FillButton
+            {/* <FillButton
               title={"削除(テスト用)"}
               onPress={() => {
                 storage.remove({ key: "userId" });
               }}
               containerStyle={styles.buttonContainer}
-            />
-            <Text>{currentUser && currentUser.userId}</Text>
+            /> */}
+            {/* <Text>{currentUser && currentUser.userId}</Text> */}
           </View>
         </View>
       );
