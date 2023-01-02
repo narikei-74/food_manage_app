@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchRecipe = createAsyncThunk(
   "recipe/fetchRecipe",
   async (data) => {
-    console.log(data);
     const res = await fetch("http://18.183.189.68:8080/recipedata/get", {
       method: "post",
       body: JSON.stringify({
