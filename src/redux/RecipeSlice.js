@@ -73,7 +73,7 @@ export const RecipeSlice = createSlice({
       state.search = {};
     },
     editOffset: (state, action) => {
-      state.search = action.payload;
+      state.currentOffset = action.payload;
     },
   },
   extraReducers: (builder) => {
