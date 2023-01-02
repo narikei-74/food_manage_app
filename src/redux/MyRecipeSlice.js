@@ -81,6 +81,9 @@ export const MyRecipeSlice = createSlice({
     resetError: (state) => {
       state.error = undefined;
     },
+    resetModalMessage: (state) => {
+      state.modalMessage = undefined;
+    },
   },
   extraReducers: (builder) => {
     // fetchMyRecipe
@@ -147,5 +150,6 @@ export const MyRecipeSlice = createSlice({
   },
 });
 
-export const { resetIsApiConnected, resetError } = MyRecipeSlice.actions;
+export const { resetIsApiConnected, resetError, resetModalMessage } =
+  MyRecipeSlice.actions;
 export default MyRecipeSlice.reducer;

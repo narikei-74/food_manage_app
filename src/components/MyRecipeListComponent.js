@@ -16,6 +16,7 @@ import {
   fetchMyRecipe,
   resetError,
   resetIsApiConnected,
+  resetModalMessage,
   updateMyRecipePeopleNumIntoDB,
 } from "../redux/MyRecipeSlice";
 import { useState } from "react";
@@ -48,6 +49,7 @@ const MyRecipeListComponent = (props) => {
     dispatch(resetIsApiConnected());
     if (myRecipeData.modalMessage != undefined) {
       Alert.alert(myRecipeData.modalMessage);
+      dispatch(resetModalMessage());
     }
   }
 
@@ -78,6 +80,11 @@ const MyRecipeListComponent = (props) => {
   };
 
   const submitPeopleNum = () => {
+    if (inputPeopleNum == "") {
+      Alert.alert("人数を入力してください。");
+      return;
+    }
+
     const updateData = [];
     myRecipe.forEach((recipe) => {
       const data = {
@@ -289,7 +296,11 @@ const MyRecipeListComponent = (props) => {
             <TextInput
               value={inputPeopleNum}
               onChangeText={(text) => {
-                if (isNaN(text) === true || text.indexOf(".") != -1) {
+                if (
+                  isNaN(text) === true ||
+                  text.indexOf(".") != -1 ||
+                  text === "0"
+                ) {
                   return;
                 }
                 setInputPeopleNum(text);
