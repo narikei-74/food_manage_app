@@ -22,7 +22,9 @@ const RecipeListScreen = ({ navigation }) => {
   const recipes = useSelector((state) => state.recipe);
 
   useEffect(() => {
-    dispatch(fetchRecipe(0)).catch((error) => error.massage);
+    dispatch(fetchRecipe({ offset: 0, searchInfo: recipes.search })).catch(
+      (error) => error.massage
+    );
   }, [dispatch]);
 
   const recipeListView = () => {
@@ -42,7 +44,7 @@ const RecipeListScreen = ({ navigation }) => {
             onPress={(recipe) => {
               navigation.navigate("RecipeDetail", { recipe: recipe });
             }}
-            recipeData={recipes.data}
+            recipes={recipes}
             currentWeek={false}
             editRecipeID={editRecipeID}
             navigation={navigation}
