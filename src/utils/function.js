@@ -105,20 +105,24 @@ export const makeMyRecipeMaterialsData = (myRecipes, additionalDate) => {
         ({ ID }) => ID == food.FoodID
       );
 
+      // 人数分を考慮
+      const gram = food.Gram * myRecipe.People_num;
+      const quantity = food.Quantity * myRecipe.People_num;
+
       if (duplicationFood == -1) {
         myRecipeMaterials.push({
           ID: food.FoodID,
           Name: food.Food.Name,
           unit: food.Food.Unit,
-          gram: food.Gram,
-          quantity: food.Quantity,
+          gram: gram,
+          quantity: quantity,
           Amazon_url: food.Food.Amazon_url,
         });
       } else {
         if (myRecipeMaterials[duplicationFood].unit == 1) {
-          myRecipeMaterials[duplicationFood].gram += food.Gram;
+          myRecipeMaterials[duplicationFood].gram += gram;
         } else {
-          myRecipeMaterials[duplicationFood].quantity += food.Quantity;
+          myRecipeMaterials[duplicationFood].quantity += quantity;
         }
       }
     });
