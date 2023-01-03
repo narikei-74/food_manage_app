@@ -26,7 +26,7 @@ import { Button } from "@rneui/base";
 import { TextInput } from "react-native-gesture-handler";
 
 const MyRecipeListComponent = (props) => {
-  const { onPress, navigation } = props;
+  const { navigation } = props;
   const styles = MyRecipeListStyle();
   const route = useRoute();
   const [isVisibleDeleteConfirm, setIsVisibleDeleteConfirm] = useState(false);
@@ -168,7 +168,7 @@ const MyRecipeListComponent = (props) => {
                     backgroundColor: "#fff",
                     borderRadius: 10,
                   }}
-                  onPress={() => onPress(recipe.Recipe)}
+                  onPress={() => navigation.navigate("RecipeDetail", { recipe: recipe.Recipe, peopleNum: recipe.People_num })}
                 >
                   <ImageBackground
                     source={{ uri: awsInfo.imageUrl + recipe.Recipe.Image_key }}
