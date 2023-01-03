@@ -8,6 +8,8 @@ import { awsInfo } from "../config/Info";
 const RecipeDetailScreen = () => {
   const route = useRoute();
   const { recipe } = route.params;
+  const peopleNum = route.params.peopleNum != undefined ? route.params.peopleNum : 1; //人数の情報 無ければ1
+
   const toJson = (recipe) => {
     try {
       return JSON.parse(recipe.How_to_cook);
@@ -87,7 +89,7 @@ const RecipeDetailScreen = () => {
           </View>
         </View>
         <View style={styles.cookInfoContainer}>
-          <Text style={styles.materialTitle}>材料(1人分)</Text>
+          <Text style={styles.materialTitle}>材料({peopleNum}人分)</Text>
           <View style={styles.materialContainer}>
             {recipe.Recipe_materials.map((material, i) => {
               return (
@@ -97,7 +99,11 @@ const RecipeDetailScreen = () => {
                     {material.Food.Name}
                   </Text>
                   <Text style={styles.textRight}>
-                    ・・・{material.Quantity_label}
+                    {material.Gram !== 0
+                      ? (material.Gram * peopleNum) + "g"
+                      : (material.Quantity !== 0
+                        ? (material.Quantity * peopleNum) + "個"
+                        : material.Quantity_label)}
                   </Text>
                 </View>
               );
@@ -106,13 +112,24 @@ const RecipeDetailScreen = () => {
         </View>
         <View style={styles.cookTextContainer}>
           <Text style={styles.materialTitle}>作り方</Text>
-          <View style={{ justifyContent: "flex-start" }}>
+          <View style={styles.w100}>
             {json.map((text, index) => {
               return (
                 <View key={index} style={styles.howToContainer}>
-                  <Text style={styles.howToNum}>
-                    {index + 1}.{" "}
-                  </Text>
+                  <View style={{
+                    height: 30,
+                    width: 30,
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    alignItems: "center",
+                    backgroundColor: "#C66600",
+                    marginRight: 5,
+                    borderColor: "#fff",
+                  }}>
+                    <Text style={styles.howToNum}>
+                      {index + 1}
+                    </Text>
+                  </View>
                   <Text style={styles.howToText}>{text}</Text>
                 </View>
               );
@@ -198,40 +215,51 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   materialContainer: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "#fff",
     borderRadius: 10,
   },
   materialTextContainer: {
     height: 35,
-    padding: 5,
+    // padding: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
   unitText: { color: "#C66600" },
   cookTextContainer: {
-    width: "85%",
+    width: "90%",
     alignItems: "center",
     height: "100%",
-    margin: 20,
+    marginLeft: 17,
     paddingBottom: 50,
+    marginTop: 15
   },
-  textLeft: {},
-  textRight: {},
+  textLeft: { fontSize: 16 },
+  textRight: { fontSize: 16 },
   howToContainer: {
     flexDirection: "row",
-    // justifyContent: "center",
-    margin: 8,
-    paddingBottom: 5,
+    alignItems: "flex-start",
+    paddingTop: 11,
+    paddingBottom: 12,
+    paddingRight: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    // width: "91%"
   },
   howToNum: {
     fontSize: 18,
+    padding: 3,
+    color: "#fff",
+    // paddingTop: 5
   },
-  howToText: {},
+  howToText: {
+    fontSize: 16,
+    paddingTop: 4,
+    lineHeight: 22
+  },
 });
 
 export default RecipeDetailScreen;

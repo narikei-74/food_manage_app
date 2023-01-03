@@ -53,11 +53,9 @@ const MyRecipeListScreen = (props) => {
 
       return (
         <MyRecipeListComponent
-          onPress={(recipe) => {
-            navigation.navigate("RecipeDetail", { recipe: recipe });
-          }}
-          myRecipeData={myRecipe.data}
-          isMyRecipe={true}
+          navigation={navigation}
+        // myRecipeData={myRecipe.data}
+        // isMyRecipe={true}
         />
       );
     }

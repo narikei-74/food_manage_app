@@ -14,9 +14,6 @@ const MyRecipeEditScreen = ({ navigation }) => {
         <Text>献立を6品まで追加できます</Text>
       </View>
       <MyRecipeListComponent
-        onPress={() => {
-          navigation.navigate("RecipeDetail");
-        }}
         navigation={navigation}
       />
     </ScrollView>
