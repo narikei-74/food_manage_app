@@ -1,5 +1,5 @@
 import { View, ScrollView, Text } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BaseStyle from "../styles/BaseStyle";
 import WeekBlockComponent from "../components/WeekBlockComponent";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,6 @@ const MyRecipeListScreen = (props) => {
       fetchNotEnoughFood({
         myRecipes: myRecipe.data,
         foodStock: foodStock.data,
-        additionalDate: 3,
       })
     );
   }, [myRecipe, foodStock]);
@@ -51,13 +50,7 @@ const MyRecipeListScreen = (props) => {
         dispatch(resetError());
       }
 
-      return (
-        <MyRecipeListComponent
-          navigation={navigation}
-        // myRecipeData={myRecipe.data}
-        // isMyRecipe={true}
-        />
-      );
+      return <MyRecipeListComponent navigation={navigation} />;
     }
   };
 

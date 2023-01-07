@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   data: [],
+  additionalDate: 1,
   loader: true,
   error: undefined,
 };
@@ -24,7 +25,7 @@ export const NotEnoughFoodSlice = createSlice({
 
       const myRecipeMaterials = makeMyRecipeMaterialsData(
         action.payload.myRecipes,
-        action.payload.additionalDate
+        state.additionalDate
       );
 
       const notEnoughFoods = makeNotEnoughFoods(
@@ -34,8 +35,12 @@ export const NotEnoughFoodSlice = createSlice({
 
       state.data = notEnoughFoods;
     },
+    editAdditionalDate: (state, action) => {
+      state.additionalDate = action.payload;
+    },
   },
 });
 
-export const { fetchNotEnoughFood } = NotEnoughFoodSlice.actions;
+export const { fetchNotEnoughFood, editAdditionalDate } =
+  NotEnoughFoodSlice.actions;
 export default NotEnoughFoodSlice.reducer;

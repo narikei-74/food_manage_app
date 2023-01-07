@@ -76,10 +76,8 @@ export const kanaToHira = (str) => {
 /**
  * 現在の日付に指定の日数加算する
  */
-export const additionDate = (additionalDate) => {
-  const now = new Date();
-  now.setDate(now.getDate() + additionalDate);
-  return getDateString(now);
+export const additionDate = (now, additionalDate) => {
+  return now.add(additionalDate, "d");
 };
 
 /**
@@ -87,13 +85,21 @@ export const additionDate = (additionalDate) => {
  */
 export const makeMyRecipeMaterialsData = (myRecipes, additionalDate) => {
   let myRecipeMaterials = [];
-  const now = dayjs();
+  const nowDate = dayjs().format("YYYY-MM-DD");
+  const now = dayjs(nowDate).add(9, "h");
+  const limitDate = additionDate(now, additionalDate);
   // マイレシピ配列
   myRecipes.forEach((myRecipe) => {
-    const recipeDate = dayjs(myRecipe.Date).add(22, "h");
+    let recipeDate = dayjs(myRecipe.Date).add(22, "h");
     if (recipeDate.isBefore(now)) {
       return;
     }
+
+    recipeDate = dayjs(myRecipe.Date);
+    if (recipeDate.isAfter(limitDate.add(23, "h").add(59, "m").add(59, "s"))) {
+      return;
+    }
+
     // レシピ材料配列
     myRecipe.Recipe.Recipe_materials.forEach((food) => {
       // 調味料は対象外
