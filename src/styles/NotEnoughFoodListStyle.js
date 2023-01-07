@@ -31,7 +31,7 @@ export const NotEnoughFoodListStyle = () => {
       color: "red",
     },
     warningText: {
-      marginBottom: 20,
+      marginBottom: 26,
       color: "#555",
       fontWeight: "bold",
     },
@@ -42,6 +42,30 @@ export const NotEnoughFoodListStyle = () => {
     buttonTitle: {
       fontSize: 16,
       color: "#0000ff",
+    },
+    arrowIcon: {
+      fontWeight: "bold",
+    },
+    additionalDateContainer: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      alignItems: "center",
+    },
+    selectButton: {
+      width: 65,
+      height: 30,
+      backgroundColor: "#fff",
+      borderColor: "#555",
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 0,
+    },
+    selectText: {
+      color: "#555",
+    },
+    selectAfterText: {
+      color: "#555",
+      fontWeight: "bold",
     },
   });
 };
