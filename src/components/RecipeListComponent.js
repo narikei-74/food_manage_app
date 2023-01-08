@@ -12,10 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { FillButton } from "./atoms/FillButton";
 import {
   addMyRecipeIntoDB,
+  startMyRecipeLoader,
   updateMyRecipeIntoDB,
 } from "../redux/MyRecipeSlice";
 import { getCurrentDateMyRecipe } from "../utils/function";
-import { editOffset, fetchAddRecipe } from "../redux/RecipeSlice";
+import {
+  editOffset,
+  fetchAddRecipe,
+  startRecipeLoader,
+} from "../redux/RecipeSlice";
 import { awsInfo } from "../config/Info";
 
 const RecipeListComponent = (props) => {
@@ -36,11 +41,13 @@ const RecipeListComponent = (props) => {
   );
 
   const onPressAdd = async (addData) => {
+    dispatch(startMyRecipeLoader());
     dispatch(addMyRecipeIntoDB(addData));
     navigation.goBack();
   };
 
   const onPressUpdate = async (updateData) => {
+    dispatch(startMyRecipeLoader());
     dispatch(updateMyRecipeIntoDB(updateData));
     navigation.goBack();
   };
@@ -88,6 +95,7 @@ const RecipeListComponent = (props) => {
       numColumns={2}
       onEndReached={() => {
         if (recipes.currentOffset + 20 == recipeData.length) {
+          dispatch(startRecipeLoader());
           dispatch(
             fetchAddRecipe({
               offset: recipeData.length - 1,

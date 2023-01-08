@@ -84,6 +84,9 @@ export const MyRecipeSlice = createSlice({
     resetModalMessage: (state) => {
       state.modalMessage = undefined;
     },
+    startMyRecipeLoader: (state) => {
+      state.loader = true;
+    },
   },
   extraReducers: (builder) => {
     // fetchMyRecipe
@@ -107,9 +110,11 @@ export const MyRecipeSlice = createSlice({
       } else {
         state.error = "マイレシピの保存に失敗しました。";
       }
+      state.loader = false;
     });
     builder.addCase(addMyRecipeIntoDB.rejected, (state, action) => {
       state.error = "マイレシピの保存に失敗しました。";
+      state.loader = false;
     });
     // updateMyRecipeIntoDB
     builder.addCase(updateMyRecipeIntoDB.fulfilled, (state, action) => {
@@ -118,9 +123,11 @@ export const MyRecipeSlice = createSlice({
       } else {
         state.error = "マイレシピの更新に失敗しました。";
       }
+      state.loader = false;
     });
     builder.addCase(updateMyRecipeIntoDB.rejected, (state, action) => {
       state.error = "マイレシピの更新に失敗しました。";
+      state.loader = false;
     });
     // deleteMyRecipeFromDB
     builder.addCase(deleteMyRecipeFromDB.fulfilled, (state, action) => {
@@ -129,9 +136,11 @@ export const MyRecipeSlice = createSlice({
       } else {
         state.error = "マイレシピの削除に失敗しました。";
       }
+      state.loader = false;
     });
     builder.addCase(deleteMyRecipeFromDB.rejected, (state, action) => {
       state.error = "マイレシピの削除に失敗しました。";
+      state.loader = false;
     });
     builder.addCase(
       updateMyRecipePeopleNumIntoDB.fulfilled,
@@ -150,6 +159,10 @@ export const MyRecipeSlice = createSlice({
   },
 });
 
-export const { resetIsApiConnected, resetError, resetModalMessage } =
-  MyRecipeSlice.actions;
+export const {
+  resetIsApiConnected,
+  resetError,
+  resetModalMessage,
+  startMyRecipeLoader,
+} = MyRecipeSlice.actions;
 export default MyRecipeSlice.reducer;

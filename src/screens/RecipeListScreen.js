@@ -4,7 +4,12 @@ import RecipeListComponent from "../components/RecipeListComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
-import { fetchRecipe, resetError } from "../redux/RecipeSlice";
+import {
+  fetchRecipe,
+  resetError,
+  resetIsApiConnected,
+  startRecipeLoader,
+} from "../redux/RecipeSlice";
 import RecipeListButtonsComponent from "../components/RecipeListButtonsComponent";
 
 const RecipeListScreen = ({ navigation }) => {
@@ -20,6 +25,13 @@ const RecipeListScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.recipe);
+
+  if (recipes.isApiConnected === true) {
+    dispatch(startRecipeLoader());
+    dispatch(
+      fetchRecipe({ offset: recipes.currentOffset, searchInfo: recipes.search })
+    );
+  }
 
   useEffect(() => {
     dispatch(fetchRecipe({ offset: 0, searchInfo: recipes.search })).catch(

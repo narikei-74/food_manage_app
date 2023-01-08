@@ -57,7 +57,7 @@ export const RecipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
-    startLoader: (state) => {
+    startRecipeLoader: (state) => {
       state.loader = true;
     },
     resetError: (state, action) => {
@@ -109,6 +109,10 @@ export const RecipeSlice = createSlice({
       }
       state.loader = false;
     });
+    builder.addCase(addPrivateRecipe.rejected, (state, action) => {
+      state.error = "レシピの作成に失敗しました。";
+      state.loader = false;
+    });
   },
 });
 
@@ -118,6 +122,6 @@ export const {
   addSearch,
   resetSearch,
   editOffset,
-  startLoader,
+  startRecipeLoader,
 } = RecipeSlice.actions;
 export default RecipeSlice.reducer;
