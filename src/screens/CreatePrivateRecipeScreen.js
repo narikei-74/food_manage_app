@@ -51,6 +51,13 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
     const currentUser = useSelector((state) => state.currentUser).data;
     const recipe = useSelector((state) => state.recipe);
     const tagList = recipeTags;
+
+    const [foodID, setFoodID] = useState(null);
+    const [isGram, setIsGram] = useState(true);
+    const [foodName, setFoodName] = useState(null);
+    const [foodQuantity, setFoodQuantity] = useState(null);
+
+
     useEffect(() => {
         dispatch(fetchFood());
     }, [dispatch]);
@@ -244,6 +251,7 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
         selectedFoods.push(insertValue);
 
         setMaterials([...new Set(selectedFoods)]);
+        setFoodID(null);
     };
     //材料削除
     const removeFood = (id) => {
@@ -290,6 +298,9 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
         }
     };
 
+
+    const selectedMaterial = foodList.find((data) => data.ID == foodID);
+
     // 必要な情報:名前 所要時間 画像 カテゴリ(主菜副菜など) 作り方 材料 (UserId) 公開してもよいか(審査の後に〜文言を入れる)
     return (
         <ScrollView
@@ -299,13 +310,6 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>新しいレシピを作成しましょう</Text>
             </View>
-            <View>
-                <OutlineButton title="画像選択" onPress={() => pickImage()} />
-                <Image
-                    style={image ? { height: 200 } : ""}
-                    source={{ uri: image?.uri }}
-                />
-            </View>
             <View style={styles.sectionContainer}>
                 <Input
                     label="レシピ名"
@@ -313,25 +317,11 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
                     onChangeText={(val) => setRecipeName(val)}
                 />
             </View>
-            <View style={styles.dropDownContainer}>
-                <Text>所要時間</Text>
-                <ModalSelector
-                    data={times}
-                    initValue={time != "" ? time + "分" : "選択してください"}
-                    cancelText={"キャンセル"}
-                    onChange={(option) => {
-                        setTime(option.value);
-                    }}
-                    initValueTextStyle={{ color: "#555" }}
-                    overlayStyle={styles.overlayStyle}
-                    backdropPressToClose={true}
-                    optionContainerStyle={styles.optionContainerStyle}
-                    optionStyle={styles.optionStyle}
-                    optionTextStyle={styles.optionTextStyle}
-                    cancelStyle={styles.cancelStyle}
-                    cancelTextStyle={styles.cancelTextStyle}
-                    sectionTextStyle={styles.sectionTextStyle}
-                    sectionStyle={styles.sectionStyle}
+            <View style={styles.w100c}>
+                <OutlineButton title="画像選択" onPress={() => pickImage()} />
+                <Image
+                    style={image ? { height: 350, width: "90%" } : ""}
+                    source={{ uri: image?.uri }}
                 />
             </View>
             <View style={styles.dropDownContainer}>
@@ -357,21 +347,193 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
                     sectionStyle={styles.sectionStyle}
                 />
             </View>
-            <View>
-                <OutlineButton
-                    title="材料選択"
-                    onPress={() => {
-                        setIsMaterialModalOpen(true);
+            <View style={styles.dropDownContainer}>
+                <Text>所要時間</Text>
+                <ModalSelector
+                    data={times}
+                    initValue={time != "" ? time + "分" : "選択してください"}
+                    cancelText={"キャンセル"}
+                    onChange={(option) => {
+                        setTime(option.value);
                     }}
+                    initValueTextStyle={{ color: "#555" }}
+                    overlayStyle={styles.overlayStyle}
+                    backdropPressToClose={true}
+                    optionContainerStyle={styles.optionContainerStyle}
+                    optionStyle={styles.optionStyle}
+                    optionTextStyle={styles.optionTextStyle}
+                    cancelStyle={styles.cancelStyle}
+                    cancelTextStyle={styles.cancelTextStyle}
+                    sectionTextStyle={styles.sectionTextStyle}
+                    sectionStyle={styles.sectionStyle}
                 />
             </View>
-            <View>
+            <View style={{ width: "90%", marginTop: 30, alignItems: "center" }}>
                 <OutlineButton
                     title="タグ選択"
                     onPress={() => {
                         setIsTagModalOpen(true);
                     }}
                 />
+                {tags.length != 0 && (
+                    <View
+                        style={{
+                            flexWrap: "wrap",
+                            flexDirection: "row",
+                            width: "80%",
+                            padding: 10,
+                        }}
+                    >
+                        {tags.map((tag, i) => {
+                            return (
+                                <View key={i} style={{ backgroundColor: "#E9D0A6", borderWidth: 1, borderRadius: 10, borderColor: "#fff", margin: 5 }}>
+                                    <Text style={{
+                                        padding: 2,
+                                        margin: 3,
+                                        color: "#fff",
+                                        fontWeight: "bold"
+                                    }}>{tag.Category_name}</Text>
+                                </View>
+                            );
+                        })}
+                    </View>
+                )}
+
+            </View>
+            <View style={{ width: "90%", margin: 20, alignItems: "center", }}>
+                <OutlineButton
+                    title="材料追加"
+                    onPress={() => {
+                        navigation.navigate("FoodSelect", {
+                            setFoodID: setFoodID,
+                            setFoodName: setFoodName,
+                            setIsGram: setIsGram,
+                        });
+                    }}
+                />
+
+                {foodID && selectedMaterial &&
+                    <View style={{
+                        width: "80%",
+                        flexDirection: "row",
+                        height: 40,
+                        padding: 3,
+                        borderBottomWidth: 1,
+                        borderBottomColor: "#EFEFF4",
+                        alignItems: "center",
+                        margin: 10,
+                    }}>
+                        <Text style={{ width: "50%" }}>{foodName}</Text>
+                        <View
+                            style={{
+                                width: "20%",
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                            }}
+                        >
+                            <TextInput
+                                keyboardType={selectedMaterial.Unit != 0 ? "numeric" : "default"}
+                                style={{
+                                    width: 40,
+                                    height: "80%",
+                                    borderWidth: 1,
+                                    borderColor: "#ccc",
+                                    borderRadius: 4,
+                                    marginRight: 5,
+                                }}
+                                onChangeText={(text) => {
+                                    if (selectedMaterial.Unit == 0) {
+                                        // 単位なし
+                                        addFoodNum({ [foodID]: text });
+                                    } else if (food.Unit == 1) {
+                                        // グラム
+                                        addFoodNum({ [foodID]: parseInt(text) });
+                                    } else {
+                                        // 個数
+                                        addFoodNum({ [foodID]: parseFloat(text) });
+                                    }
+                                }}
+                            />
+                            <Text>
+                                {selectedMaterial.Unit == 2 ? "個" : selectedMaterial.Unit == 1 ? "g" : ""}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                width: "20%",
+                                flexDirection: "row",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <TextInput
+                                style={{
+                                    width: 20,
+                                    height: "80%",
+                                    borderWidth: 1,
+                                    borderColor: "#ccc",
+                                    borderRadius: 4,
+                                }}
+                                onChangeText={(text) => {
+                                    addUnit({ [foodID]: text });
+                                }}
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={{
+                                width: "10%",
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                            }}
+                            onPress={() => {
+                                materials.find((val) => val.FoodID == foodID)
+                                    ? removeFood(foodID)
+                                    : addFood(selectedMaterial);
+                            }}
+                        >
+                            <Text style={{ color: "#F06A47" }}>
+                                {materials.find((val) => val.FoodID == foodID)
+                                    ? "削除"
+                                    : "追加"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                }
+                {materials.length != 0 && (
+                    <>
+                        <Text style={{ marginBottom: 5 }}>
+                            追加した材料
+                        </Text>
+                        <View
+                            style={{
+                                width: "90%",
+                                backgroundColor: "#fff",
+                                borderRadius: 10,
+                            }}
+                        >
+                            {materials.map((material, i) => {
+                                return (
+                                    <View key={i} style={styles.materialTextContainer}>
+                                        <Text style={styles.textLeft}>
+
+                                            <Text style={styles.unitText}>{material.Unit ? material.Unit : "　"}</Text>
+                                            {foodList.map((v) => {
+                                                if (v.ID == material.FoodID) return v.Name;
+                                            })}
+                                        </Text>
+                                        <Text style={styles.textRight}>
+
+                                            {material.Quantity_label != undefined
+                                                ? material.Quantity_label
+                                                : ""}
+
+                                        </Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    </>
+                )}
+
             </View>
             <View style={styles.sectionContainer}>
                 <Text style={{ fontSize: 18 }}>作り方</Text>
@@ -487,115 +649,17 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
                     ) : (
                         ""
                     )}
-                    <ScrollView
-                        style={{
-                            width: "80%",
-                            borderWidth: 1,
-                            marginBottom: 30,
-                            borderRadius: 10,
-                            borderColor: "#EFEFF4",
+                    <OutlineButton
+                        title="材料選択テスト"
+                        onPress={() => {
+                            setIsMaterialModalOpen(false);
+                            navigation.navigate("FoodSelect", {
+                                setFoodID: setFoodID,
+                                setFoodName: setFoodName,
+                                setIsGram: setIsGram,
+                            });
                         }}
-                    >
-                        {foodList.map((food, i) => {
-                            return (
-                                <View
-                                    key={i}
-                                    style={{
-                                        width: "100%",
-                                        flexDirection: "row",
-                                        height: 40,
-                                        padding: 3,
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#EFEFF4",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            width: "50%",
-                                            flexDirection: "row",
-                                            justifyContent: "flex-start",
-                                        }}
-                                    >
-                                        <Text style={{ color: "#111" }}>{food.Name}</Text>
-                                    </View>
-                                    <View
-                                        style={{
-                                            width: "20%",
-                                            flexDirection: "row",
-                                            justifyContent: "flex-start",
-                                        }}
-                                    >
-                                        <TextInput
-                                            keyboardType={food.Unit != 0 ? "numeric" : "default"}
-                                            style={{
-                                                width: 40,
-                                                height: "80%",
-                                                borderWidth: 1,
-                                                borderColor: "#ccc",
-                                                borderRadius: 4,
-                                                marginRight: 5,
-                                            }}
-                                            onChangeText={(text) => {
-                                                if (food.Unit == 0) {
-                                                    // 単位なし
-                                                    addFoodNum({ [food.ID]: text });
-                                                } else if (food.Unit == 1) {
-                                                    // グラム
-                                                    addFoodNum({ [food.ID]: parseInt(text) });
-                                                } else {
-                                                    // 個数
-                                                    addFoodNum({ [food.ID]: parseFloat(text) });
-                                                }
-                                            }}
-                                        />
-
-                                        <Text>
-                                            {food.Unit == 2 ? "個" : food.Unit == 1 ? "g" : ""}
-                                        </Text>
-                                    </View>
-                                    <View
-                                        style={{
-                                            width: "20%",
-                                            flexDirection: "row",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <TextInput
-                                            style={{
-                                                width: 20,
-                                                height: "80%",
-                                                borderWidth: 1,
-                                                borderColor: "#ccc",
-                                                borderRadius: 4,
-                                            }}
-                                            onChangeText={(text) => {
-                                                addUnit({ [food.ID]: text });
-                                            }}
-                                        />
-                                    </View>
-                                    <TouchableOpacity
-                                        style={{
-                                            width: "10%",
-                                            flexDirection: "row",
-                                            justifyContent: "flex-end",
-                                        }}
-                                        onPress={() => {
-                                            materials.find((val) => val.FoodID == food.ID)
-                                                ? removeFood(food.ID)
-                                                : addFood(food);
-                                        }}
-                                    >
-                                        <Text style={{ color: "#F06A47" }}>
-                                            {materials.find((val) => val.FoodID == food.ID)
-                                                ? "削除"
-                                                : "追加"}
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
-                            );
-                        })}
-                    </ScrollView>
+                    />
                 </View>
                 <View style={styles.modalButtonContainer}>
                     <FillButton
@@ -732,6 +796,19 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    w100: {
+        width: "100%"
+    },
+    w100c: {
+        width: "100%",
+        alignItems: "center"
+    },
+    mt20: {
+        marginTop: 20
+    },
+    mt30: {
+        marginTop: 30
+    },
     container: {
         flexGrow: 1,
         backgroundColor: "#fff",
@@ -764,7 +841,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 10,
+        marginTop: 20,
     },
     dropDown: {
         width: 180,
@@ -812,4 +889,16 @@ const styles = StyleSheet.create({
     modalButtonContainer: {
         alignItems: "center",
     },
+    materialTextContainer: {
+        height: 35,
+        // padding: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
+    },
+    unitText: { color: "#C66600" },
+    textLeft: { fontSize: 16 },
+    textRight: { fontSize: 16 },
 });
