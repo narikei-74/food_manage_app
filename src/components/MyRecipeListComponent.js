@@ -17,6 +17,7 @@ import {
   resetError,
   resetIsApiConnected,
   resetModalMessage,
+  startMyRecipeLoader,
   updateMyRecipePeopleNumIntoDB,
 } from "../redux/MyRecipeSlice";
 import { useState } from "react";
@@ -45,6 +46,7 @@ const MyRecipeListComponent = (props) => {
   );
 
   if (myRecipeData.isApiConnected === true) {
+    dispatch(startMyRecipeLoader());
     dispatch(fetchMyRecipe(currentUser.ID)).catch((error) => error.massage);
     dispatch(resetIsApiConnected());
     if (myRecipeData.modalMessage != undefined) {
@@ -59,6 +61,7 @@ const MyRecipeListComponent = (props) => {
   }
 
   const deleteMyRecipeEvent = () => {
+    dispatch(startMyRecipeLoader());
     dispatch(deleteMyRecipeFromDB(deleteMyRecipeID));
   };
 
@@ -168,7 +171,12 @@ const MyRecipeListComponent = (props) => {
                     backgroundColor: "#fff",
                     borderRadius: 10,
                   }}
-                  onPress={() => navigation.navigate("RecipeDetail", { recipe: recipe.Recipe, peopleNum: recipe.People_num })}
+                  onPress={() =>
+                    navigation.navigate("RecipeDetail", {
+                      recipe: recipe.Recipe,
+                      peopleNum: recipe.People_num,
+                    })
+                  }
                 >
                   <ImageBackground
                     source={{ uri: awsInfo.imageUrl + recipe.Recipe.Image_key }}

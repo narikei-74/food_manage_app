@@ -18,7 +18,7 @@ import {
   addSearch,
   editOffset,
   fetchRecipe,
-  startLoader,
+  startRecipeLoader,
 } from "../redux/RecipeSlice";
 
 const RecipeListButtonsComponent = ({ navigation }) => {
@@ -53,7 +53,7 @@ const RecipeListButtonsComponent = ({ navigation }) => {
       Free: SearchFree,
     };
 
-    dispatch(startLoader());
+    dispatch(startRecipeLoader());
     dispatch(addSearch(searchInfo));
     dispatch(editOffset(0));
     dispatch(fetchRecipe({ offset: 0, searchInfo: searchInfo }));
