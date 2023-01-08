@@ -32,6 +32,7 @@ import {
   resetIsApiConnected,
   startRecipeLoader,
 } from "../redux/RecipeSlice";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 
 export const CreatePrivateRecipeScreen = ({ navigation }) => {
   const [recipeName, setRecipeName] = useState("");
@@ -142,13 +143,28 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
     dispatch(addPrivateRecipe(data));
   };
 
+  //画像をリサイズ
+  const resizeImage = async () => {
+    const manipResult = await manipulateAsync(
+      image.uri,
+      [{ resize: { width: 600 } }],
+      {
+        compress: 1,
+        format: SaveFormat.JPEG,
+      }
+    );
+
+    return manipResult;
+  };
+
   //画像アップロード
   const imageUpload = async () => {
-    const response = await fetch(image.uri);
+    const resizedImage = await resizeImage();
+
+    const response = await fetch(resizedImage.uri);
     const blob = await response.blob();
 
-    const array = image.fileName.split(".");
-    image.fileName = makeUniqueID() + "." + array[array.length - 1];
+    image.fileName = makeUniqueID() + ".jpeg";
 
     const params = {
       Bucket: awsInfo.bucket,
@@ -158,6 +174,7 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
 
     try {
       const uploadRes = await client.send(new PutObjectCommand(params));
+      console.log(uploadRes);
       return true;
     } catch (e) {
       return false;
@@ -281,7 +298,7 @@ export const CreatePrivateRecipeScreen = ({ navigation }) => {
       quality: 1,
       allowEditing: true,
       aspect: [4, 3],
-      base64: true,
+      //   base64: true,
     };
 
     //カメラロールから画像選択
