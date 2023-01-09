@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import {
   fetchRecipe,
   resetError,
-  resetIsApiConnected,
   startRecipeLoader,
 } from "../redux/RecipeSlice";
 import RecipeListButtonsComponent from "../components/RecipeListButtonsComponent";
