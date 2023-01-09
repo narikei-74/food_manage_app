@@ -22,12 +22,16 @@ import {
   startRecipeLoader,
 } from "../redux/RecipeSlice";
 import { awsInfo } from "../config/Info";
+import { useState } from "react";
 
 const RecipeListComponent = (props) => {
   const { onPress, recipes, editRecipeID, navigation, index } = props;
   const styles = RecipeListStyle();
   const route = useRoute();
   const recipeData = recipes.data;
+  const [startRecipeBlock, setStartRecipeBlock] = useState(
+    recipes.currentOffset != 0 ? recipes.currentOffset / 2 - 3 : 0
+  );
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser).data;
@@ -93,6 +97,13 @@ const RecipeListComponent = (props) => {
       style={styles.blocks}
       data={recipeData}
       numColumns={2}
+      initialScrollIndex={startRecipeBlock}
+      onEndReachedThreshold={-0.1}
+      getItemLayout={(data, index) => ({
+        length: 225,
+        offset: 225 * index,
+        index,
+      })}
       onEndReached={() => {
         if (recipes.currentOffset + 20 == recipeData.length) {
           dispatch(startRecipeLoader());
