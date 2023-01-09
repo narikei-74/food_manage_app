@@ -97,16 +97,9 @@ const RecipeListComponent = (props) => {
       style={styles.blocks}
       data={recipeData}
       numColumns={2}
-      initialScrollIndex={startRecipeBlock}
-      onEndReachedThreshold={-0.1}
-      getItemLayout={(data, index) => ({
-        length: 225,
-        offset: 225 * index,
-        index,
-      })}
+      onEndReachedThreshold={0.1}
       onEndReached={() => {
         if (recipes.currentOffset + 20 == recipeData.length) {
-          dispatch(startRecipeLoader());
           dispatch(
             fetchAddRecipe({
               offset: recipeData.length - 1,
