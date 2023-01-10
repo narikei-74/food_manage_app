@@ -6,6 +6,7 @@ import CurrentUserReducer from "./UserSlice";
 import FoodStockReducer from "./FoodStockSlice";
 import FoodReducer from "./FoodSlice";
 import NotEnoughFoodReducer from "./NotEnoughFoodSlice";
+import AutoCreateRecipeSettingsReducer from "./AutoCreateRecipeSettingsSlice";
 
 export const Store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const Store = configureStore({
     foodStock: FoodStockReducer,
     food: FoodReducer,
     notEnoughFood: NotEnoughFoodReducer,
+    autoCreateRecipeSettings: AutoCreateRecipeSettingsReducer,
   },
 });
